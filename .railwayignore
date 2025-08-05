@@ -1,0 +1,20 @@
+# Ignorar para Railway
+node_modules/
+venv/
+venv_pyodbc/
+venv_supabase/
+*.pyc
+__pycache__/
+.git/
+.vscode/
+*.log
+.env
+.env.local
+dist/
+agente_digital_ui/node_modules/
+agente_digital_ui/dist/
+agente_digital_api/venv/
+*.exe
+*.dll
+*.so
+*.dylib
