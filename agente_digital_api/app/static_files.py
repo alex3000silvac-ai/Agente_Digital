@@ -8,7 +8,9 @@ def configure_static_files(app):
     """Configura el servicio de archivos estáticos del frontend"""
     
     # Ruta al directorio de build del frontend
-    frontend_build_path = os.path.abspath(
+    # Primero buscar en static (copiado por nixpacks), luego en la ubicación original
+    static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../static'))
+    frontend_build_path = static_path if os.path.exists(static_path) else os.path.abspath(
         os.path.join(os.path.dirname(__file__), '../../agente_digital_ui/dist')
     )
     

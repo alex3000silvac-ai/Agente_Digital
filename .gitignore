@@ -8,6 +8,7 @@ __pycache__/
 *.pyc
 venv/
 venv_pyodbc/
+venv_supabase/
 *.exe
 *.dll
 *.so
