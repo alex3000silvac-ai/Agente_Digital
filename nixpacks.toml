@@ -1,0 +1,8 @@
+# Configuración mínima para nixpacks
+providers = ["python"]
+
+[phases.setup]
+nixPkgs = ["python39", "gcc"]
+
+[start]
+cmd = "gunicorn --chdir agente_digital_api -w 4 -b 0.0.0.0:$PORT app:create_app()"

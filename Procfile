@@ -1,1 +1,1 @@
-web: sh -c 'cd agente_digital_api && gunicorn -w 4 -b 0.0.0.0:$PORT app:create_app()'
+web: gunicorn app:app
