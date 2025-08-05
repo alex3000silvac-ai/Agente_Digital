@@ -24,13 +24,14 @@ export default defineConfig({
     }
   },
   build: {
+    outDir: 'dist',
     rollupOptions: {
       external: [], // No externalizar nada crítico
       output: {
         manualChunks: undefined // Evita problemas de chunks
       }
     },
-    sourcemap: true, // Para debugging
+    sourcemap: false, // Desactivar en producción
     minify: 'esbuild' // Más estable que terser
   },
   resolve: {
