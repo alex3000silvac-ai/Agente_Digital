@@ -1,0 +1,388 @@
+Flujo Completo de Gestión de Incidentes ANCI
+Diferenciación entre OIV y PSE
+________________________________________
+1. FASE PREPARATORIA
+1.1 Registro Obligatorio Inicial (Ambos: OIV y PSE)
+Basado en Instrucción General N°1 de la ANCI
+Requisitos Previos:
+•	✅ Entidad calificada como PSE según Art. 4 Ley 21.663
+•	✅ Designación formal del encargado de ciberseguridad
+•	✅ Clave Única del encargado + 2FA activado
+Proceso de Registro:
+1.	Acceso a Portal: https://portal.anci.gob.cl
+2.	Documentación Requerida: 
+o	Documento de designación firmado con FEA por representante legal
+o	Certificado de vigencia de la sociedad
+o	Certificado de vigencia de poderes
+3.	Información a Registrar: 
+o	Datos de la institución (razón social, RUT, sector)
+o	Datos del encargado de ciberseguridad
+o	Correo electrónico institucional oficial
+________________________________________
+2. TAXONOMÍA DE INCIDENTES SEGÚN RESOLUCIÓN EXENTA N°7
+Clasificación por Áreas de Impacto:
+A. Impacto en el uso legítimo de recursos
+•	Uso no autorizado de redes y sistemas informáticos
+•	Actividades de phishing o fraude en infraestructura propia
+•	Actividades de phishing o fraude relacionadas con la institución
+•	Ejecución no autorizada de código
+B. Impacto en la confidencialidad de la información
+•	Exfiltración y/o exposición de datos
+•	Exfiltración y/o exposición de configuraciones
+•	Exfiltración y/o exposición de código fuente
+C. Impacto en la disponibilidad de un servicio esencial
+•	Indisponibilidad y/o denegación de servicio
+•	Degradación de servicio
+D. Impacto en la integridad de la información
+•	Modificación no autorizada de datos
+•	Manipulación no autorizada de configuración
+________________________________________
+3. CRITERIOS DE "EFECTO SIGNIFICATIVO" (DS N°295, Art. 3)
+Un incidente debe reportarse si es capaz de:
+•	✅ Interrumpir la continuidad de un servicio esencial
+•	✅ Afectar la integridad física o la salud de las personas
+•	✅ Comprometer la confidencialidad de archivos con datos personales
+•	✅ Implicar acceso no autorizado a redes o sistemas informáticos
+•	✅ Involucrar sistemas que contengan datos personales
+________________________________________
+4. FLUJO DE REPORTE DE INCIDENTES
+4.1 ETAPA 1: ALERTA TEMPRANA (3 HORAS)
+Aplica para: OIV y PSE
+Campos Obligatorios:
+Identificación_Entidad:
+  - nombre_institucion: "Razón social completa"
+  - rut: "XX.XXX.XXX-X"
+  - tipo_entidad: "OIV" | "PSE"
+  - sector_esencial: "Energía|Telecomunicaciones|Financiero|Salud|etc."
+
+Datos_Contacto:
+  - nombre_reportante: "Nombre completo"
+  - cargo: "CISO|Encargado Seguridad|etc."
+  - telefono_24_7: "+56XXXXXXXXX"
+  - email_oficial: "seguridad@empresa.cl"
+
+Datos_Incidente:
+  - fecha_hora_deteccion: "YYYY-MM-DD HH:MM:SS"
+  - fecha_hora_inicio_estimada: "YYYY-MM-DD HH:MM:SS"
+  - descripcion_breve: "Máximo 500 caracteres"
+  - taxonomia_inicial: "Código según Res. Exenta N°7"
+
+Impacto_Inicial:
+  - sistemas_afectados: "Lista de sistemas/servicios"
+  - servicios_interrumpidos: "Sí|No"
+  - duracion_estimada: "Horas estimadas"
+  - usuarios_afectados: "Número aproximado"
+  - alcance_geografico: "Local|Regional|Nacional"
+
+Estado_Actual:
+  - incidente_en_curso: "Sí|No"
+  - contenido_aplicado: "Sí|No"
+  - descripcion_estado: "Texto libre"
+
+Acciones_Inmediatas:
+  - medidas_contencion: "Lista de acciones tomadas"
+  - sistemas_aislados: "Sí|No - Detallar cuáles"
+
+Solicitud_Apoyo:
+  - requiere_asistencia_csirt: "Sí|No"
+  - tipo_apoyo_requerido: "Análisis forense|Contención|Comunicaciones|etc."
+4.2 ETAPA 2: SEGUNDO REPORTE (ACTUALIZACIÓN)
+Para PSE: 72 horas
+Para OIV: 24 horas (si servicio esencial afectado) | 72 horas (otros casos)
+Campos Adicionales/Actualizados:
+Referencia:
+  - id_alerta_temprana: "Código del primer reporte"
+  - fecha_actualizacion: "YYYY-MM-DD HH:MM:SS"
+
+Analisis_Detallado:
+  - descripcion_completa: "Narrativa detallada del incidente"
+  - vector_ataque: "Phishing|Vulnerabilidad|Fuerza bruta|etc."
+  - causa_raiz_preliminar: "Análisis inicial de la causa"
+
+Gravedad_Impacto:
+  - nivel_criticidad: "Crítico|Alto|Medio|Bajo"
+  - sistemas_especificos_afectados: "Lista detallada"
+  - duracion_real_interrupcion: "HH:MM"
+  - numero_usuarios_impactados: "Número exacto"
+  - volumen_datos_comprometidos: "Si aplica"
+  - efectos_colaterales: "Repercusiones en otros sectores"
+
+Indicadores_Compromiso:
+  - direcciones_ip_sospechosas: ["IP1", "IP2", "..."]
+  - hashes_malware: ["hash1", "hash2", "..."]
+  - dominios_maliciosos: ["domain1.com", "domain2.com"]
+  - cuentas_comprometidas: ["usuario1", "usuario2"]
+  - urls_maliciosas: ["url1", "url2"]
+
+Analisis_Causa_Raiz:
+  - vulnerabilidad_explotada: "CVE-XXXX-XXXX o descripción"
+  - falla_control_seguridad: "Descripción del control fallido"
+  - error_humano_involucrado: "Sí|No - Detallar"
+
+Acciones_Respuesta:
+  - medidas_contencion_aplicadas: "Lista detallada"
+  - medidas_erradicacion: "Acciones de eliminación de amenaza"
+  - estado_recuperacion: "En curso|Completada|Pendiente"
+  - tiempo_estimado_resolucion: "Horas/días restantes"
+
+Coordinaciones_Externas:
+  - notificacion_regulador_sectorial: "Sí|No - Cuál"
+  - denuncia_policial: "Sí|No"
+  - contacto_proveedores_seguridad: "Sí|No"
+  - comunicacion_publica_emitida: "Sí|No"
+
+Apoyo_Requerido:
+  - asistencia_csirt_actualizada: "Sí|No"
+  - tipo_apoyo_en_curso: "Descripción"
+4.3 ETAPA 3: PLAN DE ACCIÓN (SOLO OIV - 7 DÍAS)
+Campos Específicos para OIV:
+Plan_Recuperacion:
+  - programa_restauracion_datos: "Cronograma detallado"
+  - responsables_tecnicos: "Nombres y roles"
+  - responsables_administrativos: "Nombres y roles"
+  - tiempo_estimado_restablecimiento: "Horas/días por servicio"
+  - recursos_necesarios: "Humanos, tecnológicos, financieros"
+
+Medidas_Mitigacion:
+  - acciones_corto_plazo: "0-24 horas"
+  - acciones_mediano_plazo: "1-7 días"
+  - acciones_largo_plazo: "1-4 semanas"
+
+Impacto_Servicios_Vitales:
+  - servicios_criticos_afectados: "Lista específica"
+  - porcentaje_capacidad_reducida: "% por servicio"
+  - alternativas_operacionales: "Servicios de respaldo"
+4.4 ETAPA 4: INFORME FINAL (15 DÍAS DESDE ALERTA TEMPRANA)
+Aplica para: OIV y PSE
+Estructura Completa del Informe Final:
+Identificacion_Incidente:
+  - folio_anci: "Asignado por ANCI"
+  - id_referencias_previas: "Códigos de reportes anteriores"
+  - fecha_inicio_original: "YYYY-MM-DD HH:MM:SS"
+  - fecha_cierre: "YYYY-MM-DD HH:MM:SS"
+
+Descripcion_Completa:
+  cronologia_detallada:
+    - "YYYY-MM-DD HH:MM": "Evento 1"
+    - "YYYY-MM-DD HH:MM": "Evento 2"
+    - "YYYY-MM-DD HH:MM": "Evento N"
+  
+  desarrollo_ataque:
+    - vector_inicial: "Descripción detallada"
+    - tecnicas_utilizadas: "TTPs según MITRE ATT&CK"
+    - objetivos_atacante: "Análisis de intenciones"
+    - movimiento_lateral: "Si aplica"
+    - escalamiento_privilegios: "Si aplica"
+
+Causa_Raiz_Final:
+  - vector_compromiso: "Descripción técnica"
+  - vulnerabilidad_especifica: "CVE o descripción"
+  - controles_fallidos: "Lista de controles que no funcionaron"
+  - factores_contributivos: "Falta de parches, error humano, etc."
+
+Impacto_Final_Detallado:
+  sistemas_afectados:
+    - nombre_sistema: "Sistema A"
+      funcion: "Función crítica"
+      tiempo_caida: "HH:MM"
+      datos_perdidos: "Sí|No - Volumen"
+    - nombre_sistema: "Sistema B"
+      # ... mismo formato
+
+  impacto_servicios:
+    - servicio_interrumpido: "Servicio X"
+      duracion_total: "HH:MM"
+      usuarios_afectados: "Número"
+      region_impactada: "Geográfica"
+    
+  impacto_economico:
+    - costos_recuperacion: "$CLP"
+    - perdidas_operativas: "$CLP estimado"
+    - costos_terceros: "$CLP"
+
+  impacto_terceros:
+    - usuarios_sin_servicio: "Número y tiempo"
+    - impacto_salud_publica: "Si aplica"
+    - impacto_seguridad_nacional: "Si aplica"
+
+Medidas_Contencion_Recuperacion:
+  contencion_inmediata:
+    - fecha_hora: "YYYY-MM-DD HH:MM"
+      accion: "Descripción"
+      responsable: "Nombre/Área"
+      efectividad: "Exitosa|Parcial|Fallida"
+  
+  erradicacion:
+    - eliminacion_malware: "Técnicas utilizadas"
+    - cierre_brechas: "Vulnerabilidades parcheadas"
+    - limpieza_sistemas: "Metodología aplicada"
+  
+  recuperacion:
+    - restauracion_respaldos: "Sistemas y fechas"
+    - reconstruccion_sistemas: "Si aplica"
+    - verificacion_integridad: "Métodos de validación"
+    - fecha_servicio_normal: "YYYY-MM-DD HH:MM"
+
+Apoyo_Externo_Recibido:
+  - csirt_nacional: "Tipo de asistencia brindada"
+  - consultoras_seguridad: "Empresas y servicios"
+  - fuerzas_orden: "PDI/Carabineros - Tipo de apoyo"
+  - proveedores_tecnologia: "Vendors involucrados"
+
+Situacion_Final:
+  - estado_incidente: "Resuelto|Cerrado|En monitoreo"
+  - fecha_resolucion: "YYYY-MM-DD HH:MM"
+  - verificacion_normalidad: "Métodos de confirmación"
+  - monitoreo_posterior: "Si aplica - Duración"
+
+Lecciones_Aprendidas:
+  - controles_fallidos_identificados: "Lista específica"
+  - mejoras_tecnicas_requeridas: "Tecnología, procesos"
+  - mejoras_procedimentales: "Capacitación, políticas"
+  - inversiones_planificadas: "Presupuesto y timeline"
+
+Plan_Mejora_Continua:
+  - acciones_inmediatas: "0-30 días"
+  - acciones_mediano_plazo: "1-6 meses"
+  - acciones_largo_plazo: "6-12 meses"
+  - presupuesto_estimado: "$CLP"
+  - responsables_implementacion: "Nombres y cargos"
+
+Anexos_Evidencia:
+  - logs_relevantes: "Archivos adjuntos"
+  - reportes_forenses: "Documentos técnicos"
+  - comunicaciones_atacante: "Si aplica (ransomware)"
+  - screenshots_evidencia: "Capturas de pantalla"
+
+Contacto_Seguimiento:
+  - responsable_informe: "Nombre y cargo"
+  - aprobacion_gerencial: "Nombre ejecutivo validador"
+  - fecha_elaboracion: "YYYY-MM-DD"
+________________________________________
+5. DIFERENCIAS CLAVE POR TIPO DE ENTIDAD
+5.1 Prestadores de Servicios Esenciales (PSE)
+Plazos:
+•	⏰ Alerta Temprana: 3 horas
+•	⏰ Segundo Reporte: 72 horas
+•	⏰ Informe Final: 15 días
+Características:
+•	✅ No requiere Plan de Acción específico
+•	✅ Multas menores (hasta 20,000 UTM máximo)
+•	✅ Proceso de reporte estándar
+5.2 Operadores de Importancia Vital (OIV)
+Plazos:
+•	⏰ Alerta Temprana: 3 horas
+•	⏰ Segundo Reporte: 
+o	24 horas (si servicio esencial afectado)
+o	72 horas (otros casos)
+•	⏰ Plan de Acción: 7 días
+•	⏰ Informe Final: 15 días
+Características:
+•	✅ Requiere Plan de Acción detallado
+•	⚠️ Multas mayores (hasta 40,000 UTM máximo)
+•	✅ Obligaciones adicionales (SGSI, auditorías, certificaciones)
+•	✅ Delegado de ciberseguridad obligatorio
+________________________________________
+6. LÓGICA DE IMPLEMENTACIÓN TÉCNICA
+6.1 Sistema de Gestión de Incidentes Interno
+class IncidenteANCI:
+    def __init__(self, tipo_entidad):
+        self.tipo_entidad = tipo_entidad  # "OIV" o "PSE"
+        self.estado = "DETECTADO"
+        self.timeline = []
+        self.reportes_enviados = []
+        
+    def determinar_plazos(self, servicio_afectado=False):
+        if self.tipo_entidad == "OIV" and servicio_afectado:
+            return {
+                "alerta_temprana": 3,  # horas
+                "segundo_reporte": 24,  # horas
+                "plan_accion": 7 * 24,  # horas (7 días)
+                "informe_final": 15 * 24  # horas (15 días)
+            }
+        else:
+            return {
+                "alerta_temprana": 3,  # horas
+                "segundo_reporte": 72,  # horas
+                "plan_accion": None,  # No aplica para PSE
+                "informe_final": 15 * 24  # horas (15 días)
+            }
+    
+    def evaluar_efecto_significativo(self, incidente_data):
+        criterios = [
+            incidente_data.get("interrupcion_servicio", False),
+            incidente_data.get("afecta_salud_personas", False),
+            incidente_data.get("datos_personales_comprometidos", False),
+            incidente_data.get("acceso_no_autorizado", False)
+        ]
+        return any(criterios)
+6.2 Plantillas de Formularios Automatizados
+# Configuración para auto-completar formularios
+plantilla_base:
+  empresa:
+    razon_social: "${EMPRESA_NOMBRE}"
+    rut: "${EMPRESA_RUT}"
+    sector: "${EMPRESA_SECTOR}"
+    tipo_entidad: "${TIPO_ENTIDAD}"  # OIV o PSE
+  
+  contacto:
+    nombre: "${ENCARGADO_NOMBRE}"
+    cargo: "${ENCARGADO_CARGO}"
+    telefono: "${TELEFONO_24_7}"
+    email: "${EMAIL_OFICIAL}"
+
+# Mapeo automático de taxonomía
+taxonomia_mapping:
+  ransomware: "c.i.b"  # Indisponibilidad por apagado no autorizado
+  phishing_exitoso: "b.i.b"  # Apropiación de credenciales
+  ddos: "c.i.g"  # Tráfico excesivo volumétrico
+  fuga_datos: "b.i.e"  # Filtración de datos personales
+6.3 Sistema de Alertas y Recordatorios
+def configurar_alertas(incidente):
+    plazos = incidente.determinar_plazos()
+    
+    # Alertas automáticas
+    alertas = [
+        {"tipo": "alerta_temprana", "tiempo": 1, "unidad": "horas"},
+        {"tipo": "segundo_reporte", "tiempo": plazos["segundo_reporte"] - 6, "unidad": "horas"},
+        {"tipo": "informe_final", "tiempo": plazos["informe_final"] - 48, "unidad": "horas"}
+    ]
+    
+    if incidente.tipo_entidad == "OIV" and plazos["plan_accion"]:
+        alertas.append({
+            "tipo": "plan_accion", 
+            "tiempo": plazos["plan_accion"] - 24, 
+            "unidad": "horas"
+        })
+    
+    return alertas
+________________________________________
+7. CHECKLIST DE CUMPLIMIENTO
+Para PSE:
+•	[ ] Registro inicial completado en portal.anci.gob.cl
+•	[ ] Encargado de ciberseguridad designado y registrado
+•	[ ] Procedimiento interno de detección 24/7 implementado
+•	[ ] Plantillas de reporte preparadas y validadas
+•	[ ] Plan de respuesta a incidentes documentado
+•	[ ] Contactos de escalamiento definidos
+Para OIV (Adicional a PSE):
+•	[ ] SGSI implementado según ISO 27001
+•	[ ] Delegado de ciberseguridad formalmente designado
+•	[ ] Planes de continuidad operacional actualizados
+•	[ ] Programa de auditorías y simulacros establecido
+•	[ ] Certificaciones de ciberseguridad obtenidas
+•	[ ] Procedimiento específico para Plan de Acción definido
+________________________________________
+8. CONSIDERACIONES LEGALES IMPORTANTES
+Sanciones por Incumplimiento:
+•	PSE: Hasta 20,000 UTM por infracciones gravísimas
+•	OIV: Hasta 40,000 UTM por infracciones gravísimas
+Infracciones Típicas:
+•	No reportar en plazo (3 horas): GRAVE
+•	Información falsa o incompleta: GRAVÍSIMA
+•	No inscribirse en plataforma ANCI: LEVE
+Protección Legal:
+•	Principio non bis in idem: No doble sanción por mismo hecho
+•	Derecho a recursos administrativos y reclamación judicial
+•	Confidencialidad de información sensible reportada
+

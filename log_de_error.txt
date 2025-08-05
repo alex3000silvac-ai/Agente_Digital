@@ -1,0 +1,41 @@
+﻿1. Control de Versiones (CRÍTICO)
+bash# Si no tienes git aún:
+git init
+git add .
+git commit -m "Backup antes de cambios"
+
+# Antes de CUALQUIER cambio con Claude Code:
+git add .
+git commit -m "Estado funcional - $(date)"
+2. Versiones más estables para tu stack
+Para Vue.js:
+json{
+  "dependencies": {
+    "vue": "^3.3.8",      // LTS más estable
+    "vite": "^4.5.0",     // Evita 5.x que es más nuevo
+    "rollup": "^3.29.4"   // Fija esta versión
+  }
+}
+3. Lock de dependencias (MUY IMPORTANTE)
+bash# Usar npm ci en lugar de npm install
+npm ci  # Instala exactamente lo que dice package-lock.json
+
+# Nunca usar --force a menos que sea absolutamente necesario
+4. Configuración defensiva en package.json
+json{
+  "engines": {
+    "node": ">=18.0.0 <23.0.0",
+    "npm": ">=8.0.0"
+  },
+  "overrides": {
+    "@rollup/rollup-win32-x64-msvc": "^4.9.0"
+  }
+}
+5. Scripts de backup automático
+json{
+  "scripts": {
+    "backup": "git add . && git commit -m 'Auto backup'",
+    "safe-dev": "npm run backup && npm run dev"
+  }
+}
+¿Quieres que implementemos estas configuraciones paso a paso en tu proyecto?

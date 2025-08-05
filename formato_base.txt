@@ -1,0 +1,861 @@
+﻿1. Identificación General
+Tipo de Registro del Incidente
+
+Informativo (Registro simple)
+Título del Incidente *
+Incidente registrado automáticamente
+
+Fecha y Hora de Detección *
+
+10-07-2025 10:49
+Fecha y Hora de Ocurrencia
+
+09-07-2025 06:49
+Solo si difiere de la fecha de detección
+
+Criticidad *
+
+Media
+Alcance Geográfico
+
+Regional
+2. Descripción y Alcance
+Descripción Inicial Detallada *
+Descripción generada automáticamente para incidente
+
+Impacto Preliminar Observado
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Sistemas, Activos o Personal Afectado *
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Servicios Interrumpidos y Duración
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Evidencia de Alcance
+Evidencia de Acciones
+Ningún archivo seleccionado
+
+Gestionar Archivos y Versiones
+Archivos de Evidencia Cargados
+Nombre Archivo	Descripción	Acciones
+No hay archivos cargados
+
+Agregar Archivo de Evidencia
+
+Gestionar Evidencias de Descripción
+3. Análisis Preliminar
+Tipo de Amenaza Probable
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Origen / Vector de Ataque Probable *
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+
+Responsable del Cliente
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Evidencia de Análisis
+Evidencia de Acciones
+Ningún archivo seleccionado
+
+Gestionar Archivos y Versiones
+Archivos de Evidencia Cargados
+Nombre Archivo	Descripción	Acciones
+No hay archivos cargados
+
+Agregar Archivo de Evidencia
+
+Gestionar Evidencias de Análisis
+4. Clasificación de Taxonomía *
+Seleccione las taxonomías aplicables según el catálogo de incidentes de ciberseguridad. Cada taxonomía puede incluir evidencias y comentarios con control de versiones.
+
+Catálogo de Incidentes de Ciberseguridad
+Taxonomías para formato ANCI - Empresa tipo
+PSE
+
+38
+Disponibles
+0
+Seleccionadas
+Buscar en categorías de incidentes...
+Impacto en el uso legítimo de recursos • Actividades de phishing o fraude en infraestructura propia • Envío de correo no deseado o phishing desde infraestructura propia
+INC_USO_PHIP_ECDP
+ANCI
+Envío de correo no deseado o phishing desde infraestructura propia
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Actividades de phishing o fraude en infraestructura propia • Inclusión de sitio fraudulento en infraestructura propia
+INC_USO_PHIP_ISFI
+ANCI
+Inclusión de sitio fraudulento en infraestructura propia
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Actividades de phishing o fraude relacionadas con la institución • Envío de correo no deseado o phishing sobre una organización
+INC_USO_PHRI_ECSO
+ANCI
+Envío de correo no deseado o phishing sobre una organización
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Actividades de phishing o fraude relacionadas con la institución • Envío de correo no deseado o phishing usando remitentes de la institución
+INC_USO_PHRI_ECUR
+ANCI
+Envío de correo no deseado o phishing usando remitentes de la institución
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Ejecución no autorizada de código • Ejecución remota de código a través de parámetros de aplicación
+INC_USO_EJNA_ERCA
+ANCI
+Ejecución remota de código a través de parámetros de aplicación
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Ejecución no autorizada de código • Inyección de consultas NoSQL
+INC_USO_EJNA_ICNQ
+ANCI
+Inyección de consultas NoSQL
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Ejecución no autorizada de código • Inyección de consultas SQL
+INC_USO_EJNA_ICSL
+ANCI
+Inyección de consultas SQL
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Ejecución no autorizada de código • Inyección de requerimientos (prompts) en modelos grandes de lenguaje (LLM)
+INC_USO_EJNA_IRLL
+ANCI
+Inyección de requerimientos (prompts) en modelos grandes de lenguaje (LLM)
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Uso no autorizado de redes y sistemas informáticos • Acceso no autorizado a almacenamiento
+INC_USO_UNRI_ACNA
+ANCI
+Acceso no autorizado a almacenamiento
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Uso no autorizado de redes y sistemas informáticos • Ataque de fuerza bruta exitoso
+INC_USO_UNRI_AFBE
+ANCI
+Ataque de fuerza bruta exitoso
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Uso no autorizado de redes y sistemas informáticos • Explotación de vulnerabilidades de autenticación
+INC_USO_UNRI_EXVA
+ANCI
+Explotación de vulnerabilidades de autenticación
+Categoría de incidente para reporte ANCI
+Impacto en el uso legítimo de recursos • Uso no autorizado de redes y sistemas informáticos • Uso de credenciales comprometidas
+INC_USO_UNRI_USCC
+ANCI
+Uso de credenciales comprometidas
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de código fuente • Archivo(s) de control de versión expuestos en aplicación
+INC_CONF_EXCS_ACVE
+ANCI
+Archivo(s) de control de versión expuestos en aplicación
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de código fuente • Sistema de control de versión expuesto
+INC_CONF_EXCS_SCVE
+ANCI
+Sistema de control de versión expuesto
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de configuraciones • Filtración de configuraciones en rutas de aplicación
+INC_CONF_EXCF_FCRA
+ANCI
+Filtración de configuraciones en rutas de aplicación
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de configuraciones • Filtración de secretos en rutas de aplicación
+INC_CONF_EXCF_FSRA
+ANCI
+Filtración de secretos en rutas de aplicación
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de datos • Adversario en el medio (MitM)
+INC_CONF_EXDA_ADVM
+ANCI
+Adversario en el medio (MitM)
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de datos • Apropiación de credenciales mediante phishing
+INC_CONF_EXDA_ACMP
+ANCI
+Apropiación de credenciales mediante phishing
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de datos • Documentos públicos con datos sensibles
+INC_CONF_EXDA_DPDS
+ANCI
+Documentos públicos con datos sensibles
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de datos • Filtración de datos personales
+INC_CONF_EXDA_FDP
+ANCI
+Filtración de datos personales
+Categoría de incidente para reporte ANCI
+Impacto en la confidencialidad de la información • Exfiltración y/o exposición de datos • Keylogger en uso
+INC_CONF_EXDA_KEYL
+ANCI
+Keylogger en uso
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Degradación de servicio • Secuestro de recursos (cryptojacking)
+INC_DISP_DEGS_SDRC
+ANCI
+Secuestro de recursos (cryptojacking)
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Degradación de servicio • Sobrecarga de bases de datos
+INC_DISP_DEGS_SOBD
+ANCI
+Sobrecarga de bases de datos
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Degradación de servicio • Uso excesivo de ancho de banda
+INC_DISP_DEGS_UEAB
+ANCI
+Uso excesivo de ancho de banda
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Indisponibilidad y/o denegación de servicio • Agotamiento de conexiones TCP
+INC_DISP_INDS_ACT
+ANCI
+Agotamiento de conexiones TCP
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Indisponibilidad y/o denegación de servicio • Apagado no autorizado de sistemas informáticos
+INC_DISP_INDS_ANSI
+ANCI
+Apagado no autorizado de sistemas informáticos
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Indisponibilidad y/o denegación de servicio • Ataque de amplificación DNS/NTP
+INC_DISP_INDS_AADN
+ANCI
+Ataque de amplificación DNS/NTP
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Indisponibilidad y/o denegación de servicio • Denegación de servicio a través de la explotación de vulnerabilidades
+INC_DISP_INDS_DSEV
+ANCI
+Denegación de servicio a través de la explotación de vulnerabilidades
+Categoría de incidente para reporte ANCI
+Impacto en la disponibilidad de un servicio esencial • Indisponibilidad y/o denegación de servicio • Eliminación de configuraciones críticas
+INC_DISP_INDS_ELCC
+ANCI
+Eliminación de configuraciones críticas
+Categoría de incidente para reporte ANCI
+Impacto en la integridad de la información • Manipulación no autorizada de configuración • Alteración de reglas de firewall
+INC_INTG_MNAC_ALRF
+ANCI
+Alteración de reglas de firewall
+Categoría de incidente para reporte ANCI
+Impacto en la integridad de la información • Manipulación no autorizada de configuración • Desactivación de registros de seguridad
+INC_INTG_MNAC_DRDS
+ANCI
+Desactivación de registros de seguridad
+Categoría de incidente para reporte ANCI
+Impacto en la integridad de la información • Manipulación no autorizada de configuración • Modificación de políticas de acceso
+INC_INTG_MNAC_MPDA
+ANCI
+Modificación de políticas de acceso
+Categoría de incidente para reporte ANCI
+Impacto en la integridad de la información • Modificación no autorizada de datos • Alteración de bases de datos
+INC_INTG_MNDA_ALBD
+ANCI
+Alteración de bases de datos
+Categoría de incidente para reporte ANCI
+Impacto en la integridad de la información • Modificación no autorizada de datos • Alteración de sitio web (defacement)
+INC_INTG_MNDA_ALSW
+ANCI
+Alteración de sitio web (defacement)
+Categoría de incidente para reporte ANCI
+Impacto en la integridad de la información • Modificación no autorizada de datos • Manipulación de datos no autentificados
+INC_INTG_MNDA_MDNA
+ANCI
+Manipulación de datos no autentificados
+Categoría de incidente para reporte ANCI
+Impacto en servicios de pago • Fraude en transacciones • Transacciones fraudulentas
+INC_PSE_PAGO_FRAUD
+ANCI
+Transacciones fraudulentas
+Categoría de incidente para reporte ANCI
+Impacto en servicios de pago • Lavado de dinero • Uso del sistema para lavado de activos
+INC_PSE_PAGO_LAVAN
+ANCI
+Uso del sistema para lavado de activos
+Categoría de incidente para reporte ANCI
+Impacto en servicios de pago • Skimming de tarjetas • Clonación de tarjetas de pago
+INC_PSE_PAGO_SKIMM
+ANCI
+Clonación de tarjetas de pago
+Categoría de incidente para reporte ANCI
+5. Acciones Inmediatas (Requerido para OIV/PSE)
+Medidas de Contención Iniciales *
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+
+Evidencia de Acciones
+Evidencia de Acciones
+Ningún archivo seleccionado
+
+Gestionar Archivos y Versiones
+Archivos de Evidencia Cargados
+Nombre Archivo	Descripción	Acciones
+No hay archivos cargados
+
+Agregar Archivo de Evidencia
+
+Gestionar Evidencias de Acciones
+6. Análisis Final y Mejoras (Para Reporte ANCI 72h)
+Estos campos se completan durante la investigación y son requeridos para el reporte final a ANCI.
+
+Causa Raíz Identificada
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Lecciones Aprendidas
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Plan de Mejora
+reación: Incidentes con todos los campos, taxonomías, archivos y comentarios
+Documentación Técnica
+Evidencia de Acciones
+Ningún archivo seleccionado
+
+Gestionar Archivos y Versiones
+Archivos de Evidencia Cargados
+Nombre Archivo	Descripción	Acciones
+No hay archivos cargados
+
+Agregar Archivo de Evidencia
+Logs, capturas, trazas de red, hash de archivos maliciosos
+
+7. Archivos del Incidente
+Listado completo de todos los archivos asociados al incidente, organizados por sección. Este es un resumen de solo lectura con referencias a cada archivo.
+
+No hay archivos adjuntos al incidente.
+
+Los archivos aparecerán aquí cuando se suban a las diferentes secciones.
+
+
+FORMATO SUGERIDO 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyst's Notebook - Final Version</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        body { font-family: 'Inter', sans-serif; background-color: #0c111d; }
+        .main-container { display: grid; grid-template-columns: 260px 1fr; height: calc(100vh - 120px); }
+        .nav-link { display: flex; align-items: center; padding: 0.75rem 1.25rem; border-radius: 0.375rem; color: #9ca3af; font-weight: 500; transition: background-color 0.2s, color 0.2s; border-left: 3px solid transparent; }
+        .nav-link:hover { background-color: #374151; color: #e5e7eb; }
+        .nav-link.active { background-color: #1f2937; color: #ffffff; border-left-color: #4f46e5; }
+        .content-view { display: none; animation: fadeIn 0.4s ease-out; }
+        .content-view.active { display: block; }
+        .form-label { color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.5rem; display: block; }
+        .form-input, .form-select, .form-textarea { background-color: #1f2937; border: 1px solid #374151; color: #f9fafb; border-radius: 0.375rem; width: 100%; padding: 0.75rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5); }
+        .slide-panel { animation: slideInRight 0.3s ease-out; }
+        .btn-ai { background-color: #6d28d9; color: white; }
+        .btn-ai:hover { background-color: #5b21b6; }
+        .loader { border: 2px solid #374151; border-top: 2px solid #4f46e5; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <header class="p-4 sm:p-6 flex justify-between items-center bg-[#111827] border-b border-gray-700">
+        <div>
+            <h1 class="text-2xl font-bold text-white">Cuaderno de Analista de Incidentes</h1>
+            <p class="text-gray-400">ID: CSIRT-2025-07-59</p>
+        </div>
+        <button class="btn bg-indigo-600 hover:bg-indigo-700 text-white"><i class="fa-solid fa-save mr-2"></i>Guardar Incidente</button>
+    </header>
+
+    <div class="main-container">
+        <!-- Navegación Vertical -->
+        <aside id="main-nav" class="bg-[#111827] p-4 overflow-y-auto">
+            <nav class="space-y-2">
+                <a href="#" class="nav-link active" data-view="identificacion"><i class="fa-solid fa-flag fa-fw mr-3"></i>Identificación General</a>
+                <a href="#" class="nav-link" data-view="descripcion"><i class="fa-solid fa-align-left fa-fw mr-3"></i>Descripción y Alcance</a>
+                <a href="#" class="nav-link" data-view="analisis"><i class="fa-solid fa-magnifying-glass fa-fw mr-3"></i>Análisis Preliminar</a>
+                <a href="#" class="nav-link" data-view="clasificacion"><i class="fa-solid fa-tags fa-fw mr-3"></i>Clasificación de Taxonomías</a>
+                <a href="#" class="nav-link" data-view="acciones"><i class="fa-solid fa-shield-halved fa-fw mr-3"></i>Acciones Inmediatas</a>
+                <a href="#" class="nav-link" data-view="analisis-final"><i class="fa-solid fa-vial-circle-check fa-fw mr-3"></i>Análisis Final y Mejoras</a>
+                <a href="#" class="nav-link" data-view="resumen-archivos"><i class="fa-solid fa-folder-open fa-fw mr-3"></i>Resumen de Archivos</a>
+            </nav>
+        </aside>
+
+        <!-- Área de Contenido Principal -->
+        <main id="content-area" class="p-6 overflow-y-auto">
+            <!-- Vista 1: Identificación -->
+            <div id="view-identificacion" class="content-view active">
+                <h2 class="text-2xl font-bold mb-6 text-white">1. Identificación General</h2>
+                <div class="max-w-3xl space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="tipo-registro" class="form-label">Tipo de Registro del Incidente</label>
+                            <select id="tipo-registro" class="form-select"><option selected>Informativo (Registro simple)</option></select>
+                        </div>
+                        <div>
+                            <label for="titulo" class="form-label">Título del Incidente *</label>
+                            <input type="text" id="titulo" class="form-input" value="Incidente registrado automáticamente">
+                        </div>
+                        <div>
+                            <label for="deteccion" class="form-label">Fecha y Hora de Detección *</label>
+                            <input type="datetime-local" id="deteccion" class="form-input" value="2025-07-10T10:49">
+                        </div>
+                        <div>
+                            <label for="ocurrencia" class="form-label">Fecha y Hora de Ocurrencia</label>
+                            <input type="datetime-local" id="ocurrencia" class="form-input" value="2025-07-09T06:49">
+                        </div>
+                        <div>
+                            <label for="criticidad" class="form-label">Criticidad *</label>
+                            <select id="criticidad" class="form-select"><option selected>Media</option></select>
+                        </div>
+                        <div>
+                            <label for="alcance" class="form-label">Alcance Geográfico</label>
+                            <select id="alcance" class="form-select"><option selected>Regional</option></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Vista 2: Descripción y Alcance -->
+            <div id="view-descripcion" class="content-view">
+                <h2 class="text-2xl font-bold mb-6 text-white">2. Descripción y Alcance</h2>
+                 <div class="max-w-3xl space-y-6">
+                    <div>
+                        <label for="desc-detallada" class="form-label">Descripción Inicial Detallada *</label>
+                        <textarea id="desc-detallada" class="form-textarea" rows="4">Descripción generada automáticamente para incidente.</textarea>
+                    </div>
+                     <div>
+                        <label for="impacto-preliminar" class="form-label">Impacto Preliminar Observado</label>
+                        <textarea id="impacto-preliminar" class="form-textarea" rows="3"></textarea>
+                    </div>
+                     <div>
+                        <label for="sistemas-afectados" class="form-label">Sistemas, Activos o Personal Afectado *</label>
+                        <textarea id="sistemas-afectados" class="form-textarea" rows="3"></textarea>
+                    </div>
+                     <div>
+                        <label for="servicios-interrumpidos" class="form-label">Servicios Interrumpidos y Duración</label>
+                        <input type="text" id="servicios-interrumpidos" class="form-input">
+                    </div>
+                    <div class="evidence-module-container" data-module="descripcion"></div>
+                </div>
+            </div>
+            <!-- Vista 3: Análisis -->
+            <div id="view-analisis" class="content-view">
+                 <h2 class="text-2xl font-bold mb-6 text-white">3. Análisis Preliminar</h2>
+                 <div class="max-w-3xl space-y-6">
+                    <div>
+                        <label for="tipo-amenaza" class="form-label">Tipo de Amenaza Probable</label>
+                        <input type="text" id="tipo-amenaza" class="form-input">
+                    </div>
+                     <div>
+                        <label for="origen-ataque" class="form-label">Origen / Vector de Ataque Probable *</label>
+                        <input type="text" id="origen-ataque" class="form-input">
+                    </div>
+                     <div>
+                        <label for="responsable-cliente" class="form-label">Responsable del Cliente</label>
+                        <input type="text" id="responsable-cliente" class="form-input">
+                    </div>
+                    <div class="evidence-module-container" data-module="analisis"></div>
+                </div>
+            </div>
+            <!-- Vista 4: Clasificación de Taxonomías -->
+            <div id="view-clasificacion" class="content-view relative">
+                 <h2 class="text-2xl font-bold mb-6 text-white">4. Clasificación de Taxonomías</h2>
+                 <div class="bg-gray-800/50 p-5 rounded-lg border border-gray-700 mb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                        <div class="flex-grow">
+                            <label for="taxonomia-select" class="form-label">Seleccione una taxonomía para gestionar</label>
+                            <select id="taxonomia-select" class="form-select"></select>
+                        </div>
+                    </div>
+                </div>
+                <div id="taxonomy-workspace" class="bg-gray-800/50 p-5 rounded-lg border border-gray-700">
+                    <!-- El workspace de la taxonomía seleccionada se cargará aquí -->
+                </div>
+            </div>
+            <!-- Vista 5: Acciones Inmediatas -->
+            <div id="view-acciones" class="content-view">
+                <h2 class="text-2xl font-bold mb-6 text-white">5. Acciones Inmediatas</h2>
+                <div class="max-w-3xl space-y-6">
+                    <div>
+                        <label for="medidas-contencion" class="form-label">Medidas de Contención Iniciales *</label>
+                        <textarea id="medidas-contencion" class="form-textarea" rows="6"></textarea>
+                    </div>
+                    <div class="evidence-module-container" data-module="acciones"></div>
+                </div>
+            </div>
+            <!-- Vista 6: Análisis Final y Mejoras -->
+            <div id="view-analisis-final" class="content-view">
+                <h2 class="text-2xl font-bold mb-6 text-white">6. Análisis Final y Mejoras</h2>
+                <div class="max-w-3xl space-y-6">
+                    <div>
+                        <label for="causa-raiz" class="form-label">Causa Raíz Identificada</label>
+                        <textarea id="causa-raiz" class="form-textarea" rows="4"></textarea>
+                    </div>
+                     <div>
+                        <label for="lecciones-aprendidas" class="form-label">Lecciones Aprendidas</label>
+                        <textarea id="lecciones-aprendidas" class="form-textarea" rows="4"></textarea>
+                    </div>
+                    <div>
+                        <label for="plan-mejora" class="form-label">Plan de Mejora</label>
+                        <div class="relative">
+                            <textarea id="plan-mejora" class="form-textarea" rows="4"></textarea>
+                            <button class="btn btn-ai btn-sm absolute top-2 right-2" onclick="suggestImprovementPlan(this)">
+                                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>✨ Sugerir
+                            </button>
+                        </div>
+                    </div>
+                    <div class="evidence-module-container" data-module="analisis-final"></div>
+                </div>
+            </div>
+             <!-- Vista 7: Resumen de Archivos -->
+            <div id="view-resumen-archivos" class="content-view">
+                <h2 class="text-2xl font-bold mb-6 text-white">7. Resumen de Archivos del Incidente</h2>
+                <p class="text-gray-400 mb-6 max-w-4xl">Listado completo de solo lectura de todas las evidencias asociadas al incidente.</p>
+                <div id="summary-evidence-list" class="space-y-4"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Plantillas Ocultas -->
+    <template id="taxonomy-workspace-template">
+        <div>
+            <h3 class="text-lg font-semibold text-white mb-4 title-text"></h3>
+            <textarea class="form-textarea comment-box" rows="4" placeholder="Escriba aquí un comentario general para esta taxonomía..."></textarea>
+            <div class="mt-6">
+                <button class="btn btn-secondary btn-sm" onclick="addFileToTaxonomy(this)">
+                    <i class="fa-solid fa-plus mr-2"></i>Agregar Evidencia a esta Taxonomía
+                </button>
+                <input type="file" class="hidden" onchange="handleTaxonomyFileSelect(this)">
+            </div>
+            <div class="mt-6 overflow-x-auto">
+                <table class="min-w-full text-sm text-left">
+                    <thead class="bg-gray-700/50">
+                        <tr>
+                            <th scope="col" class="px-4 py-3 font-medium">Nombre archivo</th>
+                            <th scope="col" class="px-4 py-3 font-medium">Comentario del archivo</th>
+                            <th scope="col" class="px-4 py-3 font-medium">Fecha y hora subida</th>
+                            <th scope="col" class="px-4 py-3 text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="evidence-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="evidence-module-template">
+        <div class="mt-6">
+            <h3 class="font-semibold text-lg mb-4 text-white border-t border-gray-700 pt-6">Evidencias de la Sección</h3>
+            <div class="evidence-list space-y-3"></div>
+            <button class="btn btn-secondary btn-sm mt-4" onclick="addFileToModule(this)">
+                <i class="fa-solid fa-plus mr-2"></i>Agregar Archivo
+            </button>
+            <input type="file" class="hidden" onchange="handleFileSelect(this)">
+        </div>
+    </template>
+    
+<script>
+// --- SIMULACIÓN DE DATOS ---
+const allTaxonomies = [
+    { id: "INC_USO_PHIP_ECDP", title: "Envío de correo no deseado o phishing desde infraestructura propia", category: "Actividades de phishing o fraude en infraestructura propia" },
+    { id: "INC_USO_PHIP_ISFI", title: "Inclusión de sitio fraudulento en infraestructura propia", category: "Actividades de phishing o fraude en infraestructura propia" },
+    { id: "INC_USO_PHRI_ECSO", title: "Envío de correo no deseado o phishing sobre una organización", category: "Actividades de phishing o fraude relacionadas con la institución" },
+    { id: "INC_USO_PHRI_ECUR", title: "Envío de correo no deseado o phishing usando remitentes de la institución", category: "Actividades de phishing o fraude relacionadas con la institución" },
+    { id: "INC_USO_EJNA_ERCA", title: "Ejecución remota de código a través de parámetros de aplicación", category: "Ejecución no autorizada de código" },
+    { id: "INC_USO_EJNA_ICNQ", title: "Inyección de consultas NoSQL", category: "Ejecución no autorizada de código" },
+    { id: "INC_USO_EJNA_ICSL", title: "Inyección de consultas SQL", category: "Ejecución no autorizada de código" },
+    { id: "INC_USO_EJNA_IRLL", title: "Inyección de requerimientos (prompts) en modelos grandes de lenguaje (LLM)", category: "Ejecución no autorizada de código" },
+    { id: "INC_USO_UNRI_ACNA", title: "Acceso no autorizado a almacenamiento", category: "Uso no autorizado de redes y sistemas informáticos" },
+    { id: "INC_USO_UNRI_AFBE", title: "Ataque de fuerza bruta exitoso", category: "Uso no autorizado de redes y sistemas informáticos" },
+    { id: "INC_USO_UNRI_EXVA", title: "Explotación de vulnerabilidades de autenticación", category: "Uso no autorizado de redes y sistemas informáticos" },
+    { id: "INC_USO_UNRI_USCC", title: "Uso de credenciales comprometidas", category: "Uso no autorizado de redes y sistemas informáticos" },
+    { id: "INC_CONF_EXCS_ACVE", title: "Archivo(s) de control de versión expuestos en aplicación", category: "Exfiltración y/o exposición de código fuente" },
+    { id: "INC_CONF_EXCS_SCVE", title: "Sistema de control de versión expuesto", category: "Exfiltración y/o exposición de código fuente" },
+    { id: "INC_CONF_EXCF_FCRA", title: "Filtración de configuraciones en rutas de aplicación", category: "Exfiltración y/o exposición de configuraciones" },
+    { id: "INC_CONF_EXCF_FSRA", title: "Filtración de secretos en rutas de aplicación", category: "Exfiltración y/o exposición de configuraciones" },
+    { id: "INC_CONF_EXDA_ADVM", title: "Adversario en el medio (MitM)", category: "Exfiltración y/o exposición de datos" },
+    { id: "INC_CONF_EXDA_ACMP", title: "Apropiación de credenciales mediante phishing", category: "Exfiltración y/o exposición de datos" },
+    { id: "INC_CONF_EXDA_DPDS", title: "Documentos públicos con datos sensibles", category: "Exfiltración y/o exposición de datos" },
+    { id: "INC_CONF_EXDA_FDP", title: "Filtración de datos personales", category: "Exfiltración y/o exposición de datos" },
+    { id: "INC_CONF_EXDA_KEYL", title: "Keylogger en uso", category: "Exfiltración y/o exposición de datos" },
+    { id: "INC_DISP_DEGS_SDRC", title: "Secuestro de recursos (cryptojacking)", category: "Degradación de servicio" },
+    { id: "INC_DISP_DEGS_SOBD", title: "Sobrecarga de bases de datos", category: "Degradación de servicio" },
+    { id: "INC_DISP_DEGS_UEAB", title: "Uso excesivo de ancho de banda", category: "Degradación de servicio" },
+    { id: "INC_DISP_INDS_ACT", title: "Agotamiento de conexiones TCP", category: "Indisponibilidad y/o denegación de servicio" },
+    { id: "INC_DISP_INDS_ANSI", title: "Apagado no autorizado de sistemas informáticos", category: "Indisponibilidad y/o denegación de servicio" },
+    { id: "INC_DISP_INDS_AADN", title: "Ataque de amplificación DNS/NTP", category: "Indisponibilidad y/o denegación de servicio" },
+    { id: "INC_DISP_INDS_DSEV", title: "Denegación de servicio a través de la explotación de vulnerabilidades", category: "Indisponibilidad y/o denegación de servicio" },
+    { id: "INC_DISP_INDS_ELCC", title: "Eliminación de configuraciones críticas", category: "Indisponibilidad y/o denegación de servicio" },
+    { id: "INC_INTG_MNAC_ALRF", title: "Alteración de reglas de firewall", category: "Manipulación no autorizada de configuración" },
+    { id: "INC_INTG_MNAC_DRDS", title: "Desactivación de registros de seguridad", category: "Manipulación no autorizada de configuración" },
+    { id: "INC_INTG_MNAC_MPDA", title: "Modificación de políticas de acceso", category: "Manipulación no autorizada de configuración" },
+    { id: "INC_INTG_MNDA_ALBD", title: "Alteración de bases de datos", category: "Modificación no autorizada de datos" },
+    { id: "INC_INTG_MNDA_ALSW", title: "Alteración de sitio web (defacement)", category: "Modificación no autorizada de datos" },
+    { id: "INC_INTG_MNDA_MDNA", title: "Manipulación de datos no autentificados", category: "Modificación no autorizada de datos" },
+    { id: "INC_PSE_PAGO_FRAUD", title: "Transacciones fraudulentas", category: "Fraude en transacciones" },
+    { id: "INC_PSE_PAGO_LAVAN", title: "Uso del sistema para lavado de activos", category: "Lavado de dinero" },
+    { id: "INC_PSE_PAGO_SKIMM", title: "Clonación de tarjetas de pago", category: "Skimming de tarjetas" }
+];
+
+let dataStore = {
+    taxonomies: {
+        "INC_USO_UNRI_AFBE": { comment: "Comentario general sobre fuerza bruta.", files: [] },
+        "INC_CONF_EXDA_FDP": { comment: "", files: [{ id: `ev-tax-1`, name: "leaked_data_sample.csv", description: "Muestra de los datos filtrados.", timestamp: "10-07-2025 15:01:10" }] }
+    },
+    evidences: {
+        'descripcion': [],
+        'analisis': [{ id: `ev-mod-1`, name: "firewall_log.txt", description: "Logs del firewall perimetral.", timestamp: "10-07-2025 14:15:30" }],
+        'acciones': [],
+        'analisis-final': []
+    }
+};
+
+// --- LÓGICA DEL FORMULARIO ---
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-link, .content-view').forEach(el => el.classList.remove('active'));
+        link.classList.add('active');
+        document.getElementById(`view-${link.dataset.view}`).classList.add('active');
+        if (link.dataset.view === 'clasificacion') {
+            initializeTaxonomyWorkspace();
+        }
+        if (link.dataset.view === 'resumen-archivos') {
+            renderEvidenceSummary();
+        }
+    });
+});
+
+// --- LÓGICA DE CLASIFICACIÓN DE TAXONOMÍAS ---
+function initializeTaxonomyWorkspace() {
+    const select = document.getElementById('taxonomia-select');
+    select.innerHTML = '';
+    allTaxonomies.forEach(tax => {
+        const option = document.createElement('option');
+        option.value = tax.id;
+        option.textContent = tax.title;
+        select.appendChild(option);
+    });
+    select.onchange = displaySelectedTaxonomy;
+    displaySelectedTaxonomy();
+}
+
+function displaySelectedTaxonomy() {
+    const select = document.getElementById('taxonomia-select');
+    const taxonomyId = select.value;
+    const tax = allTaxonomies.find(t => t.id === taxonomyId);
+    const data = dataStore.taxonomies[taxonomyId] || { comment: '', files: [] };
+    
+    const workspace = document.getElementById('taxonomy-workspace');
+    const template = document.getElementById('taxonomy-workspace-template');
+    workspace.innerHTML = '';
+    const clone = template.content.cloneNode(true);
+
+    clone.querySelector('.title-text').textContent = tax.title;
+    clone.querySelector('.comment-box').value = data.comment;
+    clone.querySelector('.comment-box').onchange = (e) => { data.comment = e.target.value; };
+
+    workspace.appendChild(clone);
+    renderTaxonomyEvidenceTable(taxonomyId);
+}
+
+function renderTaxonomyEvidenceTable(taxonomyId) {
+    const tableBody = document.querySelector('#taxonomy-workspace .evidence-table-body');
+    tableBody.innerHTML = '';
+    const files = dataStore.taxonomies[taxonomyId].files;
+
+    if (files.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="4" class="text-center text-gray-500 py-4">No hay evidencias para esta taxonomía.</td></tr>`;
+        return;
+    }
+
+    files.forEach((file, index) => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-gray-700';
+        row.innerHTML = `
+            <td class="px-4 py-3 font-medium">${file.name}</td>
+            <td class="px-4 py-3">
+                <input type="text" class="form-input text-xs" placeholder="Añadir comentario..." value="${file.description}" onchange="updateTaxonomyFileDescription('${taxonomyId}', ${index}, this.value)">
+            </td>
+            <td class="px-4 py-3 text-gray-400">${file.timestamp}</td>
+            <td class="px-4 py-3 text-right flex items-center justify-end gap-2">
+                 <button class="text-green-500 hover:text-green-400" onclick="updateTaxonomyFileDescription('${taxonomyId}', ${index}, this.parentElement.previousElementSibling.previousElementSibling.querySelector('input').value, true)" title="Guardar Comentario">
+                    <i class="fa-solid fa-save"></i>
+                </button>
+                <button class="text-blue-500 hover:text-blue-400" onclick="viewEvidence('${file.id}')" title="Visualizar Archivo"><i class="fa-solid fa-eye"></i></button>
+                <button class="text-red-500 hover:text-red-400" onclick="deleteTaxonomyFile('${taxonomyId}', ${index})"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+function addFileToTaxonomy(button) {
+    button.nextElementSibling.click();
+}
+
+function handleTaxonomyFileSelect(fileInput) {
+    const taxonomyId = document.getElementById('taxonomia-select').value;
+    const now = new Date();
+    const formattedDateTime = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    for (const file of fileInput.files) {
+        dataStore.taxonomies[taxonomyId].files.push({
+            id: `ev-tax-${Date.now()}-${Math.random()}`,
+            name: file.name,
+            description: "",
+            timestamp: formattedDateTime
+        });
+    }
+    renderTaxonomyEvidenceTable(taxonomyId);
+    fileInput.value = '';
+}
+
+function updateTaxonomyFileDescription(taxonomyId, index, description, showAlert = false) {
+    dataStore.taxonomies[taxonomyId].files[index].description = description;
+    if (showAlert) alert('Comentario guardado.');
+}
+
+function deleteTaxonomyFile(taxonomyId, index) {
+    dataStore.taxonomies[taxonomyId].files.splice(index, 1);
+    renderTaxonomyEvidenceTable(taxonomyId);
+}
+
+
+// --- LÓGICA DE EVIDENCIAS POR MÓDULO ---
+function renderEvidenceModule(container) {
+    const moduleName = container.dataset.module;
+    const template = document.getElementById('evidence-module-template');
+    const clone = template.content.cloneNode(true);
+    container.appendChild(clone);
+    renderEvidenceListForModule(moduleName);
+}
+
+function renderEvidenceListForModule(moduleName) {
+    const container = document.querySelector(`.evidence-module-container[data-module="${moduleName}"] .evidence-list`);
+    if (!container) return;
+    container.innerHTML = '';
+    const evidences = dataStore.evidences[moduleName] || [];
+    if (evidences.length === 0) {
+        container.innerHTML = `<p class="text-xs text-gray-500">No hay archivos para esta sección.</p>`;
+        return;
+    }
+    evidences.forEach((evidence, index) => {
+        const div = document.createElement('div');
+        div.className = 'bg-gray-800 p-2 rounded-md flex items-center gap-3 text-sm';
+        div.innerHTML = `
+            <i class="fa-solid fa-file-lines text-gray-400"></i>
+            <span class="text-white flex-grow">${evidence.name}</span>
+            <input type="text" class="form-input text-xs flex-grow" placeholder="Descripción..." value="${evidence.description || ''}" onchange="updateModuleEvidenceDescription('${moduleName}', ${index}, this.value)">
+            <button class="text-green-500 hover:text-green-400 px-2" onclick="updateModuleEvidenceDescription('${moduleName}', ${index}, this.parentElement.querySelector('input').value, true)" title="Guardar Comentario"><i class="fa-solid fa-save"></i></button>
+            <button class="text-blue-500 hover:text-blue-400 px-2" onclick="viewEvidence('${evidence.id}')" title="Visualizar Archivo"><i class="fa-solid fa-eye"></i></button>
+            <button class="text-red-500 hover:text-red-400" onclick="deleteModuleEvidence('${moduleName}', ${index})"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function addFileToModule(buttonElement) {
+    buttonElement.nextElementSibling.click();
+}
+
+function handleFileSelect(fileInput) {
+    const moduleName = fileInput.closest('.evidence-module-container').dataset.module;
+    const now = new Date();
+    const formattedDateTime = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+    for (const file of fileInput.files) {
+        dataStore.evidences[moduleName].push({
+            id: `ev-mod-${Date.now()}-${Math.random()}`,
+            name: file.name,
+            description: "",
+            timestamp: formattedDateTime
+        });
+    }
+    renderEvidenceListForModule(moduleName);
+    fileInput.value = '';
+}
+
+function deleteModuleEvidence(moduleName, index) {
+    dataStore.evidences[moduleName].splice(index, 1);
+    renderEvidenceListForModule(moduleName);
+}
+
+function updateModuleEvidenceDescription(moduleName, index, description, showAlert = false) {
+    dataStore.evidences[moduleName][index].description = description;
+    if (showAlert) alert('Comentario guardado.');
+}
+
+function renderEvidenceSummary() {
+    const listContainer = document.getElementById('summary-evidence-list');
+    listContainer.innerHTML = '';
+    let hasEvidence = false;
+
+    const moduleMapping = {
+        'descripcion': '2. Descripción y Alcance',
+        'analisis': '3. Análisis Preliminar',
+        'acciones': '5. Acciones Inmediatas',
+        'analisis-final': '6. Análisis Final y Mejoras',
+        'clasificacion': '4. Clasificación de Taxonomías'
+    };
+    
+    // Render modular evidences
+    Object.entries(dataStore.evidences).forEach(([moduleName, evidences]) => {
+        if (evidences.length > 0) {
+            hasEvidence = true;
+            evidences.forEach(evidence => {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-800 border border-gray-700 rounded-lg p-4 flex items-start gap-4';
+                div.innerHTML = `
+                    <i class="fa-solid fa-file-lines text-3xl text-gray-500 mt-1"></i>
+                    <div class="flex-grow">
+                        <p class="font-semibold text-white">${evidence.name}</p>
+                        <p class="text-sm text-gray-300 italic mt-1">"${evidence.description || 'Sin descripción.'}"</p>
+                        <p class="text-xs text-gray-500 mt-2">Subido: ${evidence.timestamp}</p>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <p class="text-xs text-gray-500">Fuente del Módulo</p>
+                        <p class="font-semibold text-indigo-400">${moduleMapping[moduleName]}</p>
+                        <button class="btn btn-secondary btn-sm mt-2" onclick="viewEvidence('${evidence.id}')">
+                           <i class="fa-solid fa-eye mr-2"></i>Visualizar
+                        </button>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+    });
+
+    // Render taxonomy evidences
+    Object.entries(dataStore.taxonomies).forEach(([taxId, taxData]) => {
+        if (taxData.files && taxData.files.length > 0) {
+            hasEvidence = true;
+            const taxInfo = allTaxonomies.find(t => t.id === taxId);
+            taxData.files.forEach(evidence => {
+                 const div = document.createElement('div');
+                div.className = 'bg-gray-800 border border-gray-700 rounded-lg p-4 flex items-start gap-4';
+                div.innerHTML = `
+                    <i class="fa-solid fa-file-lines text-3xl text-gray-500 mt-1"></i>
+                    <div class="flex-grow">
+                        <p class="font-semibold text-white">${evidence.name}</p>
+                        <p class="text-sm text-gray-300 italic mt-1">"${evidence.description || 'Sin descripción.'}"</p>
+                        <p class="text-xs text-gray-500 mt-2">Subido: ${evidence.timestamp}</p>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <p class="text-xs text-gray-500">Fuente: ${moduleMapping['clasificacion']}</p>
+                        <p class="font-semibold text-indigo-400">${taxInfo.title}</p>
+                        <button class="btn btn-secondary btn-sm mt-2" onclick="viewEvidence('${evidence.id}')">
+                           <i class="fa-solid fa-eye mr-2"></i>Visualizar
+                        </button>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+    });
+
+    if (!hasEvidence) {
+        listContainer.innerHTML = `<p class="text-center text-gray-500">No hay evidencias cargadas en ninguna sección.</p>`;
+    }
+}
+
+function viewEvidence(evidenceId) {
+    alert(`Simulando la visualización de la evidencia con ID: ${evidenceId}`);
+}
+
+// Carga inicial
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.evidence-module-container').forEach(container => {
+        renderEvidenceModule(container);
+    });
+});
+</script>
+</body>
+</html>
+

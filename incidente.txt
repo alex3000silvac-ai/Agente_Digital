@@ -1,0 +1,109 @@
+-Diseño e ingeniería modulo de Incidentes
+-
+-Reglas Generales
+-
+-Utiliza el layout para el registro de incidentes tipo acordeon, la primera vez que se carga y se graba se llama semilla Original. Cuando se graba y se cierra y luego se vuelve a abrir se llama Semilla Base.
+-
+-Este es uno de los modulos mas problemáticos, por tanto debe estar contenido en un .py separado.  Para funcionar se deben seguir las siguientes reglas :
+-
+-a.- Cuando se carga por primera vez se genera un índice único, que acompañara toda la vida del incidente, este índice debe ser con la nomenclatura
+-
+-String :
+-
+-NRO CORRELATIVO INCREMENTAL
+-RUT EMPRESA SIN DIGITO VERIFICADOR
+-NUMERO DEL MODULO
+-NUMERO DEL SUB MODULO
+-DESCRIPCION DEL CUADRO DE DIALOGO O RUTA Y NOMBRE DEL ARCHIVO
+-
+-- Este índice se debe grabar cada vez que se crea un incidente
+-- Este indice se utiliza de referencia cada vez que se edita un incidente
+-- Todos los datos se mantienen en un archivo temporal mientras se edita el incidente, sino se graba o se sale por accidente o se interrumpe el programa, se trabaja con el indice original
+-- Los archivos y el indice se guardan en carpetas upload separadas segun normas de ciberseguridad
+-- El indice y demas datos excepto archivos se guardan en la base de datos
+-- El sistema es multitenan
+-- Cuando se genere la edicion se debe considerar este indice como unico referencia de carga, al editar el despliegue de este incidente se debe construir a partir del indice
+-
+-
+-Titulos
+-Registro Incidente Gestion Ley ciberseguridad 21.663.-
+-Nombre Empresa, tipo de empresa, Nombre Inquilino al que
+-
+-Contenido del Modulo
+-
+-1.- Identificación General
+-
+-1.1.- Tipo de registro del Incidente *
+-1.2.- Titulo del Incidente *
+-1.3.- Fecha y hora de Detección *
+-1.4.- Fecha y hora de ocurrencia *
+-1.5.- Criticidad *
+-1.6.- Alcance Geográfico
+-
+-2.- Descripción y Alcance
+-
+-2.1.- Descripción inicial detallada *
+-2.2.- Impacto Preliminar Observado *
+-2.3.- Sistemas, activos o personal afectado *
+-2.4.- Servicios interrumpidos y duración *
+-
+-2.5.- subir evidencias - descripción
+-
+-3.- Análisis Preliminar
+-
+-3.1.- Tipo Amenaza Probable *
+-3.2.- Origen/vector de ataque probable *
+-3.3.- Responsable del cliente - Se refiere a la persona que tiene mayores antecedentes del evento
+-3.4.- subir evidencias - descripción
+-
+-Subir evidencias puede incrementarse por la cantidad de archivos que se suban, por ejemplo 3.4.1 archivo primer archivo 3.4.2 archivo dos 3.4.3 archivo 3 y asi sucesivamente
+-
+-
+-4.- Clasificación de Taxonomías
+-
+-4.1.- Selección de taxonomía (viene de la tabla taxonomia_incidentes) , se despliegan dependiendo del tipo de empresa si es OIV o PSE, para este criterio, la tabla contiene como tipo OIV, PSE o AMBAS.
+-
+-Se despliegan todas las taxonomías y el usuario puede elegir una o varias, una vez seleccionada
+-
+-4.2.- ¿Por qué fue seleccionada esta taxonomía? *
+-4.3.- Observaciones Adicionales
+-4.4.- Subir evidencias - Descripción
+-
+-
+-Del punto 4.2 a 4.4 se puede repetir tantas veces como taxonomías seleccione el usuario, cada una de ellas es una entidad individual.
+-
+-como son varias taxonomías, podemos tener por ejemplo :
+-
+-4.2.1 por taxonomía numero 1 de la selección
+-4.2.2 por texto de porque fue seleccionada esta taxonomia
+-4.2.3 por observaciones adicionales
+-4.2.4 por las evidencias que contiene la referencia del archivos, comentarios y fecha. Importante, este concepto se convierte en 4.2.4.1 para el archivo uno, 4.2.4.2 archivo 2 y asi sucesivamente según la cantidad de archivos que se suban
+-
+-
+-5.- Acciones Inmediatas (Requerido para OIV/PSE)
+-
+-5.1.- Medidas de contención Iniciales *
+-5.2.- Evidencia Acciones que corresponde a subir evidencias - descripción
+-
+-Subir evidencias puede incrementarse por la cantidad de archivos que se suban, por ejemplo 5.2.1 archivo primer archivo 5.2.2 archivo dos 5.2.3 archivo 3 y asi sucesivamente
+-
+-
+-6.- Análisis de Causa Raíz
+-
+-6.1.- Análisis de Causa Raiz (OIV/PSE) *
+-6.2.- Lecciones aprendidas
+-6.3.- Recomendaciones de mejora
+-6.4.- Subir Evidencias - Descripción
+-
+-Subir evidencias puede incrementarse por la cantidad de archivos que se suban, por ejemplo 6.4.1 archivo primer archivo 6.4.2 archivo dos 6.4.3 archivo 3 y asi sucesivamente
+-
+-
+-7.- Resumen de todos los archivos
+-
+-Corresponde al listado de todos los archivos cargados en el incidente y tiene esta estructura
+-
+-Sub Modulo     Item dentro del Modulo          Nombre Archivo          Descripción     Fecha de Carga  Opción de verlo
+-
+-
+-
+-

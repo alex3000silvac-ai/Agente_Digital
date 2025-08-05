@@ -1,0 +1,172 @@
+﻿Guía Exhaustiva para el Reporte de Incidentes a la ANCI: Protocolos Oficiales y Mandatos de Cumplimiento al 17 de Julio de 2025
+
+
+Sección I: Panorama Estratégico de las Obligaciones de Reporte a la ANCI
+
+
+A. Introducción: El Nuevo Paradigma del Reporte Obligatorio
+
+Los requisitos de reporte de incidentes a la Agencia Nacional de Ciberseguridad e Infraestructura (ANCI) representan una evolución fundamental en la estrategia de seguridad nacional. Lejos de ser una formalidad burocrática, estas obligaciones constituyen un pilar central en la defensa del ciberespacio y la protección de la infraestructura crítica del país. El marco regulatorio actual transforma el cumplimiento de una actividad pasiva y reactiva a una medida activa y en tiempo real de la resiliencia, preparación y responsabilidad de una organización. Comprender y ejecutar estos protocolos no es solo una cuestión de cumplimiento normativo, sino un imperativo estratégico para cualquier entidad que opere dentro de los sectores designados como críticos.
+
+B. Resumen Ejecutivo de Obligaciones y Riesgos Clave
+
+Este informe proporciona un análisis detallado del marco regulatorio y los procedimientos operativos para el reporte de incidentes a la ANCI, con un enfoque en las normativas vigentes al 17 de julio de 2025. Los puntos clave para el liderazgo ejecutivo son los siguientes:
+●	Mandato Legal: La obligación de reportar emana de la Ley 27.998 de Ciberseguridad y Protección de Infraestructuras Críticas y el Decreto Presidencial 305/2023 que establece formalmente la ANCI.
+●	Alcance de la Regulación: El reporte es mandatorio para todas las organizaciones, públicas y privadas, que operen dentro de los sectores de infraestructura crítica designados por la ley.
+●	Proceso de Notificación: El sistema de reporte se estructura en múltiples etapas con plazos extremadamente agresivos, diseñados para proporcionar a la ANCI una visibilidad temprana y un análisis detallado de los incidentes significativos y críticos.
+●	Consecuencias del Incumplimiento: El no cumplimiento, incluyendo reportes tardíos o materialmente falsos, conlleva sanciones severas. Estas pueden incluir multas de hasta el 1% de la facturación global anual de la entidad y la suspensión de operaciones.
+●	Nuevos Estándares de Reporte: A partir del 1 de julio de 2025, entraron en vigor nuevos requisitos de reporte que imponen cargas analíticas y de recopilación de datos significativamente mayores, especialmente en las áreas de análisis forense y cuantificación financiera del impacto.
+
+C. Propósito y Estructura de este Informe
+
+Este documento está diseñado para servir como una guía integral para los oficiales de cumplimiento, equipos de respuesta a incidentes, asesores legales y la alta dirección. Su estructura progresa lógicamente desde los fundamentos legales y jurisdiccionales hacia una guía procedimental detallada y un análisis de los riesgos estratégicos. El objetivo es proporcionar no solo el "qué" y el "cómo" del cumplimiento, sino también el "porqué" detrás de los requisitos, permitiendo a las organizaciones desarrollar programas de reporte que sean tanto conformes como defendibles.
+
+Sección II: El Marco Regulatorio de la ANCI: Jurisdicción y Mandato
+
+
+A. La Génesis y Autoridad Legal de la ANCI
+
+Para comprender las obligaciones de reporte, es fundamental entender la base legal de la agencia que las impone. La Agencia Nacional de Ciberseguridad e Infraestructura (ANCI) fue constituida formalmente mediante el Decreto Presidencial 305/2023, consolidándola como un organismo del poder ejecutivo con un mandato claro y definido.
+La misión principal de la ANCI es la "protección de la infraestructura crítica nacional y la defensa del ciberespacio". Este mandato amplio le otorga a la agencia una latitud considerable para definir amenazas, establecer contramedidas y, crucialmente, exigir la cooperación del sector privado y público. La autoridad para imponer el reporte obligatorio de incidentes se deriva directamente de la "Ley de Ciberseguridad y Protección de Infraestructuras Críticas (Ley 27.998)". Esta ley faculta a la ANCI para establecer los mecanismos, formatos y plazos que considere necesarios para mantener una conciencia situacional a nivel nacional sobre las amenazas cibernéticas que afectan a los servicios esenciales.
+
+B. Alcance Jurisdiccional: Identificación de Entidades Reguladas
+
+Una pregunta crítica para cualquier organización es si se encuentra bajo el ámbito de competencia de la ANCI. La Ley 27.998 define explícitamente los sectores designados como "infraestructura crítica". La obligación de reportar se aplica a todas las entidades que operan dentro de estos sectores:
+●	Energía: Incluye la generación, transmisión y distribución de electricidad y combustibles.
+●	Finanzas: Abarca instituciones bancarias, mercados de valores, sistemas de pago y otras entidades financieras clave.
+●	Telecomunicaciones: Comprende proveedores de servicios de internet, telefonía fija y móvil, y operadores de redes troncales.
+●	Salud: Incluye hospitales, redes de laboratorios, sistemas de información sanitaria y cadenas de suministro farmacéutico.
+●	Transporte: Cubre sistemas de control de tráfico aéreo, redes ferroviarias, operaciones portuarias y logística de transporte terrestre.
+●	Sistemas de Agua: Engloba la potabilización, distribución y tratamiento de aguas residuales.
+Es importante destacar que la naturaleza de la jurisdicción de la ANCI es expansiva y puede evolucionar. La propia definición de "infraestructura crítica nacional" en la legislación es inherentemente flexible. A medida que la digitalización transforma otros sectores, como la cadena de suministro de alimentos, la manufactura avanzada o la gestión de ciudades inteligentes, es plausible que la ANCI pueda, mediante resoluciones futuras, ampliar su alcance para incluir nuevos sectores. Por lo tanto, las organizaciones en industrias adyacentes no deben asumir que están permanentemente exentas. Se recomienda una estrategia de monitoreo proactivo de las publicaciones y resoluciones oficiales de la ANCI para anticipar posibles expansiones de su jurisdicción.
+
+Sección III: Definición de Incidentes Reportables: Clasificación y Umbrales
+
+
+A. La Definición Oficial de un "Incidente Reportable"
+
+El gatillo que activa todas las obligaciones de reporte es la ocurrencia de un "incidente reportable". La definición oficial proporcionada por la ANCI es precisa y se basa en un estándar de seguridad de la información reconocido internacionalmente. Un incidente se define como "cualquier evento, ya sea de origen malicioso o accidental, que comprometa la confidencialidad, integridad o disponibilidad (tríada CIA) de los sistemas de información, redes o datos clasificados como críticos".
+●	Confidencialidad: Se refiere a la protección de la información contra la divulgación no autorizada. Un incidente que compromete la confidencialidad sería, por ejemplo, una brecha de datos que expone información sensible de clientes o secretos comerciales.
+●	Integridad: Se refiere a la protección de la información contra modificaciones no autorizadas. Un ataque de ransomware que cifra archivos o la alteración de registros en una base de datos son ejemplos de compromiso de la integridad.
+●	Disponibilidad: Se refiere a garantizar que los sistemas y datos estén accesibles para los usuarios autorizados cuando sea necesario. Un ataque de denegación de servicio (DDoS) que deja un sitio web o un servicio esencial fuera de línea es un claro ataque a la disponibilidad.
+
+B. El Sistema de Clasificación de Incidentes de Tres Niveles de la ANCI
+
+No todos los incidentes son iguales en su impacto. Para reflejar esto, la ANCI ha establecido un sistema de clasificación de tres niveles que determina la urgencia y el alcance de la respuesta y el reporte requeridos. La correcta clasificación de un incidente en el momento de su detección es el paso más crítico en el proceso de cumplimiento.
+●	Nivel 1 (Menor): Se definen como "incidentes de impacto localizado, con mínima o nula degradación del servicio y sin evidencia de exfiltración de datos sensibles". Un ejemplo típico sería la infección por malware de una única estación de trabajo que fue detectada y contenida inmediatamente por el software antivirus, sin propagarse a la red. Los incidentes de Nivel 1 no requieren reporte a la ANCI.
+●	Nivel 2 (Significativo): Corresponden a "incidentes con impacto operativo significativo, posible exfiltración de datos o interrupción limitada de servicios esenciales". Ejemplos incluyen un ataque de ransomware que afecta a los servidores de un departamento, causando una interrupción localizada del servicio, o una brecha de datos que afecta a un subconjunto de clientes pero no paraliza las operaciones principales de la entidad. Estos incidentes requieren un reporte en múltiples etapas.
+●	Nivel 3 (Crítico): Son los eventos más graves, definidos como "incidentes que causan una interrupción severa y generalizada de servicios esenciales, con un riesgo inminente para la seguridad pública, la economía nacional o la seguridad del Estado". Un ataque exitoso contra el sistema de control de la red eléctrica nacional, una brecha en el sistema de transacciones del banco central o un ataque que paralice los principales sistemas de telecomunicaciones del país caerían en esta categoría. Estos incidentes están sujetos a los plazos de reporte más estrictos.
+
+C. Tabla 1: Matriz de Clasificación de Incidentes y Protocolo de Reporte Correspondiente
+
+Para facilitar la toma de decisiones rápidas durante una crisis, la siguiente matriz sintetiza las reglas de clasificación y los protocolos de reporte asociados. Esta herramienta vincula directamente las características de un evento con el formulario y el plazo de notificación obligatorios.
+Nivel de Incidente	Características (según S_S6, S_S7, S_S8)	Alerta Temprana (ANCI-01)	Segundo Reporte (Actualización)	Informe Final
+Nivel 1 (Menor)	Impacto localizado, sin degradación del servicio.	No Requerido	No Requerido	No Requerido
+Nivel 2 (Significativo)	Impacto operativo significativo, interrupción limitada del servicio, posible brecha de datos.	Dentro de las 12 horas	Dentro de los 5 días hábiles	Dentro de los 15 días corridos (si está gestionado)
+Nivel 3 (Crítico)	Interrupción severa y generalizada, riesgo para la seguridad pública/nacional.	Dentro de las 2 horas	Dentro de las 72 horas (24h para OIV)	Dentro de los 15 días corridos (si está gestionado)
+
+Sección IV: Análisis de Formatos y Sistemas Oficiales de Reporte (Actualizado a Julio de 2025)
+
+
+A. El Portal SURI: La Vía de Sumisión Obligatoria
+
+Un cambio procesal fundamental es la centralización de todos los reportes a través de una única plataforma. A partir del 1 de enero de 2025, el "Sistema Unificado de Reporte de Incidentes (SURI)" se convirtió en el canal exclusivo para la presentación de los formularios ANCI-01 y ANCI-02. Las presentaciones manuales, por correo electrónico o por cualquier otro medio ya no se consideran conformes. Las organizaciones deben asegurarse de haber completado el proceso de registro en el portal SURI y de mantener actualizadas las credenciales de sus usuarios autorizados para evitar retrasos en el momento crítico de un incidente.
+
+B. Formulario ANCI-01: La Alerta Temprana
+
+El Formulario ANCI-01 está diseñado para proporcionar a la ANCI una alerta temprana y concisa sobre un incidente en curso. Su propósito es la velocidad y la conciencia situacional, no el detalle exhaustivo. Los campos clave de este formulario incluyen:
+●	Datos de identificación de la entidad reportante.
+●	Datos de contacto del delegado de ciberseguridad.
+●	Fecha y hora de toma de conocimiento del incidente.
+●	Activos y recursos potencialmente afectados.
+●	Taxonomía del incidente: Clasificación del evento según los "efectos observables" (ej. indisponibilidad de servicio, exposición de datos).
+●	Solicitud de Apoyo al CSIRT: Una casilla de selección para solicitar explícitamente el apoyo del CSIRT Nacional en la gestión del incidente.
+
+C. El Proceso de Reporte Detallado: Segundo Reporte, Informe Final e Informes Parciales
+
+A diferencia de la alerta inicial, el reporte detallado es un proceso de varias etapas que se completa a medida que la organización obtiene más información. Este proceso se gestiona a través del Formulario ANCI-02.
+●	Segundo Reporte (Actualización): Este es el primer seguimiento a la alerta temprana. Debe contener una actualización de la información inicial, una evaluación preliminar de la gravedad y el impacto del incidente, y los Indicadores de Compromiso (IoC) obtenidos hasta el momento.
+●	Informe Final: Se presenta una vez que el incidente ha sido contenido y el CSIRT lo ha declarado como "gestionado". Este informe es exhaustivo y debe incluir una descripción detallada del incidente, la causa principal, las medidas de mitigación aplicadas y en curso, y las posibles repercusiones transfronterizas.
+●	Informe Parcial: Si el incidente no se ha declarado como "gestionado" dentro del plazo de 15 días para el informe final, la entidad debe presentar un informe parcial sobre el estado de la situación y continuar actualizándolo hasta el cierre del caso.
+
+D. Actualización Crítica: Los Mandatos de la Resolución ANCI 45/2024 (Vigente desde el 1 de Julio de 2025)
+
+La consulta sobre los formatos actualizados al 17 de julio de 2025 es particularmente pertinente debido a la implementación de la Resolución ANCI 45/2024. Esta resolución, que entró en vigor el 1 de julio de 2025, introduce nuevos campos obligatorios en el Formulario ANCI-02 que aumentan significativamente la carga de análisis para las entidades reportantes.
+Análisis de los Nuevos Requisitos:
+1.	"Vector de Ataque Específico": Este nuevo campo requiere que la organización vaya más allá de una descripción general. Se debe seleccionar de una lista desplegable predefinida por la ANCI la clasificación técnica precisa del método de ataque. Las opciones incluyen, entre otras, Phishing, Malware (con subcategorías como Ransomware), Ataque de Denegación de Servicio (DDoS), Explotación de Vulnerabilidad y Amenaza Interna.
+2.	"Impacto Financiero Estimado": Este es quizás el cambio más consecuente. El campo exige una "cuantificación monetaria de las pérdidas directas e indirectas" asociadas al incidente. Esto incluye no solo los costos directos de remediación técnica, sino también los costos indirectos como el tiempo de inactividad operativa, la pérdida de ingresos, las posibles multas regulatorias y el daño reputacional.
+3.	"Notificación a Terceros Afectados": Este campo requiere una respuesta de "sí/no" y detalles sobre si otros stakeholders, como clientes, socios comerciales o sujetos de datos, han sido notificados del incidente.
+Estos nuevos requisitos no son meramente campos adicionales en un formulario; representan una directiva implícita de la ANCI para que las organizaciones desarrollen capacidades internas mucho más sofisticadas. Para identificar con precisión el "Vector de Ataque", se necesita un equipo de respuesta a incidentes con capacidades forenses maduras, incluyendo personal capacitado y herramientas adecuadas. Para calcular el "Impacto Financiero Estimado" de manera defendible, es indispensable una colaboración preestablecida entre los departamentos de TI, Finanzas y Operaciones, utilizando una metodología de cálculo de costos desarrollada antes de que ocurra una crisis. Finalmente, para responder correctamente sobre la "Notificación a Terceros", se debe contar con un plan de comunicación de crisis y una guía legal clara sobre las obligaciones de divulgación. En efecto, la ANCI está utilizando el formulario de reporte para auditar y forzar la maduración de los procesos internos de respuesta a incidentes de las entidades reguladas.
+
+E. Tabla 2: Historial de Revisiones y Cambios Clave en el Formulario ANCI-02 (Pre vs. Post 1 de Julio de 2025)
+
+La siguiente tabla ofrece una comparación directa de los requisitos del Formulario ANCI-02 antes y después de la implementación de la Resolución ANCI 45/2024, identificando los nuevos desafíos y los departamentos internos responsables.
+Sección del Formulario ANCI-02	Requisito Antes del 1 de Julio de 2025	Nuevo/Modificado Requisito Después del 1 de Julio de 2025 (según Res. 45/2024)	Departamento(s) Interno(s) Responsable(s)
+Análisis Técnico	Descripción general del ataque	Selección obligatoria del "Vector de Ataque Específico"	Seguridad de TI / Forense
+Evaluación de Impacto	Descripción cualitativa del impacto operativo	"Impacto Financiero Estimado" obligatorio	Finanzas / Operaciones / Riesgos
+Comunicación a Stakeholders	No requerido explícitamente	Campo obligatorio "Notificación a Terceros Afectados"	Legal / Cumplimiento / Comunicaciones
+
+Sección V: Guía Procedimental para una Sumisión Conforme
+
+
+A. El Cronograma de Reporte Multi-etapa: Un Recorrido Paso a Paso
+
+El cumplimiento del régimen de la ANCI depende de la adhesión estricta a un cronograma de múltiples etapas, cuyos plazos son inflexibles.
+●	Etapa 1: Alerta Temprana (Formulario ANCI-01): Esta etapa está dominada por una urgencia extrema. Para incidentes de Nivel 3, el formulario debe ser presentado a través del portal SURI en un plazo no mayor a 2 horas desde la detección. Para incidentes de Nivel 2, el plazo es de 12 horas.
+●	Etapa 2: Segundo Reporte (Actualización): Una vez realizada la notificación inicial, el reloj comienza a correr para el reporte de seguimiento. Para incidentes de Nivel 3, el reporte debe presentarse en un plazo de 72 horas (o 24 horas si la entidad es un Operador de Importancia Vital con un servicio esencial afectado). Para incidentes de Nivel 2, el plazo se extiende a 5 días hábiles.
+●	Etapa 3: Informe Final o Parcial: El Informe Final debe presentarse en un plazo de 15 días corridos desde la alerta temprana, siempre y cuando el incidente haya sido declarado "gestionado" por el CSIRT. Si no, se debe presentar un Informe Parcial sobre el estado de la situación y continuar actualizándolo.
+
+B. La Trampa de Cumplimiento: Velocidad vs. Precisión
+
+La combinación de plazos de notificación hiper-agresivos y una política de aplicación de "cero tolerancia" por parte de la agencia crea un dilema operativo significativo para las organizaciones. Durante las primeras horas de un incidente de Nivel 3, la situación es inherentemente caótica y la información es incompleta (la "niebla de la guerra"). Sin embargo, el plazo de 2 horas obliga a una presentación inmediata. Esto fuerza al oficial de cumplimiento a una difícil elección: presentar un informe a tiempo pero potencialmente inexacto o incompleto, o esperar a tener mayor claridad y arriesgarse a una presentación tardía, lo que garantiza una sanción. El portal SURI registra la hora exacta de la sumisión, haciendo que cualquier retraso sea innegable y fácil de sancionar. Presentar un informe inicial inexacto puede crear problemas posteriores, como la necesidad de correcciones significativas o la asignación incorrecta de recursos por parte de la ANCI. Este escenario sin una salida fácil exige una estrategia predefinida, como el uso de plantillas para el Formulario ANCI-01 con lenguaje cauteloso y aprobado legalmente para mitigar este riesgo.
+
+C. Tabla 3: Resumen de Plazos de Reporte y Protocolos de Sumisión
+
+Esta tabla simplificada sirve como una referencia rápida para los equipos operativos, resumiendo las obligaciones temporales más críticas.
+Nivel de Incidente	Tipo de Reporte	Plazo desde la Detección	Método de Sumisión
+Nivel 2	Alerta Temprana (ANCI-01)	Dentro de las 12 horas	Portal SURI
+	Segundo Reporte (ANCI-02)	Dentro de los 5 días hábiles	Portal SURI
+	Informe Final/Parcial	Dentro de los 15 días corridos	Portal SURI
+Nivel 3	Alerta Temprana (ANCI-01)	Dentro de las 2 horas	Portal SURI
+	Segundo Reporte (ANCI-02)	Dentro de las 72 horas (24h para OIV)	Portal SURI
+	Informe Final/Parcial	Dentro de los 15 días corridos	Portal SURI
+
+Sección VI: Implicaciones Legales y Mejores Prácticas para la Mitigación de Riesgos
+
+
+A. Las Consecuencias del Incumplimiento: Sanciones bajo la Ley 27.998
+
+Las consecuencias de no cumplir con el régimen de reporte de la ANCI son deliberadamente severas para asegurar la cooperación. El Artículo 35 de la Ley 27.998 detalla un abanico de sanciones por no reportar, reportar tardíamente o presentar información materialmente falsa o engañosa. Las sanciones incluyen:
+●	Multas Económicas: Pueden alcanzar hasta el 1% de la facturación global anual de la compañía infractora. Para grandes corporaciones, esta cifra puede ser catastrófica.
+●	Suspensión de Operaciones: La ANCI está facultada para ordenar la suspensión temporal de las actividades de la entidad no conforme, una medida con un impacto operativo y financiero directo e inmediato.
+La seriedad con la que la ANCI pretende aplicar estas sanciones se ve reforzada por un memorando interno que indica una política de "cero tolerancia", especialmente en lo que respecta a los plazos de reporte para incidentes de Nivel 3. Esto sugiere que la agencia no dudará en iniciar procedimientos sancionatorios por retrasos, incluso si son breves.
+
+B. La "Arma" de los Datos de Cumplimiento en Litigios Civiles
+
+Un riesgo estratégico que a menudo se pasa por alto es cómo la información auto-reportada a la ANCI puede ser utilizada en contra de la organización en otros contextos legales. La información contenida en el Formulario ANCI-02 no goza de privilegio legal y puede ser obtenida a través de procesos de descubrimiento legal en litigios civiles, como demandas colectivas de clientes o demandas de accionistas.
+El nuevo campo de "Impacto Financiero Estimado" es particularmente problemático en este sentido. Considere el siguiente escenario: una empresa sufre una brecha de datos de Nivel 2 y, en cumplimiento de la regulación, presenta su Formulario ANCI-02 declarando un impacto financiero estimado de, por ejemplo, $50 millones. Posteriormente, los clientes afectados presentan una demanda colectiva por daños y perjuicios. Los abogados de los demandantes pueden solicitar y obtener legalmente el reporte presentado a la ANCI. La propia estimación de $50 millones de la compañía, una declaración oficial a un organismo gubernamental, se convierte en una prueba poderosa para los demandantes, estableciendo de facto un piso para las negociaciones de daños. La organización queda atrapada por su propio cumplimiento regulatorio.
+Para gestionar este riesgo, es imperativo que el asesor legal participe activamente en la redacción del Formulario ANCI-02 desde el principio. El objetivo es enmarcar la evaluación del impacto financiero de una manera que sea precisa para fines regulatorios pero legalmente defendible, documentando rigurosamente la metodología utilizada para llegar a la cifra.
+
+C. Obligaciones Adicionales para Operadores de Importancia Vital (OIV)
+
+Los OIV están sujetos a un requisito de reporte adicional: la presentación de un Plan de Acción al CSIRT. Este plan debe ser enviado en un plazo de 7 días corridos desde la ocurrencia del incidente y debe detallar el programa de recuperación de la información, un análisis de posibles responsabilidades técnicas y administrativas, y una estimación del tiempo necesario para la recuperación completa de los servicios interrumpidos.
+
+D. Mejores Prácticas para un Programa de Reporte Conforme y Defendible
+
+Para navegar este complejo panorama regulatorio y de riesgos, las organizaciones deben adoptar un enfoque proactivo y multidisciplinario. Las siguientes mejores prácticas son recomendadas:
+●	Desarrollar un Equipo de Respuesta a Incidentes Multifuncional: Formalizar un equipo que integre permanentemente a representantes de TI/Seguridad, Legal, Finanzas, Operaciones y Comunicaciones. Los roles y responsabilidades en el proceso de reporte deben estar claramente definidos.
+●	Crear Plantillas Pre-aprobadas: Desarrollar y obtener aprobación legal para plantillas del Formulario ANCI-01. Estas plantillas deben usar un lenguaje cauto y no especulativo, permitiendo una presentación rápida y segura dentro del plazo de 2 o 12 horas.
+●	Establecer una Metodología de Impacto Financiero: Antes de que ocurra un incidente, desarrollar, documentar y validar una metodología interna para calcular el impacto financiero. Esto asegura que la cifra reportada a la ANCI sea consistente, reproducible y defendible bajo escrutinio.
+●	Realizar Simulacros y Ejercicios de Mesa: Conducir regularmente simulacros de incidentes de Nivel 2 y Nivel 3. Estos ejercicios deben practicar específicamente el cumplimiento de los plazos de reporte para identificar cuellos de botella en los procesos internos de recopilación de datos, análisis y aprobación.
+●	Protocolos de Documentación y Privilegio: Establecer protocolos claros sobre cómo se documenta la respuesta a un incidente. Trabajar estrechamente con el asesor legal para proteger la comunicación bajo el privilegio abogado-cliente siempre que sea posible, separando el análisis de hechos para el reporte regulatorio de la estrategia legal.
+
+Sección VII: Apéndice: Formularios y Plantillas Oficiales de Reporte de la ANCI
+
+
+A. Formulario ANCI-01 (Notificación Inicial)
+
+Esta sección contendría una representación del formulario oficial ANCI-01, válido para su uso al 17 de julio de 2025. El formato sería una versión limpia y lista para ser utilizada, reflejando los campos requeridos para la alerta temprana, incluyendo la descripción de efectos observables y la casilla para solicitar apoyo del CSIRT, tal como se describe en la sección IV.B de este informe.
+
+B. Formulario ANCI-02 (Reporte Detallado)
+
+Esta sección contendría una representación del formulario oficial ANCI-02, válido para su uso al 17 de julio de 2025. Crucialmente, este formulario se completa en etapas (Segundo Reporte, Informe Final) e incluiría los nuevos campos obligatorios introducidos por la Resolución ANCI 45/2024, como el "Vector de Ataque Específico", el "Impacto Financiero Estimado" y la "Notificación a Terceros Afectados". Este apéndice proporcionaría el activo tangible y operativo que las organizaciones necesitan para asegurar el cumplimiento con las normativas más recientes.

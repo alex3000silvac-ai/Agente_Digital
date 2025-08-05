@@ -1,0 +1,208 @@
+﻿B. Sobre la Lógica del Reporte ANCI (Plazos y Tipos de Empresa)
+Este es el núcleo de tu solicitud. Entiendo que la pantalla del Reporte ANCI no es solo un formulario, sino un "Centro de Control de Plazos" que debe ser dinámico e inteligente.
+•	El Cronómetro se Activa: Entiendo que el reloj de los plazos legales (3h, 24/72h, 15d) comienza a correr en el instante exacto en que el usuario presiona "Generar Reporte ANCI". La fecha y hora de esta acción es el "tiempo cero".
+•	Visualización de Plazos: La pantalla del reporte debe mostrar claramente esta información: 
+o	La fecha y hora exactas en que se generó el reporte (el inicio del plazo).
+o	Un contador de tiempo restante para cada etapa, que se actualice en tiempo real para generar urgencia y visibilidad.
+•	Plazos Dinámicos por Tipo de Empresa: He captado el punto clave: los plazos no son iguales para todos. Específicamente, el plazo de la "Segunda Notificación" depende de la clasificación de la empresa. El sistema debe ser lo suficientemente inteligente para saber el TipoEmpresa (OIV, PSE, BTD) y ajustar el plazo de la Etapa 2 automáticamente (ej. 24 horas para una OIV, 72 para las demás).
+C. Sobre el Flujo General (Confirmación de Lógica)
+He releído el texto que me has proporcionado y lo uso como mi guía principal. Mi entendimiento final, que quiero que me valides, es el siguiente:
+1.	Fase 1: El Expediente "Semilla": Se crea un incidente (Informativo o Interno) que sirve como el expediente maestro y repositorio central de toda la evidencia y la investigación interna. Esta es la base de todo.
+2.	Fase 2: La Declaración Formal ANCI: Es un proceso separado y posterior que se inicia con una acción manual y deliberada desde el incidente "semilla". Al iniciarse, se crea una nueva entidad (ReporteANCI) y es en ese momento que comienzan a correr los plazos legales.
+Confirmo que nuestra arquitectura actual con dos tablas separadas (Incidentes y ReportesANCI) es la forma técnica correcta y profesional de implementar esta separación lógica que has definido.
+Plan de Acción Propuesto
+Dado que mi entendimiento ahora es completo, te propongo el siguiente plan de acción para implementar todas estas mejoras:
+1.	Corregir la Navegación (Backend y Frontend): Arreglaremos el "loop" asegurando que la API entregue el EmpresaID y que el botón "Volver" en VistaReporteAnci.vue lo use para navegar correctamente al listado.
+2.	Implementar Plazos Dinámicos (Backend y Frontend): 
+o	Backend: Modificaremos la API para que también nos entregue el TipoEmpresa junto con los detalles del reporte.
+o	Frontend: Añadiremos la lógica de JavaScript en VistaReporteAnci.vue para calcular y mostrar los plazos y los contadores de tiempo restante, ajustándolos según el TipoEmpresa.
+Si estás de acuerdo con mi entendimiento y este plan, nuestro próximo paso será escribir el código para materializarlo. Te entregaré los archivos api_admin.py y VistaReporteAnci.vue completamente actualizados para solucionar el loop e implementar los plazos dinámicos.
+
+Perfectamente entendido. Esta es una distinción vital y la arquitectura que implementaremos la respetará por completo. Tu analogía es la correcta: el "Semilla" es el padre, y el "Reporte ANCI" es el hijo, y aunque el hijo depende del padre, tiene su propia identidad y responsabilidades.
+
+Confirmo mi comprensión de esta lógica de negocio, que ahora es nuestra guía definitiva:
+•	El Incidente "Semilla" (Padre): Es el expediente maestro y la fuente única de verdad sobre el qué, cómo y cuándo del incidente. Contiene toda la investigación, detalles técnicos, bitácoras y evidencias. Es un registro interno, exhaustivo y vivo.
+•	El Reporte ANCI (Hijo con Identidad Propia): Nace del "Semilla", pero existe para un propósito diferente: cumplir con la ley. Por lo tanto:
+o	Tendrá sus propios campos exclusivos que no pertenecen al "Semilla", como por ejemplo: FolioANCI, FechaDeclaracion, EstadoReporte (Ej: Declarado, En Proceso, Cerrado), y la gestión de los plazos legales que mencionas.
+o	Vive su propio ciclo de vida regulatorio, que puede ser actualizado independientemente de la investigación interna del "Semilla".
+Cómo los Vincularemos (La Solución Técnica)
+Lograremos este balance con un diseño de base de datos y API claro y profesional:
+
+1.	Vínculo en la Base de Datos: La tabla ReportesANCI tendrá una columna llamada IncidenteID. Esta columna será una "llave foránea" (Foreign Key) que apunta directamente al ID del registro correspondiente en la tabla Incidentes.
+2.	Lógica en la API: La API (api_admin.py) sabrá cómo manejar ambas entidades. Cuando le pidamos editar un incidente, irá a la tabla Incidentes. Cuando le pidamos gestionar el reporte legal, irá a la tabla ReportesANCI, usando el IncidenteID para saber a qué expediente maestro pertenece.
+Este diseño nos da lo mejor de ambos mundos:
+•	Identidad Propia: El ReporteANCI tiene su propia
+ tabla y campos para gestionar su ciclo de vida legal y cumplir la norma sin "ensuciar" el expediente de investigación.
+•	Vínculo Indestructible: Siempre sabremos qué "Semilla" originó un ReporteANCI.
+•	Preeminencia del "Semilla": Se soluciona tu problema original. El flujo de edición y gestión de un incidente siempre nos llevará al expediente "Semilla", que es el maestro.
+Cuando se designa un reporte para la ANCI pasan dos cosas, primero el incidente queda registrado como tal y automaticamente comienzan a correr los plazos dependiendo si es OIV O PSE, por otro lado queda abierta la posibilidad de abrir el informe de la anci con el FORMATO DE LA AGENCIA, pero tambien la semilla, ambos se pueden editar, pero la semilla es el registro madre. La informacion que pasa al informe ANCI es el que se genera en los encabezados de la incidencia semilla, siempre respetando el informe de la Anci, el informe anci se puede exportar a un pdf. Los plazos siempre corren, una vez iniciado el reloj, no se puede detener la marcha atras. 
+Para asegurar que estamos 100% alineados, déjame confirmar mi entendimiento de tu visión punto por punto:
+1.	La Designación ANCI es un "Punto de no Retorno": Al presionar el botón "Generar Reporte ANCI", el sistema realiza una acción crítica e irreversible: crea el registro formal del reporte y, en ese preciso instante, activa los cronómetros para los plazos legales (3h, 24/72h, 15d). Una vez iniciado, este proceso no se puede detener.
+2.	El "Expediente Semilla" es el Maestro: El incidente original (la "Semilla") sigue siendo el expediente principal y la fuente de verdad. Siempre debe ser accesible y completamente editable, sin importar si se ha generado o no un reporte para la ANCI.
+3.	El "Reporte ANCI" es un "Hijo" Editable: Aunque el Reporte ANCI nace de la "semilla", es una entidad separada con sus propios campos específicos (los del formato de la agencia). Es fundamental que este reporte también pueda ser editado para ir completando la información que exige la normativa en cada etapa. La interfaz de pestañas que propusimos es ideal para esto.
+4.	Flujo de Datos Inicial: Al momento de "Generar Reporte ANCI", el sistema debe ser inteligente y pre-poblar el formulario del reporte ANCI con la información relevante que ya existe en la "semilla" (como el título, la descripción inicial, la fecha de detección, etc.).
+5.	Exportación a PDF: El informe ANCI debe tener una funcionalidad para ser exportado a un archivo PDF, lo cual es un requerimiento práctico y muy útil para la entrega formal.
+Cuando volvemos a la semilla debe tener todas las funcionalidades y campos de como si fuera la primera vez. Lo que se puede hacer desde aqui es bajar la alerta ANCI, el incidente no se cierra, queda guardado con todo el control de cambios que tenia desde su creacion.
+
+una vista de semilla que no haya sido declarado como anci, podria en ese momento declararlo como ANCI iniciandose los plazos, tambien tener presente que la hora debe corresponder a Chile.
+1. Entendimiento de tus Requerimientos
+
+•	Lógica del Botón ANCI (Confirmación): Tienes toda la razón. La lógica debe ser:
+o	Si un incidente NO ha sido declarado, la vista debe mostrar un botón para "Generar Reporte ANCI".
+o	Si SÍ ha sido declarado, la opción de generarlo desaparece y en su lugar se habilita la pestaña/botón para "Ver Reporte ANCI".
+o	La buena noticia es que el código que te proporcioné en la última versión de VistaDetalleIncidente.vue ya implementa exactamente este comportamiento con los "botones inteligentes".
+•	Funcionalidades del Expediente "Semilla": Entendido. El expediente debe ser el centro de operaciones con todo integrado. Esto significa que debemos activar:
+o	Gestión de Evidencias: La capacidad de subir archivos y ver sus versiones.
+o	Historial de Cambios: La auditoría de qué campo se modificó, cuándo y por quién.
+o	Bitácora de Novedades (Comentarios): Un nuevo módulo para añadir comentarios y hacer seguimiento, incluyendo un control de versiones para esos comentarios.
+•	Hora de Chile: Un detalle crucial. Todas las fechas y horas deben mostrarse de manera consistente y corresponder a la zona horaria de Chile. Actualmente, usamos un formato 'es-CL' en el frontend, que instruye al navegador del usuario a mostrar la hora en su zona local. Esto debería funcionar correctamente para los usuarios en Chile.
+
+Aprovechando que estamos reestructurando hay dos cosas que me gustaria podamos planificar antes de comenzarlas. La primera es la construccion de dashboard flotantes con estadisticas que sean dinamicosl y con kpi, por ejemplo evolucion de incidencias por tipo, grafico de cumplimiento con comparaciones temas no cubiertos etc. Por otro lado, ver la posibilidad de customizar los mensajes que arroja el sistema como de recomendacion, con esto me refiero a que dependiendo del Inquilino seria el mensaje de recomendacion, esto porque queremos usar la plataforma como un promotor de servicios especializados pero que los usemos como un plus, si pór ejemplo telsur le pasa el producto a sus clientes, el sistema hara recomendaciones de telsur y sus servicios. Tambien tenemos que corregir el informe de cumplimiento ya que no muestra el numero de obligaciones cumplidas ni el estado en que estan, tampoco muestra de que obligacion se trata. Que te parece en cuanto a la estructura de archivos que prepares una propuesta.
+
+Análisis y Propuesta de Arquitectura
+1. Dashboards Dinámicos y KPIs
+•	Mi Entendimiento: Quieres una sección de Business Intelligence (BI) en el panel de administración, donde se puedan visualizar gráficos interactivos y KPIs clave, como la evolución de incidentes, el estado del cumplimiento normativo, comparativas, etc.
+•	Propuesta de Arquitectura:
+o	Backend: Necesitaremos crear un conjunto de nuevas rutas en la API dedicadas exclusivamente a las estadísticas. Por ejemplo: /api/admin/stats/incidentes-por-mes o /api/admin/stats/cumplimiento-general. Estas rutas no devolverán datos crudos, sino datos ya procesados y agregados desde la base de datos (usando GROUP BY, COUNT, etc.), listos para ser graficados.
+o	Frontend: Para visualizar estos datos, integraremos una librería de gráficos como Chart.js o ApexCharts, que son muy potentes y versátiles. Crearemos componentes de Vue específicos para cada gráfico (ej. GraficoCumplimiento.vue, GraficoIncidentesPorTipo.vue).
+_
+
+
+•	Entidad 1: El Expediente "Semilla": Sigue siendo el expediente maestro y editable. Es nuestro registro interno de investigación. Su propósito es contener toda la información posible sobre el incidente, mucho más allá de lo que se reporta. Aquí es donde deben vivir el control de cambios, el versionado de evidencias y la bitácora de comentarios.
+•	Entidad 2: El "Formulario de Reporte ANCI": Este es el "hijo" legal. Es un reflejo estructurado de los campos que la ANCI exige, tal como los has listado. Lo construiremos como un formulario específico dentro de la plataforma.
+o	Datos Institucionales: Nombre, RUT, sector, actividad.
+o	Información del Encargado: Nombre, cargo, correo, etc.
+o	Descripción del Incidente: Fecha y hora, tipo, sistemas afectados, impacto.
+o	Magnitud y Alcance: Usuarios impactados, tiempo de indisponibilidad.
+o	Medidas y Lecciones: Contención, notificación, planes de mejora.
+•	Entendimiento Clave: La información para llenar inicialmente el "Formulario de Reporte ANCI" se tomará de la "semilla", pero una vez creado, el formulario ANCI puede ser editado por separado para ajustar la redacción y los detalles finos de cara a la autoridad, sin alterar el expediente de investigación interna.
+•	Exportación para la ANCI: El "Formulario de Reporte ANCI" debe tener una función para exportar a PDF o TXT, generando un documento limpio y ordenado que facilite la tarea de copiar y pegar la información en el portal oficial de la ANCI.
+•	Notificaciones: El sistema de notificaciones por correo que alertará sobre los plazos sigue siendo un requerimiento clave.
+Diagnóstico del Problema Actual ("Guardar Expediente no hace nada")
+•	Síntoma: Como muestra tu captura de pantalla, al hacer clic en "Guardar Expediente", la acción falla.
+•	Causa Raíz: El problema reside en el backend. La función update_incidente en el archivo admin_views.py está incompleta. Específicamente, le falta la lógica para registrar el historial de cambios, lo que probablemente causa un error y detiene la ejecución antes de que se complete el guardado.
+________________________________________
+Plan de Acción Propuesto (Priorizado)
+Para avanzar de forma segura y eficiente, te propongo el siguiente plan:
+1.	Fase 1 (Inmediata): Solucionar el Guardado y la Edición.
+o	Acción: Nuestra máxima prioridad es hacer que el botón "Guardar Expediente" funcione. Para ello, te proporcionaré una versión completa y corregida del archivo admin_views.py, donde la función update_incidente esté totalmente implementada para guardar los cambios y registrar el historial.
+2.	Fase 2: Implementar el Formulario ANCI Detallado.
+o	Acción: Una vez que podamos guardar, modificaremos la pestaña "Reporte ANCI" dentro de VistaDetalleIncidente.vue para que contenga todos los campos específicos que listaste en tu documento, convirtiéndola en un formulario completo y editable.
+3.	Fase 3: Implementar la Exportación a PDF/TXT.
+o	Acción: Añadiremos un botón en la pestaña del "Reporte ANCI" que, al ser presionado, generará y descargará el reporte en un formato limpio.
+Si estás de acuerdo con este plan, nuestro próximo paso inmediato es la Fase 1.
+
+•  Consulta la taxonomía oficial de incidentes publicada en la Resolución Exenta N° 7 (2025) para clasificar correctamente los eventos alessandri.legal+11gerencia.cl+11x.com+11carey.cl+2alessandri.legal+2cariola.cl+2carey.cl+5cariola.cl+5codevsys.cl+5alessandri.legal+2neuronet.cl+2codevsys.cl+2cariola.cl+7codevsys.cl+7estadodiario.com+7.
+•  Para OIV, al reportar también deberás adjuntar certificaciones y documentos que respalden los SGSI, planes, auditorías y programas de capacitación.
+•  Mira los plazos: los PSE/OIV deben registrar su designación antes de reportar cualquier incidente (registro vigente desde el 11 de junio de 2025) codevsys.cl.
+📝 Formulario de Reporte de Incidente de Ciberseguridad (ANCI)
+________________________________________
+🟦 SECCIÓN 1: Datos del Reportante (PSE y OIV)
+Campo	Descripción	Obligatorio
+Nombre completo del reportante	Persona responsable del reporte	✅
+Cargo del reportante	Rol en la organización (Ej: Encargado de Seguridad)	✅
+Correo electrónico institucional	Contacto principal	✅
+Teléfono de contacto	Debe estar disponible para consultas de ANCI	✅
+¿Cuenta con formación/certificación?	Detallar si tiene formación en ciberseguridad	✅
+Tipo de entidad	Seleccione: PSE / OIV	✅
+________________________________________
+🟦 SECCIÓN 2: Identificación del Incidente
+Campo	Descripción	Obligatorio
+Fecha y hora de detección	Hora exacta del primer síntoma o señal	✅
+Fecha y hora de notificación	Momento en que se reporta a la ANCI	✅
+Tipo de incidente	Seleccionar de la taxonomía oficial ANCI (Ej: Ransomware, DDoS)	✅
+Descripción inicial del incidente	Qué ocurrió, cómo fue detectado	✅
+Sistemas o servicios afectados	Módulos, áreas, redes o sistemas comprometidos	✅
+Impacto en continuidad o datos	Ej: interrupción de servicios, filtración, modificación	✅
+Afectación a terceros	¿Impactó a usuarios, clientes u otras entidades?	✅
+Número de personas o sistemas afectados	Estimación o conteo si se conoce	✅
+________________________________________
+🟦 SECCIÓN 3: Medidas Iniciales y Contención
+Campo	Descripción	Obligatorio
+Acciones de contención aplicadas	Ej: aislamiento, bloqueo, restauración	✅
+Sistemas desconectados o apagados	Detallar si hubo interrupciones forzadas	✅
+Notificaciones internas realizadas	A dirección, clientes o personal	✅
+Estado actual del incidente	En investigación / Mitigado / Cerrado / Otro	✅
+________________________________________
+🟥 SECCIÓN 4: Exclusiva para OIV
+Campo	Descripción	Obligatorio (OIV)
+¿Cuenta con SGSI certificado (ISO 27001)?	Sí / No	✅
+Detalle de Plan de Continuidad Operativa	Nombre del plan, estado de implementación	✅
+¿Se activó el plan de recuperación?	Sí / No. ¿Cuál fue su resultado?	✅
+Auditorías o ejercicios realizados	Simulacros, pentesting, auditorías previas	✅
+Fecha de última auditoría o simulacro	Fecha y alcance	✅
+Delegado técnico designado ante ANCI	Nombre, cargo, contacto	✅
+Medidas para evitar propagación	Acciones específicas para contener el daño	✅
+Notificación a afectados (si aplica)	¿Se notificó a clientes, socios, usuarios finales?	✅
+Registro de capacitaciones del personal	Fechas, temarios, cobertura (%)	✅
+________________________________________
+📎 Adjuntos (al subir a la plataforma ANCI)
+Documento	Obligatorio
+Nombramiento del reportante con firma electrónica avanzada	✅
+Registro del incidente (PDF o digital)	✅
+Evidencia técnica (logs, capturas, informes)	✅ si aplica
+Certificados SGSI / Continuidad (para OIV)	✅ si OIV
+Bitácora de medidas tomadas	✅
+________________________________________
+📬 Contacto para seguimiento del caso
+Campo	Descripción	Obligatorio
+Nombre y cargo del contacto	Persona técnica designada	✅
+Horario disponible	Ej: Lunes a Viernes, 9:00-18:00	✅
+Correo de emergencia		✅
+Teléfono directo		✅
+
+Te recuerdo lo que hablamos, el problema que tenemos es que existen tres figuras, el reporte semilla, el reporte anci que se envia a la anci y el reporte de seguimiento una vez que la incidecia fue declarada tan grave que debe reportarse oficialmente.
+En la vista del incidente ya creado, deberiamos ver el mismo formato que cuando le dimos vida al incidente con los controles de cambio, seguimiento de versiones para los achivos. Tambien se deben traspasar todos los datos que esten disponibles al informe de la anci. Por otra parte al momento de crearse el informe ANCI, recuerda que se debe crear un formulario que no se puede tocar en donde aparecen las fechas y horarios a reportar, recuerda que es una cuenta regresiva, esto segun se trate de una oiv o una pse.
+
+El concepto esta errado, el expediente semilla debe ser exactamente al que se usa para crearlo. Es el de las imagenes, se perdio la opcion para crear el incidente en formato anci. Debe existir un boton que se use para tranformar el informe en ANCI, de aque se traen la mayor cantidad de datos posibles. Debes considerar incluir los datos del formulario ANCI que sean genericos en el formato semilla, sino esta debemos contemplarlo. Si esta en la semilla copiarlo al formato anci, los datos que pides estan correctos. El informe 3 debes usar el formto original, mira el formato que te copio. Replantea la logica, primreo el informe semilla, una vez que creado lo puedo modificar, eliminar o transformar en informe anci. Cuando se transforma en ANCI, automaticamente se crea el informe de PLAZOS segun es OIV O PSE. Ese informe al igual que de la ANCI debe poder exportarse a un word, pdf o text para que pueda ser copiado a la anci y evitar la doble digitacion. Recuerda que tambien se piden unos archivos minimos para la anci, por tanto no deberias dejar crear el informe anci si falta la informacion que pide la anci. Por favor lee esto detallada y profundamente, luego haz un detalle de lo que entiendes y armamos un plan de trabajo.
+
+1.	El Expediente "Semilla" es el Formulario Maestro y Único.
+o	Tanto la creación de un nuevo incidente como la edición de uno existente deben usar exactamente el mismo formulario visual. Este formulario es el que se ve en tus imágenes (image_0842b9.png, image_083fd9.png), con sus secciones bien definidas ("1. Identificación General", "2. Descripción y Alcance", "3. Análisis Preliminar", etc.), incluyendo los campos para subir evidencias en cada etapa.
+o	Este formulario maestro es el Expediente "Semilla". Es el repositorio central y la única fuente de verdad para toda la investigación.
+2.	El Flujo de Vida del Incidente es Secuencial.
+o	Paso 1: Crear. El usuario llena el formulario "Semilla" para registrar un nuevo incidente.
+o	Paso 2: Gestionar. Una vez creado, el usuario puede volver a ver y editar este mismo formulario "Semilla" en cualquier momento, modificando campos, añadiendo notas o subiendo nuevas evidencias.
+o	Paso 3: Transformar (Acción Clave). Desde la vista de edición del "Semilla", el usuario tiene la opción de escalarlo.
+3.	La "Transformación" a ANCI es una Acción Deliberada.
+o	En la vista del "Expediente Semilla" debe existir un botón claro, como "Transformar en Reporte ANCI".
+o	Validación Previa: Este botón debe estar deshabilitado si no se ha completado la información mínima requerida en la "Semilla" que es necesaria para un reporte ANCI (ej. descripción, criticidad, archivos de evidencia inicial, etc.). Esto fuerza una buena práctica.
+o	Acción del Botón: Al hacer clic, el sistema realiza dos tareas:
+1.	Crea una entidad ReporteANCI separada, copiando de forma inteligente todos los datos relevantes desde la "Semilla".
+2.	Activa el "Informe de Plazos", que comienza la cuenta regresiva legal.
+4.	El Informe de Plazos Vuelve a su Diseño Original.
+
+o	Para gestionar las etapas del reporte ANCI (Alerta Temprana, Segunda Notificación, Informe Final), usaremos el formato que te gusta y que es más funcional: la línea de tiempo vertical a la izquierda y el formulario de la etapa activa a la derecha, como en la imagen Imagen de WhatsApp 2025-06-23.... Este informe debe mostrar la cuenta regresiva dinámica (24h/72h) según el tipo de empresa (OIV/PSE).
+5.	Exportación Múltiple.
+
+o
+El boton para escalar al informe ANCI no debe estar desactivado, lo que debe hacer es validar que existan los campos en la semilla y si existen crea el reporte anci y el informe de seguimiento. Una vez concretado esto aparecen 3 pestañas , una para acceder al incidente semilla, dos para el informe anci exportable y t res el informe de informe final anci con la cuenta regresiva y el formato ANTIGUO. EL CUADRO DE GESTION DE INCIDENTES DONDE PUEDO VER EL HISTORICO DEBE INDICAR SI LA INCIDENCIA ES NORMAL O ANCI, SI ES NORMAL SE VA AL FORMATO DE EDICION ORIGINAL Y SE REPITE EL CICLO, TAMBIEN DEBE HABER UN BOTON OJALA BIEN VISIBLES QUE PERMITA TRANSFORMAR EL INFORME DE NORMAL A ANCI Y AQUI CORRE EL CICLO YA CONVERSADO. INCORPORA ESTAS INSTRUCCIONES MUY CLARA Y PROFUNDAMENTE
+
+Mi Entendimiento Final y Definitivo
+1.	Lógica del Botón "Escalar a ANCI":
+o	El botón para escalar un incidente a reporte ANCI, ubicado dentro de la vista de detalle, siempre estará visible y activado. No estará deshabilitado.
+o	La validación de los campos requeridos se realizará al momento de hacer clic en el botón.
+o	Si la validación falla, el sistema le informará al usuario exactamente qué campos necesita completar en el "Expediente Semilla".
+o	Si la validación es exitosa, el sistema procederá a crear el reporte ANCI y el informe de seguimiento de plazos.
+2.	La Interfaz de 3 Pestañas (Post-Escalado):
+o	La vista de 3 pestañas aparecerá únicamente después de que un incidente haya sido escalado exitosamente a ANCI.
+o	Pestaña 1: "Expediente Semilla", con el formulario de edición original y completo.
+o	Pestaña 2: "Informe ANCI Exportable", con los datos listos para ser copiados o exportados.
+o	Pestaña 3: "Informe de Seguimiento ANCI", que mostrará la cuenta regresiva de los plazos utilizando el formato antiguo (línea de tiempo vertical a la izquierda y detalles de la etapa a la derecha).
+3.	Visualización en la Lista General de Incidentes:
+o	La pantalla principal donde se listan todos los incidentes (VistaListaIncidentes.vue) deberá tener un indicador visual claro (como una nueva columna o una etiqueta de color) que distinga si un incidente es "Normal" o ya ha sido escalado a "ANCI".
+4.	Navegación Diferenciada desde la Lista:
+o	Al hacer clic en un incidente "Normal" desde la lista, se navegará a la vista de edición original de una sola vista (el "Expediente Semilla").
+o	Al hacer clic en un incidente "ANCI" desde la lista, se navegará directamente a la vista con las 3 pestañas ya activas.
+Informe de Comprensión del Módulo de Incidentes
+Tras analizar la documentación y el código, mi entendimiento del requerimiento es el siguiente:
+•	El Objetivo Principal: El corazón del problema reside en el formulario de registro de incidentes (la "semilla del expediente"). El objetivo es reemplazar la sección de taxonomía actual por un acordeón jerárquico y dinámico que sea el centro de la gestión inicial del incidente.
+•	El Acordeón Interactivo: Este no es un simple selector. Es un panel de trabajo detallado que debe cumplir con las siguientes características clave:
+o	Filtrado Dinámico por Tipo de Empresa: El acordeón debe mostrar únicamente las taxonomías (Áreas, Efectos y Categorías) que aplican a la empresa seleccionada, ya sea OIV, PSE o Ambos. Esta lógica se basará en el campo AplicaPara de la tabla Taxonomia_Categorias.
+o	Estructura Jerárquica Profesional: La presentación debe ser clara y anidada, mostrando la relación Área → Efecto → Categoría, permitiendo al usuario expandir y contraer las secciones con fluidez.
+o	Funcionalidad Detallada por Categoría: Aquí radica la riqueza que se perdió. Por cada categoría dentro del acordeón, el sistema debe permitir:
+	Gestión de Evidencias: Un sistema para subir, ver y eliminar archivos específicos para esa categoría del incidente.
+	Control de Cambios: Un historial de todas las modificaciones realizadas en los campos de esa categoría.
+	Sección de Comentarios: Un área para que los analistas dejen notas y observaciones contextuales.
+	Control de Versiones: Un mecanismo para versionar el estado de análisis de esa categoría específica.
+•	Calidad Visual y Experiencia de Usuario (UX): La prioridad absoluta es que el diseño sea intuitivo, moderno y profesional. Se debe abandonar cualquier solución genérica en favor de este formato de acordeón detallado, que es crucial para el flujo de trabajo del analista.
+•	Integridad Funcional: Confirmo que el objetivo es recuperar y conservar todas estas funcionalidades interactivas. El plan de trabajo está diseñado para asegurar que no se pierda ninguna de las capacidades que mencionaste.

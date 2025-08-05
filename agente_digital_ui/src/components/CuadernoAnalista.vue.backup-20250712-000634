@@ -1,0 +1,2773 @@
+<template>
+  <div class="card-dark">
+    <div class="header-con-navegacion">
+      <button @click="volverAEmpresas" class="btn-volver">
+        <i class="ph ph-arrow-left"></i>
+        <span>Volver a Empresas</span>
+      </button>
+      <div class="header-title-container">
+        <h2 class="text-2xl font-bold text-white mb-2">
+          Gestión Incidentes Ley Ciberseguridad 21663
+        </h2>
+        <p v-if="empresaInfo.nombre" class="empresa-subtitle text-lg">
+          {{ empresaInfo.nombre }} - {{ empresaInfo.tipo === 'OIV' ? 'Operador de Infraestructura Vital (OIV)' : 'Proveedor de Servicios Esenciales (PSE)' }}
+        </p>
+      </div>
+      <button @click="guardarIncidente" :disabled="!esValido || guardando" class="btn btn-primary ml-auto">
+        <i v-if="guardando" class="ph ph-spinner-gap" :class="{'animate-spin': guardando}"></i>
+        <i v-else class="ph ph-floppy-disk"></i>
+        {{ guardando ? 'Guardando...' : 'Guardar Incidente' }}
+      </button>
+    </div>
+
+    <div v-if="loading" class="text-center p-8 text-gray-400">Cargando datos del incidente...</div>
+    <div v-else-if="error" class="error-banner"><strong>Error:</strong> {{ error }}</div>
+    
+    <div v-else class="mt-6 space-y-2">
+      <!-- 1. Identificación General -->
+      <div class="accordion-item">
+        <button 
+          @click="toggleAcordeon('identificacion')" 
+          class="accordion-header"
+          :aria-expanded="acordeonesAbiertos.has('identificacion')"
+        >
+          <span class="header-text">
+            <i class="ph ph-identification-badge accordion-icon"></i>
+            <span class="section-title-accordion">1. Identificación General</span>
+          </span>
+          <i class="ph ph-caret-down accordion-caret" :class="{ 'open': acordeonesAbiertos.has('identificacion') }"></i>
+        </button>
+        
+        <Transition name="accordion-fade">
+          <div v-show="acordeonesAbiertos.has('identificacion')" class="accordion-content">
+            <div class="content-section">
+              <div class="form-grid">
+                <div>
+                  <label class="form-label">Tipo de Registro del Incidente</label>
+                  <select v-model="datos.tipoFlujo" class="form-input">
+                    <option value="Informativo">Informativo (Registro simple)</option>
+                    <option value="Interno">Interno</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Título del Incidente *</label>
+                  <input v-model="datos.titulo" type="text" class="form-input" 
+                         placeholder="Descripción breve del incidente">
+                </div>
+                <div>
+                  <label class="form-label">Fecha y Hora de Detección *</label>
+                  <input v-model="datos.fechaDeteccion" type="datetime-local" class="form-input">
+                </div>
+                <div>
+                  <label class="form-label">Fecha y Hora de Ocurrencia</label>
+                  <input v-model="datos.fechaOcurrencia" type="datetime-local" class="form-input">
+                  <small class="text-gray-400">Solo si difiere de la fecha de detección</small>
+                </div>
+                <div>
+                  <label class="form-label">Criticidad *</label>
+                  <select v-model="datos.criticidad" class="form-input">
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Crítica">Crítica</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Alcance Geográfico</label>
+                  <select v-model="datos.alcanceGeografico" class="form-input">
+                    <option value="Local">Local</option>
+                    <option value="Regional">Regional</option>
+                    <option value="Nacional">Nacional</option>
+                    <option value="Internacional">Internacional</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- 2. Descripción y Alcance -->
+      <div class="accordion-item">
+        <button 
+          @click="toggleAcordeon('descripcion')" 
+          class="accordion-header"
+          :aria-expanded="acordeonesAbiertos.has('descripcion')"
+        >
+          <span class="header-text">
+            <i class="ph ph-file-text accordion-icon"></i>
+            <span class="section-title-accordion">2. Descripción y Alcance</span>
+          </span>
+          <i class="ph ph-caret-down accordion-caret" :class="{ 'open': acordeonesAbiertos.has('descripcion') }"></i>
+        </button>
+        
+        <Transition name="accordion-fade">
+          <div v-show="acordeonesAbiertos.has('descripcion')" class="accordion-content">
+            <div class="content-section">
+              <h3 class="section-title">Descripción del Incidente</h3>
+              <div class="campo-formulario">
+                <label class="form-label">Descripción Inicial Detallada *</label>
+                <textarea v-model="datos.descripcionInicial" class="form-input" rows="4"
+                          placeholder="Describa detalladamente el incidente..."></textarea>
+              </div>
+            </div>
+
+            <div class="content-section">
+              <h3 class="section-title">Impacto y Afectación</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="form-label">Impacto Preliminar Observado</label>
+                  <textarea v-model="datos.impactoPreliminar" class="form-input" rows="3"
+                            placeholder="Describa el impacto inicial observado..."></textarea>
+                </div>
+                <div>
+                  <label class="form-label">Sistemas, Activos o Personal Afectado *</label>
+                  <textarea v-model="datos.sistemasAfectados" class="form-input" rows="3"
+                            placeholder="Especifique sistemas afectados..."></textarea>
+                </div>
+                <div>
+                  <label class="form-label">Servicios Interrumpidos y Duración</label>
+                  <input v-model="datos.serviciosInterrumpidos" type="text" class="form-input"
+                         placeholder="Servicios afectados y tiempo de indisponibilidad">
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección de Evidencias -->
+            <div class="content-section evidencias-full-width">
+              <div class="evidencias-box">
+                <div class="evidencias-header">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h3>
+                      <i class="ph ph-folder-open" style="color: #60a5fa;"></i>
+                      Evidencias - Descripción
+                    </h3>
+                    <div class="evidencias-stats" v-if="getEvidencias('descripcion').length > 0">
+                      <span class="stat-badge vigente">✓ {{ getEvidencias('descripcion').length }}</span>
+                    </div>
+                    <div v-else style="font-size: 0.75rem; color: #9ca3af;">Sin evidencias</div>
+                  </div>
+                </div>
+
+                <div class="evidencias-list" v-if="getEvidencias('descripcion').length > 0">
+                  <div v-for="(archivo, index) in getEvidencias('descripcion')" 
+                       :key="index" class="evidencia-item">
+                    <div class="evidencia-content" @click="verEvidencia(archivo)">
+                      <div class="evidencia-info">
+                        <i :class="getIconoArchivo(archivo.nombre)" class="evidencia-icon"></i>
+                        <div class="evidencia-details">
+                          <div class="evidencia-name-line">
+                            <span class="evidencia-name">{{ archivo.nombre }}</span>
+                            <span class="evidencia-version">{{ archivo.fechaSubida || 'Ahora' }}</span>
+                            <span v-if="archivo.descripcion" class="evidencia-comentario">"{{ archivo.descripcion }}"</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="evidencia-actions">
+                      <button @click.stop="editarEvidencia(archivo, 'descripcion')"
+                              class="btn-editar-evidencia" title="Editar comentario">
+                        <i class="ph ph-pencil"></i>
+                      </button>
+                      <button @click.stop="eliminarEvidencia('descripcion', index)"
+                              class="btn-eliminar-evidencia" title="Eliminar evidencia">
+                        <i class="ph ph-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div v-else class="evidencias-empty">No hay evidencias cargadas</div>
+
+                <div class="evidencias-footer" v-if="getEvidencias('descripcion').length === 0">
+                  <button @click="abrirModalEvidencias('descripcion')">
+                    Subir primera evidencia →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button @click="abrirModalEvidencias('descripcion')" class="btn btn-secondary">
+                <i class="ph ph-paperclip"></i> Gestionar Evidencias
+              </button>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- 3. Análisis Preliminar -->
+      <div class="accordion-item">
+        <button 
+          @click="toggleAcordeon('analisis')" 
+          class="accordion-header"
+          :aria-expanded="acordeonesAbiertos.has('analisis')"
+        >
+          <span class="header-text">
+            <i class="ph ph-magnifying-glass-plus accordion-icon"></i>
+            <span class="section-title-accordion">3. Análisis Preliminar</span>
+          </span>
+          <i class="ph ph-caret-down accordion-caret" :class="{ 'open': acordeonesAbiertos.has('analisis') }"></i>
+        </button>
+        
+        <Transition name="accordion-fade">
+          <div v-show="acordeonesAbiertos.has('analisis')" class="accordion-content">
+            <div class="content-section">
+              <h3 class="section-title">Análisis Técnico del Incidente</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="form-label">Tipo de Amenaza Probable</label>
+                  <input v-model="datos.tipoAmenaza" type="text" class="form-input"
+                         placeholder="Ej: Malware, Phishing, DDoS, etc.">
+                </div>
+                <div>
+                  <label class="form-label">Origen / Vector de Ataque Probable *</label>
+                  <input v-model="datos.vectorAtaque" type="text" class="form-input"
+                         placeholder="Ej: Externo / Fuerza bruta desde IP 192.168.1.100">
+                </div>
+                <div>
+                  <label class="form-label">Responsable del Cliente</label>
+                  <input v-model="datos.responsableCliente" type="text" class="form-input"
+                         placeholder="Persona responsable por parte del cliente">
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección de Evidencias -->
+            <div class="content-section evidencias-full-width">
+              <div class="evidencias-box">
+                <div class="evidencias-header">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h3>
+                      <i class="ph ph-folder-open" style="color: #60a5fa;"></i>
+                      Evidencias - Análisis
+                    </h3>
+                    <div class="evidencias-stats" v-if="getEvidencias('analisis').length > 0">
+                      <span class="stat-badge vigente">✓ {{ getEvidencias('analisis').length }}</span>
+                    </div>
+                    <div v-else style="font-size: 0.75rem; color: #9ca3af;">Sin evidencias</div>
+                  </div>
+                </div>
+
+                <div class="evidencias-list" v-if="getEvidencias('analisis').length > 0">
+                  <div v-for="(archivo, index) in getEvidencias('analisis')" 
+                       :key="index" class="evidencia-item">
+                    <div class="evidencia-content" @click="verEvidencia(archivo)">
+                      <div class="evidencia-info">
+                        <i :class="getIconoArchivo(archivo.nombre)" class="evidencia-icon"></i>
+                        <div class="evidencia-details">
+                          <div class="evidencia-name-line">
+                            <span class="evidencia-name">{{ archivo.nombre }}</span>
+                            <span class="evidencia-version">{{ archivo.fechaSubida || 'Ahora' }}</span>
+                            <span v-if="archivo.descripcion" class="evidencia-comentario">"{{ archivo.descripcion }}"</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="evidencia-actions">
+                      <button @click.stop="editarEvidencia(archivo, 'analisis')"
+                              class="btn-editar-evidencia" title="Editar comentario">
+                        <i class="ph ph-pencil"></i>
+                      </button>
+                      <button @click.stop="eliminarEvidencia('analisis', index)"
+                              class="btn-eliminar-evidencia" title="Eliminar evidencia">
+                        <i class="ph ph-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div v-else class="evidencias-empty">No hay evidencias cargadas</div>
+
+                <div class="evidencias-footer" v-if="getEvidencias('analisis').length === 0">
+                  <button @click="abrirModalEvidencias('analisis')">
+                    Subir primera evidencia →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button @click="abrirModalEvidencias('analisis')" class="btn btn-secondary">
+                <i class="ph ph-paperclip"></i> Gestionar Evidencias
+              </button>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- 4. Clasificación de Taxonomías -->
+      <div class="accordion-item">
+        <button 
+          @click="toggleAcordeon('clasificacion')" 
+          class="accordion-header"
+          :aria-expanded="acordeonesAbiertos.has('clasificacion')"
+        >
+          <span class="header-text">
+            <i class="ph ph-tag accordion-icon"></i>
+            <span class="section-title-accordion" style="color: white;">4. Clasificación de Taxonomías</span>
+          </span>
+          <i class="ph ph-caret-down accordion-caret" :class="{ 'open': acordeonesAbiertos.has('clasificacion') }"></i>
+        </button>
+        
+        <Transition name="accordion-fade">
+          <div v-show="acordeonesAbiertos.has('clasificacion')" class="accordion-content">
+            <div class="content-section">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                <div class="flex-grow">
+                  <label for="taxonomia-select" class="form-label">Seleccione una taxonomía para gestionar</label>
+                  <select v-model="taxonomiaSeleccionada" @change="agregarTaxonomia" 
+                          class="form-input" id="taxonomia-select">
+                    <option value="">-- Seleccione una taxonomía --</option>
+                    <optgroup v-for="area in agruparTaxonomiasPorArea()" :key="area.nombre" :label="`Área: ${area.nombre}`">
+                      <option v-for="tax in area.taxonomias" :key="tax.id" 
+                              :value="tax.id">
+                        {{ formatearOpcionTaxonomia(tax) }}
+                      </option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="datos.taxonomiasSeleccionadas.length > 0" class="content-section">
+              <h4 class="form-label mb-3" style="color: white; font-size: 1rem;">Taxonomías incluidas en el informe: {{ datos.taxonomiasSeleccionadas.length }}</h4>
+            </div>
+
+            <!-- Workspace por cada taxonomía seleccionada -->
+            <div v-for="tax in datos.taxonomiasSeleccionadas" :key="tax.id" 
+                 class="taxonomia-workspace" :class="{ guardada: tax.guardada }">
+              <div class="taxonomia-header">
+                <h3 class="taxonomia-title">{{ tax.nombre }}</h3>
+                <div class="taxonomia-header-actions">
+                  <span v-if="tax.guardada" class="badge-guardado">
+                    <i class="ph ph-check-circle"></i> Guardada
+                  </span>
+                  <button @click="removerTaxonomia(datos.taxonomiasSeleccionadas.indexOf(tax))" 
+                          class="btn-remove-tax" title="Eliminar taxonomía">
+                    <i class="ph ph-trash"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="content-section">
+                <div class="taxonomia-detalle-completo">
+                  <div class="taxonomia-info-row">
+                    <span class="taxonomia-label-white">Área:</span>
+                    <span class="taxonomia-valor-white">{{ tax.data.area || 'Sin área' }}</span>
+                  </div>
+                  <div class="taxonomia-info-row">
+                    <span class="taxonomia-label-white">Efecto:</span>
+                    <span class="taxonomia-valor-white">{{ tax.data.efecto || 'Sin efecto' }}</span>
+                  </div>
+                  <div class="taxonomia-info-row">
+                    <span class="taxonomia-label-white">Categoría Incidente:</span>
+                    <span class="taxonomia-valor-white">{{ tax.data.categoria || 'Sin categoría' }}</span>
+                  </div>
+                  <div class="taxonomia-info-row">
+                    <span class="taxonomia-label-white">Subcategoría Incidente:</span>
+                    <span class="taxonomia-valor-white">{{ tax.data.subcategoria || 'Sin subcategoría' }}</span>
+                  </div>
+                </div>
+
+                <div class="campo-formulario mt-4">
+                  <label class="form-label">¿Por qué fue seleccionada esta taxonomía? *</label>
+                  <textarea v-model="datosTaxonomias[tax.id].observacionesTecnicas" 
+                            class="form-input" rows="4"
+                            placeholder="Explique el motivo por el cual esta taxonomía fue seleccionada para este incidente..."
+                            required></textarea>
+                </div>
+                
+                <div class="campo-formulario">
+                  <label class="form-label">Observaciones adicionales</label>
+                  <textarea v-model="datosTaxonomias[tax.id].observacionesImpacto" 
+                            class="form-input" rows="3"
+                            placeholder="Agregue cualquier observación adicional relevante..."></textarea>
+                </div>
+              </div>
+
+              <!-- Sección de Evidencias por Taxonomía -->
+              <div class="content-section evidencias-full-width">
+                <div class="evidencias-box">
+                  <div class="evidencias-header">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                      <h3>
+                        <i class="ph ph-folder-open" style="color: #60a5fa;"></i>
+                        Evidencias - {{ tax.nombre }}
+                      </h3>
+                      <div class="evidencias-stats" v-if="getEvidenciasTaxonomia(tax.id).length > 0">
+                        <span class="stat-badge vigente">✓ {{ getEvidenciasTaxonomia(tax.id).length }}</span>
+                      </div>
+                      <div v-else style="font-size: 0.75rem; color: #9ca3af;">Sin evidencias</div>
+                    </div>
+                  </div>
+
+                  <div class="evidencias-list" v-if="getEvidenciasTaxonomia(tax.id).length > 0">
+                    <div v-for="(archivo, index) in getEvidenciasTaxonomia(tax.id)" 
+                         :key="index" class="evidencia-item">
+                      <div class="evidencia-content" @click="verEvidencia(archivo)">
+                        <div class="evidencia-info">
+                          <i :class="getIconoArchivo(archivo.nombre)" class="evidencia-icon"></i>
+                          <div class="evidencia-details">
+                            <div class="evidencia-name-line">
+                              <span class="evidencia-name">{{ archivo.nombre }}</span>
+                              <span class="evidencia-version">{{ archivo.fechaSubida || 'Ahora' }}</span>
+                              <span v-if="archivo.descripcion" class="evidencia-comentario">"{{ archivo.descripcion }}"</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="evidencia-actions">
+                        <button @click.stop="editarEvidenciaTaxonomia(archivo, tax.id)"
+                                class="btn-editar-evidencia" title="Editar comentario">
+                          <i class="ph ph-pencil"></i>
+                        </button>
+                        <button @click.stop="eliminarEvidenciaTaxonomia(tax.id, index)"
+                                class="btn-eliminar-evidencia" title="Eliminar evidencia">
+                          <i class="ph ph-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div v-else class="evidencias-empty">No hay evidencias cargadas</div>
+
+                  <div class="evidencias-footer" v-if="getEvidenciasTaxonomia(tax.id).length === 0">
+                    <button @click="abrirModalEvidenciasTaxonomia(tax.id)">
+                      Subir primera evidencia →
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button @click="abrirModalEvidenciasTaxonomia(tax.id)" class="btn btn-secondary">
+                  <i class="ph ph-paperclip"></i> Gestionar Evidencias
+                </button>
+                <button @click="guardarTaxonomia(tax)" class="btn btn-primary" :disabled="tax.guardada">
+                  <i class="ph ph-check-circle"></i> {{ tax.guardada ? 'Taxonomía Registrada' : 'Registrar Taxonomía' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- 5. Acciones Inmediatas -->
+      <div class="accordion-item">
+        <button 
+          @click="toggleAcordeon('acciones')" 
+          class="accordion-header"
+          :aria-expanded="acordeonesAbiertos.has('acciones')"
+        >
+          <span class="header-text">
+            <i class="ph ph-lightning accordion-icon"></i>
+            <span class="section-title-accordion">5. Acciones Inmediatas (Requerido para OIV/PSE)</span>
+          </span>
+          <i class="ph ph-caret-down accordion-caret" :class="{ 'open': acordeonesAbiertos.has('acciones') }"></i>
+        </button>
+        
+        <Transition name="accordion-fade">
+          <div v-show="acordeonesAbiertos.has('acciones')" class="accordion-content">
+            <div class="content-section">
+              <h3 class="section-title">Medidas de Contención y Respuesta</h3>
+              <div class="campo-formulario">
+                <label class="form-label">Medidas de Contención Iniciales *</label>
+                <textarea v-model="datos.medidasContencion" class="form-input" rows="4"
+                          placeholder="Describa las acciones inmediatas tomadas para contener el incidente..."></textarea>
+              </div>
+            </div>
+
+            <!-- Sección de Evidencias -->
+            <div class="content-section evidencias-full-width">
+              <div class="evidencias-box">
+                <div class="evidencias-header">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h3>
+                      <i class="ph ph-folder-open" style="color: #60a5fa;"></i>
+                      Evidencias - Acciones
+                    </h3>
+                    <div class="evidencias-stats" v-if="getEvidencias('acciones').length > 0">
+                      <span class="stat-badge vigente">✓ {{ getEvidencias('acciones').length }}</span>
+                    </div>
+                    <div v-else style="font-size: 0.75rem; color: #9ca3af;">Sin evidencias</div>
+                  </div>
+                </div>
+
+                <div class="evidencias-list" v-if="getEvidencias('acciones').length > 0">
+                  <div v-for="(archivo, index) in getEvidencias('acciones')" 
+                       :key="index" class="evidencia-item">
+                    <div class="evidencia-content" @click="verEvidencia(archivo)">
+                      <div class="evidencia-info">
+                        <i :class="getIconoArchivo(archivo.nombre)" class="evidencia-icon"></i>
+                        <div class="evidencia-details">
+                          <div class="evidencia-name-line">
+                            <span class="evidencia-name">{{ archivo.nombre }}</span>
+                            <span class="evidencia-version">{{ archivo.fechaSubida || 'Ahora' }}</span>
+                            <span v-if="archivo.descripcion" class="evidencia-comentario">"{{ archivo.descripcion }}"</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="evidencia-actions">
+                      <button @click.stop="editarEvidencia(archivo, 'acciones')"
+                              class="btn-editar-evidencia" title="Editar comentario">
+                        <i class="ph ph-pencil"></i>
+                      </button>
+                      <button @click.stop="eliminarEvidencia('acciones', index)"
+                              class="btn-eliminar-evidencia" title="Eliminar evidencia">
+                        <i class="ph ph-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div v-else class="evidencias-empty">No hay evidencias cargadas</div>
+
+                <div class="evidencias-footer" v-if="getEvidencias('acciones').length === 0">
+                  <button @click="abrirModalEvidencias('acciones')">
+                    Subir primera evidencia →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button @click="abrirModalEvidencias('acciones')" class="btn btn-secondary">
+                <i class="ph ph-paperclip"></i> Gestionar Evidencias
+              </button>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- 6. Análisis Final y Mejoras -->
+      <div class="accordion-item">
+        <button 
+          @click="toggleAcordeon('analisis-final')" 
+          class="accordion-header"
+          :aria-expanded="acordeonesAbiertos.has('analisis-final')"
+        >
+          <span class="header-text">
+            <i class="ph ph-clipboard-text accordion-icon"></i>
+            <span class="section-title-accordion">6. Análisis Final y Mejoras</span>
+          </span>
+          <i class="ph ph-caret-down accordion-caret" :class="{ 'open': acordeonesAbiertos.has('analisis-final') }"></i>
+        </button>
+        
+        <Transition name="accordion-fade">
+          <div v-show="acordeonesAbiertos.has('analisis-final')" class="accordion-content">
+            <div class="content-section">
+              <h3 class="section-title">Análisis de Causa Raíz</h3>
+              <div class="campo-formulario">
+                <label class="form-label">Análisis de Causa Raíz (OIV/PSE)</label>
+                <textarea v-model="datos.analisisCausaRaiz" class="form-input" rows="4"
+                          placeholder="Análisis detallado de las causas fundamentales del incidente..."></textarea>
+              </div>
+            </div>
+
+            <div class="content-section">
+              <h3 class="section-title">Lecciones Aprendidas y Mejoras</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="form-label">Lecciones Aprendidas</label>
+                  <textarea v-model="datos.leccionesAprendidas" class="form-input" rows="3"
+                            placeholder="Principales aprendizajes del incidente..."></textarea>
+                </div>
+                <div>
+                  <label class="form-label">Recomendaciones de Mejora</label>
+                  <textarea v-model="datos.recomendacionesMejora" class="form-input" rows="3"
+                            placeholder="Mejoras propuestas para prevenir futuros incidentes..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección de Evidencias -->
+            <div class="content-section evidencias-full-width">
+              <div class="evidencias-box">
+                <div class="evidencias-header">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h3>
+                      <i class="ph ph-folder-open" style="color: #60a5fa;"></i>
+                      Evidencias - Análisis Final
+                    </h3>
+                    <div class="evidencias-stats" v-if="getEvidencias('analisis-final').length > 0">
+                      <span class="stat-badge vigente">✓ {{ getEvidencias('analisis-final').length }}</span>
+                    </div>
+                    <div v-else style="font-size: 0.75rem; color: #9ca3af;">Sin evidencias</div>
+                  </div>
+                </div>
+
+                <div class="evidencias-list" v-if="getEvidencias('analisis-final').length > 0">
+                  <div v-for="(archivo, index) in getEvidencias('analisis-final')" 
+                       :key="index" class="evidencia-item">
+                    <div class="evidencia-content" @click="verEvidencia(archivo)">
+                      <div class="evidencia-info">
+                        <i :class="getIconoArchivo(archivo.nombre)" class="evidencia-icon"></i>
+                        <div class="evidencia-details">
+                          <div class="evidencia-name-line">
+                            <span class="evidencia-name">{{ archivo.nombre }}</span>
+                            <span class="evidencia-version">{{ archivo.fechaSubida || 'Ahora' }}</span>
+                            <span v-if="archivo.descripcion" class="evidencia-comentario">"{{ archivo.descripcion }}"</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="evidencia-actions">
+                      <button @click.stop="editarEvidencia(archivo, 'analisis-final')"
+                              class="btn-editar-evidencia" title="Editar comentario">
+                        <i class="ph ph-pencil"></i>
+                      </button>
+                      <button @click.stop="eliminarEvidencia('analisis-final', index)"
+                              class="btn-eliminar-evidencia" title="Eliminar evidencia">
+                        <i class="ph ph-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div v-else class="evidencias-empty">No hay evidencias cargadas</div>
+
+                <div class="evidencias-footer" v-if="getEvidencias('analisis-final').length === 0">
+                  <button @click="abrirModalEvidencias('analisis-final')">
+                    Subir primera evidencia →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button @click="abrirModalEvidencias('analisis-final')" class="btn btn-secondary">
+                <i class="ph ph-paperclip"></i> Gestionar Evidencias
+              </button>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- 7. Resumen de Archivos -->
+      <div class="accordion-item">
+        <button 
+          @click="toggleAcordeon('resumen-archivos')" 
+          class="accordion-header"
+          :aria-expanded="acordeonesAbiertos.has('resumen-archivos')"
+        >
+          <span class="header-text">
+            <i class="ph ph-folder-simple accordion-icon"></i>
+            <span class="section-title-accordion">7. Resumen de Archivos</span>
+          </span>
+          <i class="ph ph-caret-down accordion-caret" :class="{ 'open': acordeonesAbiertos.has('resumen-archivos') }"></i>
+        </button>
+        
+        <Transition name="accordion-fade">
+          <div v-show="acordeonesAbiertos.has('resumen-archivos')" class="accordion-content">
+            <div class="content-section">
+              <h3 class="section-title">Resumen de Todos los Archivos del Incidente</h3>
+              
+              <div v-if="todosLosArchivos.length > 0" class="archivos-resumen-container">
+                <div class="archivos-stats-global">
+                  <div class="stat-item">
+                    <i class="ph ph-files"></i>
+                    <span>Total de archivos: {{ todosLosArchivos.length }}</span>
+                  </div>
+                </div>
+
+                <table class="archivos-table">
+                  <thead>
+                    <tr>
+                      <th>Archivo</th>
+                      <th>Sección</th>
+                      <th>Fecha</th>
+                      <th>Descripción</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(archivo, index) in todosLosArchivos" :key="index">
+                      <td>
+                        <div class="archivo-info">
+                          <i :class="getIconoArchivo(archivo.nombre)"></i>
+                          <span>{{ archivo.nombre }}</span>
+                        </div>
+                      </td>
+                      <td>{{ archivo.seccion }}</td>
+                      <td>{{ archivo.fechaSubida || 'Ahora' }}</td>
+                      <td>{{ archivo.descripcion || '-' }}</td>
+                      <td>
+                        <button @click="verEvidencia(archivo)" class="btn-action" title="Ver archivo">
+                          <i class="ph ph-eye"></i>
+                        </button>
+                        <button @click="descargarArchivo(archivo)" class="btn-action" title="Descargar">
+                          <i class="ph ph-download"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div v-else class="evidencias-empty">
+                No hay archivos cargados en ninguna sección del incidente
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Gestión de Evidencias -->
+  <div v-if="modalEvidencias.visible" class="modal-overlay" @click="cerrarModalEvidencias">
+    <div class="modal-content" @click.stop>
+      <div class="modal-header">
+        <h3>Gestión de Evidencias - {{ getNombreSeccionModal() }}</h3>
+        <button @click="cerrarModalEvidencias" class="btn-close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="upload-zone">
+          <input 
+            ref="fileInputModal" 
+            type="file" 
+            multiple 
+            @change="handleFileUpload"
+            style="display: none;"
+          >
+          <div class="upload-drop-zone" @click="$refs.fileInputModal.click()">
+            <i class="ph ph-cloud-upload"></i>
+            <p>Haz clic para subir archivos</p>
+            <p class="text-sm">PDF, DOC, XLS, Imágenes, etc.</p>
+          </div>
+        </div>
+
+        <div v-if="archivosTemporales.length > 0" class="archivos-temporales">
+          <h4>Archivos por subir:</h4>
+          <div v-for="(archivo, index) in archivosTemporales" :key="index" class="archivo-temporal">
+            <div class="archivo-info">
+              <i :class="getIconoArchivo(archivo.name)"></i>
+              <span>{{ archivo.name }}</span>
+            </div>
+            <input 
+              v-model="archivo.descripcion" 
+              type="text" 
+              placeholder="Descripción del archivo..."
+              class="form-input"
+            >
+            <button @click="removerArchivoTemporal(index)" class="btn-remove">
+              <i class="ph ph-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <div v-if="getEvidencias(modalEvidencias.seccion).length > 0" class="evidencias-existentes">
+          <h4>Evidencias actuales:</h4>
+          <div v-for="(archivo, index) in getEvidencias(modalEvidencias.seccion)" 
+               :key="index" class="evidencia-item-modal">
+            <div class="evidencia-info">
+              <i :class="getIconoArchivo(archivo.nombre)"></i>
+              <span>{{ archivo.nombre }}</span>
+              <span class="evidencia-fecha">{{ archivo.fechaSubida || 'Ahora' }}</span>
+            </div>
+            <p v-if="archivo.descripcion" class="evidencia-descripcion">{{ archivo.descripcion }}</p>
+            <button @click="eliminarEvidencia(modalEvidencias.seccion, index)" 
+                    class="btn-eliminar">
+              <i class="ph ph-trash"></i> Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button @click="cerrarModalEvidencias" class="btn btn-secondary">Cancelar</button>
+        <button @click="guardarEvidencias" class="btn btn-primary" 
+                :disabled="archivosTemporales.length === 0">
+          Guardar Evidencias
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Edición de Evidencia -->
+  <div v-if="modalEdicion.visible" class="modal-overlay" @click="cerrarModalEdicion">
+    <div class="modal-content modal-sm" @click.stop>
+      <div class="modal-header">
+        <h3>Editar Evidencia</h3>
+        <button @click="cerrarModalEdicion" class="btn-close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="campo-formulario">
+          <label class="form-label">Comentario / Descripción</label>
+          <textarea v-model="modalEdicion.descripcion" 
+                    class="form-input" 
+                    rows="3"
+                    placeholder="Agregue un comentario sobre esta evidencia...">
+          </textarea>
+        </div>
+        
+        <div class="campo-formulario">
+          <label class="form-label">Fecha de vigencia (opcional)</label>
+          <input v-model="modalEdicion.fechaVigencia" 
+                 type="date" 
+                 class="form-input">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button @click="cerrarModalEdicion" class="btn btn-secondary">Cancelar</button>
+        <button @click="guardarEdicionEvidencia" class="btn btn-primary">
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Visualización de Archivo -->
+  <div v-if="modalVisualizacion.visible" class="modal-overlay" @click="cerrarModalVisualizacion">
+    <div class="modal-content modal-lg" @click.stop>
+      <div class="modal-header">
+        <h3>{{ modalVisualizacion.archivo?.nombre }}</h3>
+        <div class="modal-header-actions">
+          <button @click="descargarArchivo(modalVisualizacion.archivo)" class="btn btn-secondary btn-sm">
+            <i class="ph ph-download"></i> Descargar
+          </button>
+          <button @click="cerrarModalVisualizacion" class="btn-close">
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Vista previa según tipo de archivo -->
+        <div v-if="esImagen(modalVisualizacion.archivo?.nombre)" class="preview-container">
+          <img :src="modalVisualizacion.url" alt="Vista previa" class="preview-image">
+        </div>
+        
+        <div v-else-if="esPDF(modalVisualizacion.archivo?.nombre)" class="preview-container">
+          <iframe :src="modalVisualizacion.url" class="preview-pdf"></iframe>
+        </div>
+        
+        <div v-else class="preview-no-disponible">
+          <i class="ph ph-file-text" style="font-size: 4rem; color: #60a5fa;"></i>
+          <p>Vista previa no disponible para este tipo de archivo</p>
+          <p class="text-sm">{{ modalVisualizacion.archivo?.nombre }}</p>
+        </div>
+        
+        <!-- Información del archivo -->
+        <div class="archivo-info-detail">
+          <div class="info-row">
+            <span class="info-label">Tipo:</span>
+            <span>{{ obtenerExtension(modalVisualizacion.archivo?.nombre) }}</span>
+          </div>
+          <div class="info-row" v-if="modalVisualizacion.archivo?.descripcion">
+            <span class="info-label">Descripción:</span>
+            <span>{{ modalVisualizacion.archivo.descripcion }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Fecha de carga:</span>
+            <span>{{ modalVisualizacion.archivo?.fechaSubida || 'No especificada' }}</span>
+          </div>
+          <div class="info-row" v-if="modalVisualizacion.archivo?.fechaVigencia">
+            <span class="info-label">Vigente hasta:</span>
+            <span>{{ formatearFecha(modalVisualizacion.archivo.fechaVigencia) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive, computed, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import apiClient from '../services/api.js'
+
+// Props
+const props = defineProps({
+  incidenteId: { type: [Number, String], default: null },
+  modo: { type: String, default: 'creacion' },
+  empresaId: { type: [Number, String], required: true }
+})
+
+// Declarar eventos que emite el componente
+const emit = defineEmits(['incidenteGuardado', 'error'])
+
+// Router
+const router = useRouter()
+const route = useRoute()
+
+// Estado
+const loading = ref(false)
+const error = ref(null)
+const guardando = ref(false)
+const acordeonesAbiertos = reactive(new Set(['identificacion']))
+
+// Información de la empresa
+const empresaInfo = ref({
+  nombre: '',
+  tipo: ''
+})
+
+// Datos del incidente
+const datos = reactive({
+  tipoFlujo: 'Informativo',
+  titulo: '',
+  fechaDeteccion: '',
+  fechaOcurrencia: '',
+  criticidad: 'Media',
+  alcanceGeografico: 'Local',
+  descripcionInicial: '',
+  impactoPreliminar: '',
+  sistemasAfectados: '',
+  serviciosInterrumpidos: '',
+  tipoAmenaza: '',
+  vectorAtaque: '',
+  responsableCliente: '',
+  medidasContencion: '',
+  analisisCausaRaiz: '',
+  leccionesAprendidas: '',
+  recomendacionesMejora: '',
+  taxonomiasSeleccionadas: [],
+  evidencias: {
+    descripcion: [],
+    analisis: [],
+    acciones: [],
+    'analisis-final': []
+  },
+  evidenciasTaxonomias: {}
+})
+
+// Taxonomías
+const taxonomiaSeleccionada = ref('')
+const taxonomiasDisponibles = ref([])
+const datosTaxonomias = reactive({})
+
+// Modal de evidencias
+const modalEvidencias = reactive({
+  visible: false,
+  seccion: null,
+  taxonomiaId: null
+})
+const archivosTemporales = ref([])
+
+// Modal de edición
+const modalEdicion = reactive({
+  visible: false,
+  archivo: null,
+  seccion: null,
+  descripcion: '',
+  fechaVigencia: ''
+})
+
+// Modal de visualización
+const modalVisualizacion = reactive({
+  visible: false,
+  archivo: null,
+  url: null
+})
+
+// Computed
+const esValido = computed(() => {
+  return datos.titulo && 
+         datos.fechaDeteccion && 
+         datos.criticidad && 
+         datos.descripcionInicial && 
+         datos.sistemasAfectados
+})
+
+const todosLosArchivos = computed(() => {
+  const archivos = []
+  const secciones = {
+    'descripcion': 'Descripción y Alcance',
+    'analisis': 'Análisis Preliminar',
+    'acciones': 'Acciones Inmediatas',
+    'analisis-final': 'Análisis Final'
+  }
+  
+  for (const [seccion, nombreSeccion] of Object.entries(secciones)) {
+    if (datos.evidencias[seccion]) {
+      datos.evidencias[seccion].forEach(archivo => {
+        archivos.push({
+          ...archivo,
+          seccion: nombreSeccion
+        })
+      })
+    }
+  }
+  
+  return archivos
+})
+
+// Métodos
+function toggleAcordeon(seccion) {
+  if (acordeonesAbiertos.has(seccion)) {
+    acordeonesAbiertos.delete(seccion)
+  } else {
+    acordeonesAbiertos.add(seccion)
+  }
+}
+
+function volverAEmpresas() {
+  router.push(`/admin/empresas/${props.empresaId}`)
+}
+
+async function cargarDatosEmpresa() {
+  try {
+    const response = await apiClient.get(`/admin/empresas/${props.empresaId}`)
+    empresaInfo.value = {
+      nombre: response.data.nombre,
+      tipo: response.data.tipo_empresa
+    }
+  } catch (err) {
+    console.error('Error al cargar datos de empresa:', err)
+  }
+}
+
+async function cargarTaxonomias() {
+  try {
+    const response = await apiClient.get('/admin/taxonomias/flat', {
+      params: {
+        tipo_empresa: empresaInfo.value.tipo || 'PSE'
+      }
+    })
+    if (response.data.status === 'success') {
+      taxonomiasDisponibles.value = response.data.taxonomias
+    }
+  } catch (err) {
+    console.error('Error al cargar taxonomías:', err)
+  }
+}
+
+function agregarTaxonomia() {
+  if (!taxonomiaSeleccionada.value) return
+  
+  // No convertir a parseInt porque los IDs son strings
+  const taxonomia = taxonomiasDisponibles.value.find(t => t.id === taxonomiaSeleccionada.value)
+  
+  if (taxonomia) {
+    // Verificar si ya está seleccionada
+    if (estaSeleccionada(taxonomia.id)) {
+      alert('Esta taxonomía ya fue incluida en el informe')
+      taxonomiaSeleccionada.value = ''
+      return
+    }
+    // Formatear el nombre sin subcategoría para el workspace
+    const partes = []
+    if (taxonomia.area) partes.push(`Área: ${taxonomia.area}`)
+    if (taxonomia.efecto) partes.push(`Efecto: ${taxonomia.efecto}`)
+    if (taxonomia.categoria) partes.push(`Categoría Incidente: ${taxonomia.categoria}`)
+    const nombreFormateado = partes.join(' | ')
+    
+    // Preguntar al usuario si desea incluir esta taxonomía
+    const mensaje = `¿Desea incluir esta taxonomía en el informe del incidente?\n\n${nombreFormateado}`
+    
+    if (confirm(mensaje)) {
+      const nuevaTaxonomia = {
+        id: taxonomia.id,  // ID es clave para el guardado
+        nombre: nombreFormateado,
+        data: taxonomia,
+        guardada: false
+      }
+      datos.taxonomiasSeleccionadas.push(nuevaTaxonomia)
+      
+      // Inicializar datos de la taxonomía
+      datosTaxonomias[taxonomia.id] = {
+        observacionesTecnicas: '',
+        observacionesImpacto: ''
+      }
+      
+      // Inicializar array de evidencias para esta taxonomía
+      if (!datos.evidenciasTaxonomias[taxonomia.id]) {
+        datos.evidenciasTaxonomias[taxonomia.id] = []
+      }
+    }
+  }
+  
+  taxonomiaSeleccionada.value = ''
+}
+
+function estaSeleccionada(idTaxonomia) {
+  return datos.taxonomiasSeleccionadas.some(t => t.id === idTaxonomia)
+}
+
+
+function removerTaxonomia(index) {
+  const taxonomia = datos.taxonomiasSeleccionadas[index]
+  
+  if (taxonomia.guardada) {
+    if (!confirm(`La taxonomía "${taxonomia.nombre}" ya fue guardada. ¿Está seguro de eliminarla?`)) {
+      return
+    }
+  }
+  
+  datos.taxonomiasSeleccionadas.splice(index, 1)
+  
+  // Limpiar datos de la taxonomía
+  delete datosTaxonomias[taxonomia.id]
+  delete datos.evidenciasTaxonomias[taxonomia.id]
+}
+
+function getTaxonomiaSeleccionada() {
+  const tax = datos.taxonomiasSeleccionadas.find(t => t.id === taxonomiaActiva.value)
+  return tax ? tax.data : null
+}
+
+function getTaxonomiaData(idTaxonomia) {
+  if (!datosTaxonomias[idTaxonomia]) {
+    datosTaxonomias[idTaxonomia] = {
+      observacionesTecnicas: '',
+      observacionesImpacto: ''
+    }
+  }
+  return datosTaxonomias[idTaxonomia]
+}
+
+// Gestión de evidencias
+function abrirModalEvidencias(seccion) {
+  modalEvidencias.seccion = seccion
+  modalEvidencias.visible = true
+  archivosTemporales.value = []
+}
+
+function cerrarModalEvidencias() {
+  modalEvidencias.visible = false
+  modalEvidencias.seccion = null
+  modalEvidencias.taxonomiaId = null
+  archivosTemporales.value = []
+}
+
+function handleFileUpload(event) {
+  const files = Array.from(event.target.files)
+  files.forEach(file => {
+    archivosTemporales.value.push({
+      file: file,
+      name: file.name,
+      descripcion: ''
+    })
+  })
+}
+
+function removerArchivoTemporal(index) {
+  archivosTemporales.value.splice(index, 1)
+}
+
+function guardarEvidencias() {
+  // Verificar si es una taxonomía
+  if (modalEvidencias.seccion.startsWith('taxonomia-')) {
+    const taxonomiaId = modalEvidencias.taxonomiaId
+    if (!datos.evidenciasTaxonomias[taxonomiaId]) {
+      datos.evidenciasTaxonomias[taxonomiaId] = []
+    }
+    
+    archivosTemporales.value.forEach(archivo => {
+      datos.evidenciasTaxonomias[taxonomiaId].push({
+        nombre: archivo.name,
+        descripcion: archivo.descripcion,
+        fechaSubida: new Date().toLocaleString(),
+        file: archivo.file
+      })
+    })
+  } else {
+    // Sección normal
+    archivosTemporales.value.forEach(archivo => {
+      datos.evidencias[modalEvidencias.seccion].push({
+        nombre: archivo.name,
+        descripcion: archivo.descripcion,
+        fechaSubida: new Date().toLocaleString(),
+        file: archivo.file
+      })
+    })
+  }
+  
+  cerrarModalEvidencias()
+}
+
+function getEvidencias(seccion) {
+  return datos.evidencias[seccion] || []
+}
+
+function eliminarEvidencia(seccion, index) {
+  if (confirm('¿Está seguro de eliminar esta evidencia?')) {
+    datos.evidencias[seccion].splice(index, 1)
+  }
+}
+
+function verEvidencia(archivo) {
+  modalVisualizacion.archivo = archivo
+  modalVisualizacion.visible = true
+  
+  // Si es un archivo local (recién subido), crear URL temporal
+  if (archivo.file) {
+    modalVisualizacion.url = URL.createObjectURL(archivo.file)
+  } else {
+    // Si es un archivo del servidor, usar la URL del servidor
+    modalVisualizacion.url = archivo.url || '#'
+  }
+}
+
+function cerrarModalVisualizacion() {
+  modalVisualizacion.visible = false
+  modalVisualizacion.archivo = null
+  if (modalVisualizacion.url && modalVisualizacion.url.startsWith('blob:')) {
+    URL.revokeObjectURL(modalVisualizacion.url)
+  }
+  modalVisualizacion.url = null
+}
+
+function descargarArchivo(archivo) {
+  if (archivo.file) {
+    // Si es un archivo local, crear un enlace temporal
+    const url = URL.createObjectURL(archivo.file)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = archivo.nombre
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  } else if (archivo.url) {
+    // Si es del servidor, abrir en nueva pestaña
+    window.open(archivo.url, '_blank')
+  }
+}
+
+function getNombreSeccion(seccion) {
+  const nombres = {
+    'descripcion': 'Descripción y Alcance',
+    'analisis': 'Análisis Preliminar',
+    'acciones': 'Acciones Inmediatas',
+    'analisis-final': 'Análisis Final'
+  }
+  return nombres[seccion] || seccion
+}
+
+function getNombreSeccionModal() {
+  if (modalEvidencias.seccion.startsWith('taxonomia-')) {
+    const taxonomiaId = modalEvidencias.taxonomiaId
+    const taxonomia = datos.taxonomiasSeleccionadas.find(t => t.id === taxonomiaId)
+    return taxonomia ? taxonomia.nombre : 'Taxonomía'
+  }
+  return getNombreSeccion(modalEvidencias.seccion)
+}
+
+function getIconoArchivo(nombreArchivo) {
+  const extension = nombreArchivo.split('.').pop().toLowerCase()
+  const iconos = {
+    'pdf': 'ph ph-file-pdf',
+    'doc': 'ph ph-file-doc',
+    'docx': 'ph ph-file-doc',
+    'xls': 'ph ph-file-xls',
+    'xlsx': 'ph ph-file-xls',
+    'ppt': 'ph ph-file-ppt',
+    'pptx': 'ph ph-file-ppt',
+    'png': 'ph ph-file-image',
+    'jpg': 'ph ph-file-image',
+    'jpeg': 'ph ph-file-image',
+    'gif': 'ph ph-file-image',
+    'zip': 'ph ph-file-zip',
+    'rar': 'ph ph-file-zip'
+  }
+  return iconos[extension] || 'ph ph-file'
+}
+
+function editarEvidencia(archivo, seccion) {
+  modalEdicion.archivo = archivo
+  modalEdicion.seccion = seccion
+  modalEdicion.descripcion = archivo.descripcion || ''
+  modalEdicion.fechaVigencia = archivo.fechaVigencia || ''
+  modalEdicion.visible = true
+}
+
+function cerrarModalEdicion() {
+  modalEdicion.visible = false
+  modalEdicion.archivo = null
+  modalEdicion.seccion = null
+  modalEdicion.descripcion = ''
+  modalEdicion.fechaVigencia = ''
+}
+
+function guardarEdicionEvidencia() {
+  if (modalEdicion.archivo) {
+    modalEdicion.archivo.descripcion = modalEdicion.descripcion
+    modalEdicion.archivo.fechaVigencia = modalEdicion.fechaVigencia
+  }
+  cerrarModalEdicion()
+}
+
+function esImagen(nombreArchivo) {
+  if (!nombreArchivo) return false
+  const ext = nombreArchivo.split('.').pop().toLowerCase()
+  return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(ext)
+}
+
+function esPDF(nombreArchivo) {
+  if (!nombreArchivo) return false
+  const ext = nombreArchivo.split('.').pop().toLowerCase()
+  return ext === 'pdf'
+}
+
+function obtenerExtension(nombreArchivo) {
+  if (!nombreArchivo) return 'Desconocido'
+  return nombreArchivo.split('.').pop().toUpperCase()
+}
+
+function formatearFecha(fecha) {
+  if (!fecha) return ''
+  const opciones = { year: 'numeric', month: 'long', day: 'numeric' }
+  return new Date(fecha).toLocaleDateString('es-ES', opciones)
+}
+
+function agruparTaxonomiasPorArea() {
+  const grupos = {}
+  
+  taxonomiasDisponibles.value.forEach(tax => {
+    const area = tax.area || 'Sin clasificar'
+    if (!grupos[area]) {
+      grupos[area] = {
+        nombre: area,
+        taxonomias: []
+      }
+    }
+    grupos[area].taxonomias.push(tax)
+  })
+  
+  // Convertir a array y ordenar
+  return Object.values(grupos).sort((a, b) => a.nombre.localeCompare(b.nombre))
+}
+
+function formatearOpcionTaxonomia(tax) {
+  // Mostrar solo área, efecto y categoría en el dropdown (sin subcategoría)
+  const partes = []
+  if (tax.area) partes.push(`Área: ${tax.area}`)
+  if (tax.efecto) partes.push(`Efecto: ${tax.efecto}`)
+  if (tax.categoria) partes.push(`Categoría Incidente: ${tax.categoria}`)
+  return partes.join(' | ')
+}
+
+// Funciones para manejo de evidencias por taxonomía
+function getEvidenciasTaxonomia(taxonomiaId) {
+  return datos.evidenciasTaxonomias[taxonomiaId] || []
+}
+
+function abrirModalEvidenciasTaxonomia(taxonomiaId) {
+  modalEvidencias.seccion = `taxonomia-${taxonomiaId}`
+  modalEvidencias.taxonomiaId = taxonomiaId
+  modalEvidencias.visible = true
+  archivosTemporales.value = []
+}
+
+function eliminarEvidenciaTaxonomia(taxonomiaId, index) {
+  if (confirm('¿Está seguro de eliminar esta evidencia?')) {
+    datos.evidenciasTaxonomias[taxonomiaId].splice(index, 1)
+  }
+}
+
+function editarEvidenciaTaxonomia(archivo, taxonomiaId) {
+  modalEdicion.archivo = archivo
+  modalEdicion.seccion = `taxonomia-${taxonomiaId}`
+  modalEdicion.taxonomiaId = taxonomiaId
+  modalEdicion.descripcion = archivo.descripcion || ''
+  modalEdicion.fechaVigencia = archivo.fechaVigencia || ''
+  modalEdicion.visible = true
+}
+
+async function guardarTaxonomia(taxonomia) {
+  try {
+    // Validar que haya explicación del motivo
+    const observaciones = datosTaxonomias[taxonomia.id]
+    if (!observaciones.observacionesTecnicas) {
+      alert('Por favor explique por qué fue seleccionada esta taxonomía')
+      return
+    }
+    
+    // Preparar datos para guardar - ID es fundamental
+    const datosGuardar = {
+      incidente_id: props.incidenteId || null,
+      taxonomia_id: taxonomia.id,  // ID de la taxonomía de la BD
+      area: taxonomia.data.area,
+      efecto: taxonomia.data.efecto,
+      categoria: taxonomia.data.categoria,
+      subcategoria: taxonomia.data.subcategoria,
+      observaciones_tecnicas: observaciones.observacionesTecnicas,
+      observaciones_impacto: observaciones.observacionesImpacto,
+      evidencias: datos.evidenciasTaxonomias[taxonomia.id] || [],
+      empresa_tipo: empresaInfo.value.tipo  // OIV o PSE
+    }
+    
+    // Guardando taxonomía
+    
+    // TODO: Aquí iría la llamada real a la API
+    // const response = await apiClient.post('/admin/incidentes/taxonomias', datosGuardar)
+    
+    // Marcar como guardada solo si fue exitoso
+    taxonomia.guardada = true
+    
+    // Mensaje de éxito con el nombre completo
+    alert(`Taxonomía registrada exitosamente:\n\nID: ${taxonomia.id}\n${taxonomia.nombre}`)
+    
+  } catch (error) {
+    console.error('Error al guardar taxonomía:', error)
+    taxonomia.guardada = false
+    alert('Error al guardar la taxonomía')
+  }
+}
+
+async function guardarIncidente() {
+  if (!esValido.value) {
+    alert('Por favor complete todos los campos obligatorios')
+    return
+  }
+  
+  guardando.value = true
+  error.value = null
+  
+  try {
+    // Preparar FormData para enviar
+    const formData = new FormData()
+    
+    // Datos básicos del incidente - Solo usar nombres de BD
+    formData.append('empresa_id', props.empresaId)
+    formData.append('creado_por', 'Usuario') // TODO: obtener del contexto de sesión
+    
+    // Campos específicos del formulario usando nombres de BD
+    formData.append('TipoFlujo', datos.tipoFlujo)
+    formData.append('Titulo', datos.titulo)
+    formData.append('FechaDeteccion', datos.fechaDeteccion)
+    formData.append('FechaOcurrencia', datos.fechaOcurrencia || datos.fechaDeteccion)
+    formData.append('Criticidad', datos.criticidad)
+    formData.append('AlcanceGeografico', datos.alcanceGeografico)
+    formData.append('DescripcionInicial', datos.descripcionInicial)
+    formData.append('AnciImpactoPreliminar', datos.impactoPreliminar)
+    formData.append('SistemasAfectados', datos.sistemasAfectados)
+    formData.append('ServiciosInterrumpidos', datos.serviciosInterrumpidos)
+    formData.append('AnciTipoAmenaza', datos.tipoAmenaza)
+    formData.append('OrigenIncidente', datos.vectorAtaque)
+    formData.append('ResponsableCliente', datos.responsableCliente)
+    formData.append('AccionesInmediatas', datos.medidasContencion)
+    formData.append('CausaRaiz', datos.analisisCausaRaiz)
+    formData.append('LeccionesAprendidas', datos.leccionesAprendidas)
+    formData.append('PlanMejora', datos.recomendacionesMejora)
+    
+    // Preparar taxonomías seleccionadas con sus comentarios
+    const taxonomiasData = datos.taxonomiasSeleccionadas.map(t => ({
+      Id_Taxonomia: t.id,
+      Comentarios: JSON.stringify({
+        observaciones_tecnicas: datosTaxonomias[t.id]?.observacionesTecnicas || '',
+        observaciones_impacto: datosTaxonomias[t.id]?.observacionesImpacto || '',
+        justificacion: datosTaxonomias[t.id]?.justificacion || ''
+      })
+    }))
+    formData.append('taxonomias_seleccionadas', JSON.stringify(taxonomiasData))
+    
+    // Preparar comentarios adicionales
+    const comentariosAdicionales = []
+    // Agregar comentarios de cada sección
+    if (datos.comentarioDescripcion) {
+      comentariosAdicionales.push({ texto: `[Descripción] ${datos.comentarioDescripcion}` })
+    }
+    if (datos.comentarioAnalisis) {
+      comentariosAdicionales.push({ texto: `[Análisis] ${datos.comentarioAnalisis}` })
+    }
+    if (datos.comentarioAcciones) {
+      comentariosAdicionales.push({ texto: `[Acciones] ${datos.comentarioAcciones}` })
+    }
+    if (datos.comentarioAnalisisFinal) {
+      comentariosAdicionales.push({ texto: `[Análisis Final] ${datos.comentarioAnalisisFinal}` })
+    }
+    formData.append('comentarios_adicionales_json', JSON.stringify(comentariosAdicionales))
+    
+    // Determinar el nombre del campo de archivos según el modo
+    const archivosFieldName = props.modo === 'edicion' ? 'archivos_nuevos' : 'archivos'
+    
+    // Agregar archivos de evidencias
+    let archivoIndex = 0
+    for (const [seccion, archivos] of Object.entries(datos.evidencias)) {
+      for (const archivo of archivos) {
+        if (archivo.file) {
+          formData.append(archivosFieldName, archivo.file)
+          formData.append(`descripcion_archivo_${archivo.file.name}`, archivo.descripcion || `Evidencia de ${seccion}`)
+          formData.append(`version_archivo_${archivo.file.name}`, '1')
+          archivoIndex++
+        }
+      }
+    }
+    
+    // Agregar archivos de taxonomías
+    for (const [taxId, archivos] of Object.entries(datos.evidenciasTaxonomias)) {
+      if (archivos && archivos.length > 0) {
+        for (const archivo of archivos) {
+          if (archivo.file) {
+            formData.append(archivosFieldName, archivo.file)
+            formData.append(`descripcion_archivo_${archivo.file.name}`, `Evidencia taxonomía ${taxId}: ${archivo.descripcion || ''}`)
+            formData.append(`version_archivo_${archivo.file.name}`, '1')
+          }
+        }
+      }
+    }
+    
+    // En modo edición, manejar archivos a eliminar
+    if (props.modo === 'edicion') {
+      const archivosAEliminar = []
+      // Buscar archivos marcados para eliminar
+      for (const [seccion, archivos] of Object.entries(datos.evidencias)) {
+        archivos.forEach(archivo => {
+          if (archivo.id && archivo.marcarEliminar) {
+            archivosAEliminar.push(archivo.id)
+          }
+        })
+      }
+      formData.append('archivos_a_eliminar', JSON.stringify(archivosAEliminar))
+    }
+    
+    let response
+    if (props.modo === 'edicion' && props.incidenteId) {
+      // Para actualización
+      formData.append('modificado_por', 'Usuario') // TODO: obtener del contexto
+      response = await fetch(`http://localhost:5000/api/incidente/${props.incidenteId}`, {
+        method: 'PUT',
+        body: formData
+      })
+    } else {
+      // Para creación
+      response = await fetch('http://localhost:5000/api/incidente/', {
+        method: 'POST',
+        body: formData
+      })
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || 'Error al guardar')
+    }
+    
+    const result = await response.json()
+    
+    alert('Incidente guardado exitosamente')
+    router.push(`/admin/empresas/${props.empresaId}`)
+  } catch (err) {
+    console.error('Error al guardar incidente:', err)
+    error.value = err.message || 'Error al guardar el incidente'
+  } finally {
+    guardando.value = false
+  }
+}
+
+async function cargarDatosIncidente() {
+  if (!props.incidenteId) return
+  
+  loading.value = true
+  try {
+    const response = await fetch(`http://localhost:5000/api/incidente/${props.incidenteId}`)
+    if (!response.ok) throw new Error('Error al cargar incidente')
+    
+    const incidente = await response.json()
+    
+    // Cargar datos básicos
+    datos.tipoFlujo = incidente.TipoFlujo || 'Informativo'
+    datos.titulo = incidente.Titulo || ''
+    datos.fechaDeteccion = incidente.FechaDeteccion ? new Date(incidente.FechaDeteccion).toISOString().slice(0, 16) : ''
+    datos.fechaOcurrencia = incidente.FechaOcurrencia ? new Date(incidente.FechaOcurrencia).toISOString().slice(0, 16) : ''
+    datos.criticidad = incidente.Criticidad || 'Media'
+    datos.alcanceGeografico = incidente.AlcanceGeografico || 'Local'
+    
+    // Descripción y alcance
+    datos.descripcionInicial = incidente.DescripcionInicial || ''
+    datos.impactoPreliminar = incidente.AnciImpactoPreliminar || ''
+    datos.sistemasAfectados = incidente.SistemasAfectados || ''
+    datos.serviciosInterrumpidos = incidente.ServiciosInterrumpidos || ''
+    
+    // Análisis preliminar
+    datos.tipoAmenaza = incidente.AnciTipoAmenaza || ''
+    datos.vectorAtaque = incidente.OrigenIncidente || ''
+    datos.responsableCliente = incidente.ResponsableCliente || ''
+    
+    // Acciones inmediatas
+    datos.medidasContencion = incidente.AccionesInmediatas || ''
+    
+    // Análisis final
+    datos.analisisCausaRaiz = incidente.CausaRaiz || ''
+    datos.leccionesAprendidas = incidente.LeccionesAprendidas || ''
+    datos.recomendacionesMejora = incidente.PlanMejora || ''
+    
+    // Cargar archivos adjuntos
+    if (incidente.archivos_adjuntos && incidente.archivos_adjuntos.length > 0) {
+      // Agrupar archivos por sección basándose en la descripción
+      incidente.archivos_adjuntos.forEach(archivo => {
+        const archivoData = {
+          id: archivo.EvidenciaID,
+          nombre: archivo.NombreArchivo,
+          descripcion: archivo.Descripcion,
+          fechaSubida: archivo.FechaSubida,
+          tamano: archivo.TamanoKB,
+          version: archivo.Version,
+          tipo: archivo.TipoArchivo
+        }
+        
+        // Determinar la sección basándose en la descripción
+        if (archivo.Descripcion?.includes('[Descripción]') || archivo.Descripcion?.includes('descripcion')) {
+          datos.evidencias.descripcion.push(archivoData)
+        } else if (archivo.Descripcion?.includes('[Análisis]') || archivo.Descripcion?.includes('analisis')) {
+          datos.evidencias.analisis.push(archivoData)
+        } else if (archivo.Descripcion?.includes('[Acciones]') || archivo.Descripcion?.includes('acciones')) {
+          datos.evidencias.acciones.push(archivoData)
+        } else if (archivo.Descripcion?.includes('[Análisis Final]') || archivo.Descripcion?.includes('analisis-final')) {
+          datos.evidencias['analisis-final'].push(archivoData)
+        } else if (archivo.Descripcion?.includes('taxonomía')) {
+          // Es una evidencia de taxonomía
+          const match = archivo.Descripcion.match(/taxonomía (\w+):/)
+          if (match && match[1]) {
+            if (!datos.evidenciasTaxonomias[match[1]]) {
+              datos.evidenciasTaxonomias[match[1]] = []
+            }
+            datos.evidenciasTaxonomias[match[1]].push(archivoData)
+          }
+        }
+      })
+    }
+    
+    // Cargar taxonomías
+    if (incidente.Taxonomias && incidente.Taxonomias.length > 0) {
+      for (const tax of incidente.Taxonomias) {
+        const taxonomiaCompleta = taxonomiasDisponibles.value.find(t => t.id === tax.Id_Taxonomia)
+        if (taxonomiaCompleta) {
+          // Formatear nombre sin subcategoría
+          const partes = []
+          if (taxonomiaCompleta.area) partes.push(`Área: ${taxonomiaCompleta.area}`)
+          if (taxonomiaCompleta.efecto) partes.push(`Efecto: ${taxonomiaCompleta.efecto}`)
+          if (taxonomiaCompleta.categoria) partes.push(`Categoría Incidente: ${taxonomiaCompleta.categoria}`)
+          
+          datos.taxonomiasSeleccionadas.push({
+            id: tax.Id_Taxonomia,
+            nombre: partes.join(' | '),
+            data: taxonomiaCompleta,
+            guardada: true
+          })
+          
+          // Cargar comentarios de taxonomía si existen
+          try {
+            const comentarios = JSON.parse(tax.Comentarios || '{}')
+            datosTaxonomias[tax.Id_Taxonomia] = {
+              observacionesTecnicas: comentarios.observaciones_tecnicas || '',
+              observacionesImpacto: comentarios.observaciones_impacto || '',
+              justificacion: comentarios.justificacion || ''
+            }
+          } catch (e) {
+            datosTaxonomias[tax.Id_Taxonomia] = {
+              observacionesTecnicas: '',
+              observacionesImpacto: ''
+            }
+          }
+        }
+      }
+    }
+    
+    // Cargar comentarios
+    if (incidente.Comentarios && incidente.Comentarios.length > 0) {
+      incidente.Comentarios.forEach(comentario => {
+        const texto = comentario.Comentario
+        if (texto.startsWith('[Descripción]')) {
+          datos.comentarioDescripcion = texto.replace('[Descripción] ', '')
+        } else if (texto.startsWith('[Análisis]')) {
+          datos.comentarioAnalisis = texto.replace('[Análisis] ', '')
+        } else if (texto.startsWith('[Acciones]')) {
+          datos.comentarioAcciones = texto.replace('[Acciones] ', '')
+        } else if (texto.startsWith('[Análisis Final]')) {
+          datos.comentarioAnalisisFinal = texto.replace('[Análisis Final] ', '')
+        }
+      })
+    }
+    
+  } catch (err) {
+    console.error('Error al cargar incidente:', err)
+    error.value = 'Error al cargar los datos del incidente'
+  } finally {
+    loading.value = false
+  }
+}
+
+// Cargar datos al montar
+onMounted(async () => {
+  await cargarDatosEmpresa()
+  await cargarTaxonomias()
+  
+  // Si es modo edición, cargar datos del incidente
+  if (props.modo === 'edicion' && props.incidenteId) {
+    await cargarDatosIncidente()
+  }
+})
+</script>
+
+<style scoped>
+/* Estilos base del card-dark */
+.card-dark {
+  background-color: #1a1d23;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Header con navegación */
+.header-con-navegacion {
+  background-color: #111318;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #2d3748;
+}
+
+.header-title-container {
+  flex: 1;
+  text-align: center;
+}
+
+.empresa-subtitle {
+  font-size: 1.125rem;
+  color: #e5e7eb;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Botón volver */
+.btn-volver {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #2d3748;
+  color: #e5e7eb;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-volver:hover {
+  background-color: #374151;
+  color: #ffffff;
+}
+
+/* Acordeón */
+.accordion-item {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background-color: #1f2937;
+  border: none;
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.accordion-header:hover {
+  background-color: #2d3748;
+}
+
+.header-text {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.accordion-icon {
+  font-size: 1.25rem;
+  color: #60a5fa;
+}
+
+.section-title-accordion {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.accordion-caret {
+  font-size: 1.25rem;
+  transition: transform 0.3s;
+}
+
+.accordion-caret.open {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding: 1.5rem;
+  background-color: #111318;
+  border-top: 1px solid #374151;
+}
+
+/* Transición del acordeón */
+.accordion-fade-enter-active,
+.accordion-fade-leave-active {
+  transition: all 0.3s ease;
+  max-height: 2000px;
+  overflow: hidden;
+}
+
+.accordion-fade-enter-from,
+.accordion-fade-leave-to {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Secciones de contenido */
+.content-section {
+  margin-bottom: 1.5rem;
+}
+
+.content-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+/* Formularios */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.campo-formulario {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.375rem;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 1px #60a5fa;
+}
+
+.form-input::placeholder {
+  color: #6b7280;
+}
+
+select.form-input {
+  cursor: pointer;
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Evidencias */
+.evidencias-full-width {
+  width: 100%;
+}
+
+.evidencias-box {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.evidencias-header {
+  padding: 1rem;
+  background-color: #111318;
+  border-bottom: 1px solid #374151;
+}
+
+.evidencias-header h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.evidencias-stats {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stat-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.stat-badge.vigente {
+  background-color: #10b981;
+  color: white;
+}
+
+.evidencias-list {
+  padding: 0.5rem;
+}
+
+.evidencia-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s;
+}
+
+.evidencia-item:hover {
+  background-color: #2d3748;
+  border-color: #4b5563;
+}
+
+.evidencia-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  cursor: pointer;
+}
+
+.evidencia-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.evidencia-icon {
+  font-size: 1.5rem;
+  color: #60a5fa;
+}
+
+.evidencia-details {
+  flex: 1;
+}
+
+.evidencia-name-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.evidencia-name {
+  font-weight: 500;
+  color: #e5e7eb;
+}
+
+.evidencia-version {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.evidencia-comentario {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 0.75rem;
+}
+
+.evidencia-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-editar-evidencia {
+  padding: 0.25rem 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-right: 0.25rem;
+}
+
+.btn-editar-evidencia:hover {
+  background-color: #2563eb;
+}
+
+.btn-eliminar-evidencia {
+  padding: 0.25rem 0.5rem;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-eliminar-evidencia:hover {
+  background-color: #dc2626;
+}
+
+.evidencias-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.evidencias-footer {
+  padding: 1rem;
+  background-color: #111318;
+  border-top: 1px solid #374151;
+  text-align: center;
+}
+
+.evidencias-footer button {
+  color: #60a5fa;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.evidencias-footer button:hover {
+  color: #93bbfc;
+  text-decoration: underline;
+}
+
+/* Taxonomías */
+.taxonomias-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.taxonomy-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #2d3748;
+  border: 1px solid #4b5563;
+  border-radius: 0.375rem;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.taxonomy-chip:hover {
+  background-color: #374151;
+  border-color: #6b7280;
+}
+
+.taxonomy-chip.active {
+  background-color: #1e40af;
+  border-color: #3b82f6;
+}
+
+.chip-remove {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.chip-remove:hover {
+  color: #ef4444;
+}
+
+.taxonomia-detalle {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.taxonomia-campo {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.taxonomia-label {
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.taxonomia-valor {
+  color: #e5e7eb;
+}
+
+/* Botones de acción */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #374151;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #4b5563;
+  color: #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background-color: #6b7280;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #1a1d23;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background-color: #111318;
+  border-bottom: 1px solid #374151;
+}
+
+.modal-header h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.btn-close:hover {
+  color: #e5e7eb;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: #111318;
+  border-top: 1px solid #374151;
+}
+
+/* Upload zone */
+.upload-zone {
+  margin-bottom: 1.5rem;
+}
+
+.upload-drop-zone {
+  border: 2px dashed #374151;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.upload-drop-zone:hover {
+  border-color: #60a5fa;
+  background-color: rgba(96, 165, 250, 0.05);
+}
+
+.upload-drop-zone i {
+  font-size: 3rem;
+  color: #60a5fa;
+  margin-bottom: 0.5rem;
+}
+
+.upload-drop-zone p {
+  color: #9ca3af;
+  margin: 0.25rem 0;
+}
+
+.upload-drop-zone .text-sm {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Archivos temporales */
+.archivos-temporales {
+  margin-bottom: 1.5rem;
+}
+
+.archivos-temporales h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 0.75rem;
+}
+
+.archivo-temporal {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+}
+
+.archivo-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+}
+
+.btn-remove {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-remove:hover {
+  background-color: #dc2626;
+}
+
+/* Evidencias existentes en modal */
+.evidencias-existentes {
+  margin-top: 1.5rem;
+}
+
+.evidencias-existentes h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 0.75rem;
+}
+
+.evidencia-item-modal {
+  padding: 0.75rem;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+}
+
+.evidencia-fecha {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+}
+
+.evidencia-descripcion {
+  margin: 0.5rem 0;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.btn-eliminar {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-eliminar:hover {
+  background-color: #dc2626;
+}
+
+/* Resumen de archivos */
+.archivos-resumen-container {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.archivos-stats-global {
+  padding: 1rem;
+  background-color: #111318;
+  border-bottom: 1px solid #374151;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+}
+
+.archivos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.archivos-table th {
+  text-align: left;
+  padding: 0.75rem;
+  background-color: #111318;
+  color: #9ca3af;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #374151;
+}
+
+.archivos-table td {
+  padding: 0.75rem;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #374151;
+}
+
+.archivos-table tr:hover td {
+  background-color: #2d3748;
+}
+
+.btn-action {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.btn-action:hover {
+  color: #93bbfc;
+}
+
+/* Animación de spinner */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error banner */
+.error-banner {
+  background-color: #7f1d1d;
+  color: #fca5a5;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  margin: 1rem;
+}
+
+/* Modales pequeño y grande */
+.modal-sm {
+  max-width: 400px;
+}
+
+.modal-lg {
+  max-width: 900px;
+}
+
+/* Modal header con acciones */
+.modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* Contenedor de vista previa */
+.preview-container {
+  background-color: #111318;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 0.375rem;
+}
+
+.preview-pdf {
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 0.375rem;
+}
+
+.preview-no-disponible {
+  text-align: center;
+  padding: 3rem;
+  color: #9ca3af;
+}
+
+.preview-no-disponible p {
+  margin-top: 1rem;
+}
+
+.preview-no-disponible .text-sm {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+/* Información detallada del archivo */
+.archivo-info-detail {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #374151;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #9ca3af;
+  min-width: 120px;
+}
+
+/* Campo de fecha en modal */
+.campo-formulario input[type="date"] {
+  cursor: pointer;
+}
+
+/* Estilos para optgroup en select */
+optgroup {
+  color: #60a5fa;
+  font-weight: 600;
+  background-color: #111318;
+}
+
+select.form-input option {
+  padding-left: 1rem;
+}
+
+select.form-input option:disabled {
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Workspace de taxonomía */
+.taxonomia-workspace {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.taxonomia-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #374151;
+}
+
+.taxonomia-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.btn-remove-tax {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.btn-remove-tax:hover {
+  color: #ef4444;
+}
+
+/* Indicador de taxonomía guardada */
+.taxonomia-workspace.guardada {
+  border-color: #10b981;
+}
+
+.taxonomia-workspace.guardada .taxonomia-title {
+  color: white;
+}
+
+/* Ajuste para el acordión de taxonomías */
+.accordion-header .section-title-accordion[style*="color: white"] {
+  color: white !important;
+}
+
+/* Taxonomía header mejorado */
+.taxonomia-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.badge-guardado {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background-color: #10b981;
+  color: white;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Detalle de taxonomía con texto blanco */
+.taxonomia-detalle-completo {
+  background-color: #111318;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Asegurar que TODO el texto del select sea visible */
+select.form-input option {
+  padding-left: 1rem;
+  max-width: none;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.taxonomia-info-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #374151;
+}
+
+.taxonomia-info-row:last-child {
+  border-bottom: none;
+}
+
+.taxonomia-label-white {
+  font-weight: 600;
+  color: white;
+  min-width: 200px;
+}
+
+.taxonomia-valor-white {
+  color: white;
+  flex: 1;
+  font-weight: 500;
+}
+
+/* Botón eliminar mejorado */
+.btn-remove-tax {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-remove-tax:hover {
+  background-color: #dc2626;
+}
+
+/* Estado guardado */
+.taxonomia-workspace.guardada {
+  border-color: #10b981;
+  background-color: rgba(16, 185, 129, 0.05);
+}
+
+.taxonomia-workspace.guardada .taxonomia-title {
+  color: white;
+}
+
+/* Botón primario deshabilitado */
+.btn-primary:disabled {
+  background-color: #4b5563;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-primary:disabled:hover {
+  background-color: #4b5563;
+}
+/* Dropdown con texto BLANCO */
+select.form-input {
+  color: white !important;
+  background-color: #1f2937;
+}
+
+select.form-input option {
+  padding-left: 1rem;
+  color: white !important;
+  background-color: #1f2937;
+}
+
+select.form-input optgroup {
+  color: #60a5fa !important;
+  font-weight: 600;
+  background-color: #111318;
+}
+
+/* Estilos específicos para el dropdown de taxonomías - TEXTO BLANCO FORZADO */
+#taxonomia-select {
+  color: white !important;
+  background-color: #1f2937 !important;
+}
+
+#taxonomia-select option {
+  color: white !important;
+  background-color: #1f2937 !important;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+#taxonomia-select optgroup {
+  color: #60a5fa !important;
+  font-weight: 600;
+  background-color: #111318 !important;
+}
+</style>

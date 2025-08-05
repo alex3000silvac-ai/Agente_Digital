@@ -1,0 +1,45 @@
+﻿(function () {
+  const originalLog = console.log;
+  const originalError = console.error;
+  const originalWarn = console.warn;
+  const logBuffer = [];
+
+  function timestamp() {
+    return new Date().toISOString();
+  }
+
+  // Redefinir console.log, console.error, console.warn
+  console.log = function (...args) {
+    logBuffer.push(`[LOG ${timestamp()}] ${args.join(' ')}`);
+    originalLog.apply(console, args);
+  };
+  console.error = function (...args) {
+    logBuffer.push(`[ERROR ${timestamp()}] ${args.join(' ')}`);
+    originalError.apply(console, args);
+  };
+  console.warn = function (...args) {
+    logBuffer.push(`[WARN ${timestamp()}] ${args.join(' ')}`);
+    originalWarn.apply(console, args);
+  };
+
+  // Función para guardar en archivo txt
+  function saveConsoleLog() {
+    const blob = new Blob([logBuffer.join('\n')], { type: 'text/plain' });
+    const a = document.createElement('a');
+    const filename = `console-log-${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    logBuffer.length = 0; // Limpia buffer después de guardar
+  }
+
+  // Exportar manualmente también
+  window.exportConsoleLogNow = saveConsoleLog;
+
+  // Guardar automáticamente cada X segundos
+  const intervalSeconds = 60; // puedes cambiar a 30, 300, etc.
+  setInterval(saveConsoleLog, intervalSeconds * 1000);
+
+  console.log(`⏱️ Auto-logger activo. Guardará logs cada ${intervalSeconds} segundos.`);
+
+})();

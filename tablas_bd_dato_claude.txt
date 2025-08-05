@@ -1,0 +1,238 @@
+=== ESTRUCTURA DE TABLAS - AGENTE DIGITAL ===
+Fecha de generación: 2025-07-18 01:27:05.015072
+
+
+============================================================
+TABLA: Incidentes
+============================================================
+
+COLUMNA                        TIPO                 NULL   KEY  DEFAULT             
+------------------------------ -------------------- ------ ---- --------------------
+IncidenteID                    int                  NO     PK                       
+EmpresaID                      int                  NO     FK                       
+EmpresaID                      int                  NO     FK                       
+Titulo                         nvarchar(-1)         YES                             
+IDVisible                      nvarchar(50)         YES                             
+FechaCreacion                  datetime2            NO                              
+FechaDeteccion                 datetime2            YES                             
+FechaCierre                    datetime2            YES                             
+CreadoPor                      nvarchar(100)        YES                             
+ResponsableCliente             nvarchar(255)        YES                             
+EstadoActual                   nvarchar(50)         YES                             
+Criticidad                     nvarchar(50)         YES                             
+TipoFlujo                      nvarchar(50)         YES                             
+DescripcionInicial             nvarchar(-1)         YES                             
+SistemasAfectados              nvarchar(-1)         YES                             
+OrigenIncidente                nvarchar(-1)         YES                             
+AccionesInmediatas             nvarchar(-1)         YES                             
+ReporteAnciID                  int                  YES                             
+FechaDeclaracionANCI           datetime2            YES                             
+FechaActualizacion             datetime2            YES                             
+FechaOcurrencia                datetime             YES                             
+AlcanceGeografico              nvarchar(100)        YES                             
+ServiciosInterrumpidos         nvarchar(-1)         YES                             
+AnciImpactoPreliminar          nvarchar(-1)         YES                             
+AnciTipoAmenaza                nvarchar(500)        YES                             
+CausaRaiz                      nvarchar(-1)         YES                             
+LeccionesAprendidas            nvarchar(-1)         YES                             
+PlanMejora                     nvarchar(-1)         YES                             
+FormatoSemillaJSON             ntext(1073741823)    YES                             
+FechaModificacion              datetime2            YES                             
+IndiceTaxonomias               nvarchar(-1)         YES                             
+SolicitarCSIRT                 bit                  YES                             
+TipoApoyoCSIRT                 nvarchar(100)        YES                             
+UrgenciaCSIRT                  nvarchar(50)         YES                             
+ObservacionesCSIRT             nvarchar(4000)       YES                             
+TipoRegistro                   nvarchar(50)         YES                             
+
+============================================================
+TABLA: Empresas
+============================================================
+
+COLUMNA                        TIPO                 NULL   KEY  DEFAULT             
+------------------------------ -------------------- ------ ---- --------------------
+EmpresaID                      int                  NO     PK                       
+InquilinoID                    int                  NO     FK                       
+InquilinoID                    int                  NO     FK                       
+RazonSocial                    nvarchar(510)        NO                              
+RUT                            nvarchar(40)         YES                             
+TipoEmpresa                    nvarchar(100)        YES                             
+NombreFantasia                 nvarchar(1020)       YES                             
+GiroDelNegocio                 nvarchar(1020)       YES                             
+Direccion                      nvarchar(1020)       YES                             
+Ciudad                         nvarchar(200)        YES                             
+RepresentanteLegal             nvarchar(500)        YES                             
+EmailContacto                  nvarchar(255)        YES                             
+Telefono                       nvarchar(100)        YES                             
+ContactoTecnico                nvarchar(500)        YES                             
+ContactoComercial              nvarchar(500)        YES                             
+ContactoCobranza               nvarchar(500)        YES                             
+EncargadoCiberseguridad        nvarchar(255)        YES                             
+SectorEconomico                nvarchar(100)        YES                             
+DelegadoCiberseguridadEmail    nvarchar(255)        YES                             
+DelegadoCiberseguridadTelefono nvarchar(50)         YES                             
+ContactoTecnicoEmergenciaNombre nvarchar(255)        YES                             
+ContactoTecnicoEmergenciaEmail nvarchar(255)        YES                             
+ContactoTecnicoEmergenciaTelefono nvarchar(50)         YES                             
+NumeroEmpleados                int                  YES                             
+FechaCreacion                  datetime2            NO                              
+FechaActualizacion             datetime2            YES                             
+EstadoActivo                   bit                  NO                              
+
+============================================================
+TABLA: INCIDENTE_TAXONOMIA
+============================================================
+
+COLUMNA                        TIPO                 NULL   KEY  DEFAULT             
+------------------------------ -------------------- ------ ---- --------------------
+ID                             int                  NO     PK                       
+IncidenteID                    int                  NO                              
+Id_Taxonomia                   nvarchar(100)        NO                              
+Comentarios                    nvarchar(-1)         YES                             
+FechaAsignacion                datetime2            YES                             
+CreadoPor                      nvarchar(100)        YES                             
+
+============================================================
+TABLA: Taxonomia_incidentes
+============================================================
+
+COLUMNA                        TIPO                 NULL   KEY  DEFAULT             
+------------------------------ -------------------- ------ ---- --------------------
+Id_Incidente                   nvarchar(50)         NO     PK                       
+Area                           nvarchar(255)        YES                             
+Efecto                         nvarchar(255)        YES                             
+Subcategoria_del_Incidente     nvarchar(255)        YES                             
+Categoria_del_Incidente        nvarchar(255)        YES                             
+AplicaTipoEmpresa              nvarchar(10)         YES                             
+Descripcion                    nvarchar(512)        YES                             
+
+============================================================
+TABLA: INCIDENTES_ARCHIVOS
+============================================================
+
+COLUMNA                        TIPO                 NULL   KEY  DEFAULT             
+------------------------------ -------------------- ------ ---- --------------------
+ArchivoID                      int                  NO     PK                       
+IncidenteID                    int                  NO     FK                       
+SeccionID                      int                  NO     FK                       
+NumeroArchivo                  int                  NO                              
+NombreOriginal                 nvarchar(255)        NO                              
+NombreServidor                 nvarchar(255)        NO                              
+RutaArchivo                    nvarchar(500)        NO                              
+TipoArchivo                    nvarchar(50)         YES                             
+TamanoKB                       int                  NO                              
+HashArchivo                    nvarchar(64)         YES                             
+Descripcion                    nvarchar(500)        YES                             
+FechaSubida                    datetime             YES                             
+SubidoPor                      nvarchar(100)        YES                             
+Activo                         bit                  YES                             
+
+============================================================
+TABLA: Usuarios
+============================================================
+
+COLUMNA                        TIPO                 NULL   KEY  DEFAULT             
+------------------------------ -------------------- ------ ---- --------------------
+UsuarioID                      int                  NO     PK                       
+Email                          nvarchar(255)        NO                              
+PasswordHash                   nvarchar(255)        NO                              
+NombreCompleto                 nvarchar(255)        YES                             
+InquilinoID                    int                  YES    FK                       
+EmpresaID                      int                  YES                             
+Rol                            nvarchar(50)         YES                             
+FechaCreacion                  datetime             YES                             
+UltimoAcceso                   datetime             YES                             
+EstadoActivo                   bit                  NO                              
+
+============================================================
+TABLA: Inquilinos
+============================================================
+
+COLUMNA                        TIPO                 NULL   KEY  DEFAULT             
+------------------------------ -------------------- ------ ---- --------------------
+InquilinoID                    int                  NO     PK                       
+RazonSocial                    nvarchar(510)        NO                              
+RUT                            nvarchar(40)         YES                             
+EstadoActivo                   bit                  NO                              
+FechaCreacion                  datetime2            NO                              
+
+
+=== RELACIONES ENTRE TABLAS ===
+
+Tabla                          Columna FK           -->   Tabla Ref                      Columna PK          
+------------------------------ -------------------- ----- ------------------------------ --------------------
+AdministradoresPlataforma      PerfilID             -->   PerfilesAdminPlataforma        PerfilID            
+AdministradoresPlataforma      UsuarioID            -->   Usuarios                       UsuarioID           
+AnciAutorizaciones             IncidenteID          -->   Incidentes                     IncidenteID         
+AnciEnvios                     ReporteAnciID        -->   ReportesANCI                   ReporteAnciID       
+AnciNotificaciones             IncidenteID          -->   Incidentes                     IncidenteID         
+AnciPlazos                     IncidenteID          -->   Incidentes                     IncidenteID         
+AnciPlazos                     ReporteAnciID        -->   ReportesANCI                   ReporteAnciID       
+AuditoriaAdminPlataforma       AdminPlataformaID    -->   AdministradoresPlataforma      AdminPlataformaID   
+COMENTARIOS_TAXONOMIA          IncidenteID          -->   Incidentes                     IncidenteID         
+ComentariosIncidenteCategoria  IncidenteCategoriaID -->   IncidentesCategorias           IncidenteCategoriaID
+CumplimientoEmpresa            EmpresaID            -->   Empresas                       EmpresaID           
+CumplimientoEmpresa            RecomendacionID      -->   Recomendaciones                RecomendacionID     
+Empresas                       InquilinoID          -->   Inquilinos                     InquilinoID         
+Empresas                       InquilinoID          -->   Inquilinos                     InquilinoID         
+EVIDENCIAS_TAXONOMIA           IncidenteID          -->   Incidentes                     IncidenteID         
+EvidenciasCumplimiento         CumplimientoID       -->   CumplimientoEmpresa            CumplimientoID      
+EvidenciasCumplimiento         EmpresaID            -->   Empresas                       EmpresaID           
+EvidenciasCumplimiento         InquilinoID          -->   Inquilinos                     InquilinoID         
+EvidenciasIncidenteCategoria   IncidenteCategoriaID -->   IncidentesCategorias           IncidenteCategoriaID
+EvidenciasIncidentes           IncidenteID          -->   Incidentes                     IncidenteID         
+HistorialCumplimiento          CumplimientoID       -->   CumplimientoEmpresa            CumplimientoID      
+HistorialIncidentes            IncidenteID          -->   Incidentes                     IncidenteID         
+Incidentes                     EmpresaID            -->   Empresas                       EmpresaID           
+Incidentes                     EmpresaID            -->   Empresas                       EmpresaID           
+INCIDENTES_ARCHIVOS            IncidenteID          -->   Incidentes                     IncidenteID         
+INCIDENTES_ARCHIVOS            SeccionID            -->   ANCI_SECCIONES_CONFIG          SeccionID           
+INCIDENTES_AUDITORIA           IncidenteID          -->   Incidentes                     IncidenteID         
+INCIDENTES_COMENTARIOS         IncidenteID          -->   Incidentes                     IncidenteID         
+INCIDENTES_COMENTARIOS         SeccionID            -->   ANCI_SECCIONES_CONFIG          SeccionID           
+INCIDENTES_SECCIONES_DATOS     IncidenteID          -->   Incidentes                     IncidenteID         
+INCIDENTES_SECCIONES_DATOS     SeccionID            -->   ANCI_SECCIONES_CONFIG          SeccionID           
+IncidentesCategorias           CategoriaID          -->   Taxonomia_Categoria            CategoriaID         
+IncidentesCategorias           IncidenteID          -->   Incidentes                     IncidenteID         
+Recomendaciones                VerboID              -->   VerbosRectores                 VerboID             
+RecomendacionesCumplimiento    ObligacionID         -->   OBLIGACIONES                   ObligacionID        
+ReportesANCI                   IncidenteID          -->   Incidentes                     IncidenteID         
+SesionesAdminPlataforma        AdminPlataformaID    -->   AdministradoresPlataforma      AdminPlataformaID   
+SolucionesGenericas            ObligacionID         -->   OBLIGACIONES                   ObligacionID        
+SolucionesPropuestas           InquilinoID          -->   Inquilinos                     InquilinoID         
+SolucionesPropuestas           ObligacionID         -->   OBLIGACIONES                   ObligacionID        
+Taxonomia_Categoria            EfectoID             -->   Taxonomia_Efectos              EfectoID            
+Taxonomia_Efectos              AreaID               -->   Taxonomia_Areas                AreaID              
+Usuarios                       InquilinoID          -->   Inquilinos                     InquilinoID         
+UsuariosCliente                InquilinoID          -->   InquilinosConfig               InquilinoID         
+UsuariosCliente                RolID                -->   RolesCliente                   RolID               
+UsuariosCliente                RolID                -->   RolesCliente                   RolID               
+UsuariosPlataforma             RolPlataformaID      -->   RolesPlataforma                RolPlataformaID     
+UsuariosPlataforma             RolPlataformaID      -->   RolesPlataforma                RolPlataformaID     
+VerbosRectores                 ObligacionID         -->   OBLIGACIONES                   ObligacionID        
+
+
+=== NOTAS IMPORTANTES ===
+
+1. CAMPOS CSIRT (Agregados recientemente):
+   - SolicitarCSIRT: Indica si se solicita ayuda al CSIRT
+   - TipoApoyoCSIRT: Tipo de apoyo requerido (Análisis técnico, Contención, etc.)
+   - UrgenciaCSIRT: Urgencia del apoyo (Alta, Media, Normal)
+   - ObservacionesCSIRT: Observaciones adicionales para el CSIRT
+   - TipoRegistro: Tipo de registro del incidente (Para análisis interno, Para Auditoría, Registro General)
+
+2. CAMPOS DE TEXTO CON CAPACIDAD EXTENDIDA (4000 caracteres):
+   - DescripcionInicial
+   - AnciImpactoPreliminar
+   - SistemasAfectados
+   - ServiciosInterrumpidos
+   - AccionesInmediatas
+   - CausaRaiz
+   - LeccionesAprendidas
+   - PlanMejora
+   - ObservacionesCSIRT
+
+3. ARCHIVOS:
+   - Los archivos se almacenan temporalmente en JSON
+   - La tabla INCIDENTES_ARCHIVOS está preparada para almacenamiento permanente
+   - Cada archivo tiene: ID único, nombre, tamaño, tipo, descripción, comentario

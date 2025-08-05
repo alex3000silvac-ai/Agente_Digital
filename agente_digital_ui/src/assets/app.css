@@ -1,0 +1,50 @@
+<template>
+  <div class="app-container">
+    <aside v-if="authStore.isAuthenticated && $route.name !== 'Login'" class="sidebar">
+      <div>
+        <div class="sidebar-header">
+          <div class="logo-icon-wrapper">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.471A9.003 9.003 0 1012 21a9.003 9.003 0 008.369-5.39V12m-10 6h.01M12 6h.01M6 12h.01M7.5 16h.01M3 8h.01M16 8h.01M21 12h.01M12 3h.01M12 21h.01"></path></svg>
+          </div>
+          <div>
+            <h1 class="logo-title">Jurídica Digital SPA</h1>
+            <p class="logo-subtitle">Agente Digital</p>
+          </div>
+        </div>
+        <nav>
+          <ul class="sidebar-nav">
+            <li>
+              <router-link :to="{ name: 'AdminDashboard' }" class="nav-link" :class="{ active: $route.name === 'AdminDashboard' }">
+                <span>❖ Panel Principal</span>
+              </router-link>
+            </li>
+            </ul>
+        </nav>
+      </div>
+      <div class="sidebar-footer">
+        <a @click="handleLogout" href="#" class="nav-link">Cerrar Sesión</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <router-view />
+    </main>
+  </div>
+</template>
+
+<script setup>
+import { useAuthStore } from './stores/auth';
+import { useRouter } from 'vue-router';
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleLogout = () => {
+  authStore.logout();
+};
+</script>
+
+<style>
+@import '@/assets/main.css';
+@import '@/assets/base.css';
+</style>

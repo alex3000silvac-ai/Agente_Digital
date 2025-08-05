@@ -1,0 +1,551 @@
+# Sistema de Gestión de Cumplimiento ANCI
+## Arquitectura de Carpetas Seguras y Solución Sistémica
+
+---
+
+## 🎯 ANALOGÍA DIDÁCTICA: El Sistema como una "Caja Fuerte Digital"
+
+Imagina que cada cliente tiene una **caja fuerte digital personal** dentro de tu sistema, completamente aislada y segura. Dentro de esta caja fuerte hay **gavetas especializadas** (carpetas) para cada tipo de documento legal que exige la ANCI. El sistema funciona como un **asistente virtual legal** que:
+
+- ✅ Conoce exactamente qué documentos necesita cada gaveta
+- ⏰ Te avisa cuándo algo está por vencer
+- 📋 Verifica automáticamente si tienes todo completo
+- 🚨 Te alerta si falta algo importante
+
+---
+
+## 📁 ESTRUCTURA DE CARPETAS PROPUESTA
+
+### 🏗️ Arquitectura Principal
+
+```
+📂 CLIENTE_[RUT_EMPRESA]/
+├── 📂 00_CONFIGURACION_SISTEMA/
+├── 📂 01_REGISTRO_ANCI/
+├── 📂 02_CLASIFICACION_ENTIDAD/
+├── 📂 03_GOBERNANZA_SEGURIDAD/
+├── 📂 04_GESTION_INCIDENTES/
+├── 📂 05_CONTRATOS_TERCEROS/
+├── 📂 06_CERTIFICACIONES/
+├── 📂 07_AUDITORIAS_EVIDENCIAS/
+├── 📂 08_CAPACITACION_PERSONAL/
+├── 📂 09_CONTINUIDAD_NEGOCIO/
+├── 📂 10_COMUNICACION_ANCI/
+├── 📂 11_RESPALDOS_HISTORICOS/
+└── 📂 99_LOGS_SISTEMA/
+```
+
+---
+
+## 📋 DETALLE DE CADA CARPETA Y SUS FUNCIONES
+
+### 📂 00_CONFIGURACION_SISTEMA/
+**Propósito**: Configuración y metadatos del cliente
+
+```
+📁 CONFIGURACION_SISTEMA/
+├── 📄 cliente_profile.json          # Configuración del cliente
+├── 📄 tipo_entidad.json             # PSE o OIV
+├── 📄 alertas_config.json           # Configuración de alertas
+├── 📄 responsables.json             # Contactos y responsables
+└── 📄 historial_cambios.log         # Log de cambios de configuración
+```
+
+**Campos clave del cliente_profile.json**:
+```json
+{
+  "empresa": {
+    "razon_social": "Empresa XYZ S.A.",
+    "rut": "76.123.456-7",
+    "sector_esencial": "Telecomunicaciones",
+    "tipo_entidad": "PSE", // PSE o OIV
+    "fecha_calificacion": "2025-01-15",
+    "direccion": "Av. Principal 123, Santiago",
+    "contacto_principal": {
+      "nombre": "Juan Pérez",
+      "cargo": "CISO",
+      "email": "juan.perez@empresa.cl",
+      "telefono": "+56912345678"
+    }
+  },
+  "configuracion_alertas": {
+    "dias_aviso_vencimiento": [90, 60, 30, 15, 7],
+    "email_notificaciones": ["seguridad@empresa.cl"],
+    "horario_alertas": "08:00-18:00"
+  }
+}
+```
+
+### 📂 01_REGISTRO_ANCI/
+**Propósito**: Documentación del registro obligatorio ante ANCI
+
+```
+📁 REGISTRO_ANCI/
+├── 📁 documentos_originales/
+│   ├── 📄 comprobante_registro_anci.pdf
+│   ├── 📄 designacion_encargado_FEA.pdf
+│   ├── 📄 certificado_vigencia_sociedad.pdf
+│   └── 📄 certificado_vigencia_poderes.pdf
+├── 📁 comunicaciones/
+│   ├── 📄 email_confirmacion_anci.eml
+│   └── 📄 actualizaciones_registro.pdf
+├── 📄 checklist_registro.json
+└── 📄 estado_cumplimiento.json
+```
+
+### 📂 02_CLASIFICACION_ENTIDAD/
+**Propósito**: Gestión de la clasificación PSE/OIV
+
+```
+📁 CLASIFICACION_ENTIDAD/
+├── 📁 autoevaluacion_oiv/
+│   ├── 📄 analisis_criterios_impacto.pdf
+│   ├── 📄 evaluacion_dependencia_tecnologica.pdf
+│   └── 📄 matriz_riesgo_calificacion.xlsx
+├── 📁 proceso_calificacion/
+│   ├── 📄 nomina_preliminar_anci.pdf
+│   ├── 📄 observaciones_consulta_publica.pdf
+│   └── 📄 resolucion_final_anci.pdf
+├── 📄 historial_clasificacion.json
+└── 📄 plan_preparacion_oiv.pdf
+```
+
+### 📂 03_GOBERNANZA_SEGURIDAD/
+**Propósito**: Políticas, procedimientos y documentos de gobernanza
+
+```
+📁 GOBERNANZA_SEGURIDAD/
+├── 📁 politicas/
+│   ├── 📄 politica_general_seguridad.pdf
+│   ├── 📄 politica_control_acceso.pdf
+│   ├── 📄 politica_uso_aceptable.pdf
+│   └── 📄 politica_clasificacion_informacion.pdf
+├── 📁 sgsi/ (Solo OIV)
+│   ├── 📄 manual_sgsi.pdf
+│   ├── 📄 declaracion_aplicabilidad.xlsx
+│   ├── 📄 matriz_riesgos.xlsx
+│   └── 📄 plan_tratamiento_riesgos.pdf
+├── 📁 procedimientos/
+│   ├── 📄 proc_gestion_vulnerabilidades.pdf
+│   ├── 📄 proc_gestion_cambios.pdf
+│   └── 📄 proc_respaldo_recuperacion.pdf
+├── 📄 matriz_cumplimiento.xlsx
+└── 📄 proximas_revisiones.json
+```
+
+### 📂 04_GESTION_INCIDENTES/
+**Propósito**: Todo lo relacionado con incidentes de ciberseguridad
+
+```
+📁 GESTION_INCIDENTES/
+├── 📁 plan_respuesta/
+│   ├── 📄 plan_respuesta_incidentes.pdf
+│   ├── 📄 procedimiento_clasificacion.pdf
+│   └── 📄 contactos_emergencia.pdf
+├── 📁 incidentes_reportados/
+│   ├── 📁 2025/
+│   │   ├── 📁 INC-2025-001/
+│   │   │   ├── 📄 alerta_temprana.pdf
+│   │   │   ├── 📄 segundo_reporte.pdf
+│   │   │   ├── 📄 plan_accion.pdf (Solo OIV)
+│   │   │   ├── 📄 informe_final.pdf
+│   │   │   └── 📄 evidencias_tecnicas/
+│   │   └── 📁 INC-2025-002/
+├── 📁 plantillas/
+│   ├── 📄 plantilla_alerta_temprana.docx
+│   ├── 📄 plantilla_segundo_reporte.docx
+│   └── 📄 plantilla_informe_final.docx
+├── 📄 taxonomia_anci.json
+└── 📄 indicadores_cumplimiento.xlsx
+```
+
+### 📂 05_CONTRATOS_TERCEROS/
+**Propósito**: Gestión de contratos con proveedores críticos
+
+```
+📁 CONTRATOS_TERCEROS/
+├── 📁 proveedores_ti/
+│   ├── 📁 PROVEEDOR_A/
+│   │   ├── 📄 contrato_principal.pdf
+│   │   ├── 📄 anexo_ciberseguridad.pdf
+│   │   ├── 📄 evaluacion_seguridad.xlsx
+│   │   └── 📄 reportes_incidentes/
+│   └── 📁 PROVEEDOR_B/
+├── 📁 clausulas_tipo/
+│   ├── 📄 clausulas_notificacion_incidentes.docx
+│   ├── 📄 clausulas_auditoria_seguridad.docx
+│   └── 📄 clausulas_responsabilidad.docx
+├── 📁 evaluaciones_riesgo/
+├── 📄 matriz_proveedores_criticos.xlsx
+└── 📄 vencimientos_contratos.json
+```
+
+### 📂 06_CERTIFICACIONES/
+**Propósito**: Gestión de certificaciones técnicas
+
+```
+📁 CERTIFICACIONES/
+├── 📁 iso27001/ (Principal para OIV)
+│   ├── 📄 certificado_vigente.pdf
+│   ├── 📄 informe_auditoria_certificacion.pdf
+│   ├── 📄 plan_seguimiento.pdf
+│   └── 📄 no_conformidades_cerradas.xlsx
+├── 📁 otras_certificaciones/
+│   ├── 📄 cert_iso22301.pdf
+│   └── 📄 cert_iso20000.pdf
+├── 📁 auditorias_seguimiento/
+├── 📄 calendario_renovaciones.json
+└── 📄 costos_certificaciones.xlsx
+```
+
+### 📂 07_AUDITORIAS_EVIDENCIAS/
+**Propósito**: Auditorías, simulacros y evidencias de cumplimiento
+
+```
+📁 AUDITORIAS_EVIDENCIAS/
+├── 📁 auditorias_internas/
+│   ├── 📁 2025/
+│   │   ├── 📄 plan_auditoria_anual.pdf
+│   │   ├── 📄 informe_auditoria_Q1.pdf
+│   │   └── 📄 seguimiento_acciones_correctivas.xlsx
+├── 📁 pruebas_penetracion/
+│   ├── 📁 2025_Q1/
+│   │   ├── 📄 informe_pentest_externo.pdf
+│   │   └── 📄 plan_remediacion.xlsx
+├── 📁 simulacros/
+│   ├── 📁 tabletop_2025_S1/
+│   │   ├── 📄 escenario_simulacro.pdf
+│   │   ├── 📄 participantes.xlsx
+│   │   └── 📄 lecciones_aprendidas.pdf
+├── 📄 programa_anual_ejercicios.pdf
+└── 📄 metricas_madurez.xlsx
+```
+
+### 📂 08_CAPACITACION_PERSONAL/
+**Propósito**: Programas de capacitación y concientización
+
+```
+📁 CAPACITACION_PERSONAL/
+├── 📁 programa_anual/
+│   ├── 📄 plan_capacitacion_2025.pdf
+│   ├── 📄 calendario_sesiones.xlsx
+│   └── 📄 presupuesto_aprobado.pdf
+├── 📁 materiales/
+│   ├── 📁 concientizacion_general/
+│   ├── 📁 phishing_awareness/
+│   └── 📁 respuesta_incidentes/
+├── 📁 registros_asistencia/
+│   ├── 📄 asistencia_2025_S1.xlsx
+│   └── 📄 certificados_completitud.pdf
+├── 📁 simulacros_phishing/
+│   ├── 📄 campana_2025_Q1.xlsx
+│   └── 📄 metricas_efectividad.pdf
+└── 📄 evaluacion_programa.xlsx
+```
+
+### 📂 09_CONTINUIDAD_NEGOCIO/
+**Propósito**: Planes de continuidad y recuperación (Crítico para OIV)
+
+```
+📁 CONTINUIDAD_NEGOCIO/
+├── 📁 analisis_impacto/ (BIA)
+│   ├── 📄 bia_completo.xlsx
+│   ├── 📄 procesos_criticos.pdf
+│   └── 📄 objetivos_rto_rpo.xlsx
+├── 📁 plan_continuidad/ (BCP)
+│   ├── 📄 bcp_master.pdf
+│   ├── 📄 estrategias_continuidad.pdf
+│   └── 📄 procedimientos_activacion.pdf
+├── 📁 plan_recuperacion/ (DRP)
+│   ├── 📄 drp_tecnologico.pdf
+│   ├── 📄 procedimientos_restauracion.pdf
+│   └── 📄 sitios_alternativos.pdf
+├── 📁 pruebas_drp/
+│   ├── 📄 resultados_prueba_2025_S1.pdf
+│   └── 📄 mejoras_identificadas.xlsx
+└── 📄 revision_anual_planes.pdf
+```
+
+### 📂 10_COMUNICACION_ANCI/
+**Propósito**: Toda la comunicación oficial con ANCI
+
+```
+📁 COMUNICACION_ANCI/
+├── 📁 correspondencia_oficial/
+│   ├── 📄 comunicados_recibidos.pdf
+│   ├── 📄 respuestas_enviadas.pdf
+│   └── 📄 solicitudes_informacion.pdf
+├── 📁 instrucciones_generales/
+│   ├── 📄 instruccion_general_001.pdf
+│   ├── 📄 instruccion_general_002.pdf
+│   └── 📄 impacto_nuevas_instrucciones.xlsx
+├── 📁 actualizaciones_normativas/
+│   ├── 📄 nuevos_decretos.pdf
+│   └── 📄 resoluciones_anci.pdf
+├── 📄 contactos_anci.json
+└── 📄 historial_comunicaciones.xlsx
+```
+
+### 📂 11_RESPALDOS_HISTORICOS/
+**Propósito**: Versiones históricas y respaldos
+
+```
+📁 RESPALDOS_HISTORICOS/
+├── 📁 versiones_documentos/
+│   ├── 📁 2024/
+│   └── 📁 2025/
+├── 📁 snapshots_mensuales/
+├── 📁 documentos_obsoletos/
+└── 📄 politica_retencion.pdf
+```
+
+### 📂 99_LOGS_SISTEMA/
+**Propósito**: Logs técnicos y auditoría del sistema
+
+```
+📁 LOGS_SISTEMA/
+├── 📄 accesos_sistema.log
+├── 📄 modificaciones_documentos.log
+├── 📄 alertas_enviadas.log
+└── 📄 errores_sistema.log
+```
+
+---
+
+## 🔧 FUNCIONALIDADES DEL SISTEMA
+
+### 🤖 Motor de Inteligencia de Cumplimiento
+
+```python
+class MotorCumplimientoANCI:
+    def __init__(self, cliente_config):
+        self.cliente = cliente_config
+        self.tipo_entidad = cliente_config['tipo_entidad']  # PSE o OIV
+        self.checklist_maestro = self.cargar_checklist()
+        
+    def evaluar_cumplimiento_global(self):
+        """Evalúa el estado general de cumplimiento"""
+        areas = [
+            'registro_anci',
+            'gobernanza_seguridad', 
+            'gestion_incidentes',
+            'contratos_terceros',
+            'certificaciones',
+            'auditorias_evidencias',
+            'capacitacion_personal',
+            'continuidad_negocio'
+        ]
+        
+        resultado = {}
+        for area in areas:
+            resultado[area] = self.evaluar_area(area)
+            
+        return self.generar_dashboard(resultado)
+    
+    def verificar_vencimientos(self):
+        """Verifica documentos próximos a vencer"""
+        alertas = []
+        
+        # Verificar certificaciones
+        certificaciones = self.obtener_certificaciones()
+        for cert in certificaciones:
+            dias_restantes = self.calcular_dias_vencimiento(cert['fecha_vencimiento'])
+            if dias_restantes <= 90:
+                alertas.append({
+                    'tipo': 'certificacion',
+                    'documento': cert['nombre'],
+                    'dias_restantes': dias_restantes,
+                    'criticidad': self.evaluar_criticidad(dias_restantes)
+                })
+        
+        return alertas
+    
+    def generar_reporte_incidente(self, tipo_reporte, datos_incidente):
+        """Genera automáticamente reportes para ANCI"""
+        plantillas = {
+            'alerta_temprana': 'plantilla_alerta_temprana.docx',
+            'segundo_reporte': 'plantilla_segundo_reporte.docx',
+            'informe_final': 'plantilla_informe_final.docx'
+        }
+        
+        if self.tipo_entidad == 'OIV' and tipo_reporte == 'plan_accion':
+            plantillas['plan_accion'] = 'plantilla_plan_accion.docx'
+            
+        return self.procesar_plantilla(plantillas[tipo_reporte], datos_incidente)
+```
+
+### ⚡ Sistema de Alertas Inteligentes
+
+```python
+class SistemaAlertasANCI:
+    def __init__(self):
+        self.tipos_alerta = {
+            'CRITICA': {'dias': [7, 3, 1], 'color': 'rojo'},
+            'ALTA': {'dias': [30, 15, 7], 'color': 'naranja'},
+            'MEDIA': {'dias': [90, 60, 30], 'color': 'amarillo'},
+            'BAJA': {'dias': [180, 90], 'color': 'azul'}
+        }
+    
+    def programar_alertas(self, documento):
+        """Programa alertas basadas en tipo de documento"""
+        if documento['tipo'] == 'certificacion_iso27001':
+            return self.tipos_alerta['CRITICA']
+        elif documento['tipo'] == 'plan_respuesta_incidentes':
+            return self.tipos_alerta['ALTA']
+        elif documento['tipo'] == 'politica_interna':
+            return self.tipos_alerta['MEDIA']
+        else:
+            return self.tipos_alerta['BAJA']
+    
+    def enviar_alerta(self, alerta):
+        """Envía alerta por múltiples canales"""
+        canales = ['email', 'sms', 'dashboard', 'slack']
+        for canal in canales:
+            self.enviar_por_canal(canal, alerta)
+```
+
+### 📊 Dashboard de Cumplimiento
+
+```python
+def generar_dashboard_cliente(cliente_rut):
+    """Genera dashboard personalizado por tipo de entidad"""
+    
+    dashboard = {
+        'resumen_ejecutivo': {
+            'nivel_cumplimiento_global': '85%',
+            'alertas_criticas': 2,
+            'documentos_vencidos': 0,
+            'proximos_vencimientos': 5
+        },
+        'areas_cumplimiento': {
+            'registro_anci': {'estado': 'COMPLETO', 'porcentaje': 100},
+            'gobernanza_seguridad': {'estado': 'EN_PROGRESO', 'porcentaje': 75},
+            'gestion_incidentes': {'estado': 'COMPLETO', 'porcentaje': 100},
+            'certificaciones': {'estado': 'ATENCION', 'porcentaje': 60}
+        },
+        'acciones_requeridas': [
+            {
+                'prioridad': 'CRITICA',
+                'accion': 'Renovar certificación ISO 27001',
+                'fecha_limite': '2025-03-15',
+                'responsable': 'CISO'
+            },
+            {
+                'prioridad': 'ALTA', 
+                'accion': 'Actualizar Plan de Respuesta a Incidentes',
+                'fecha_limite': '2025-02-28',
+                'responsable': 'Equipo Seguridad'
+            }
+        ]
+    }
+    
+    return dashboard
+```
+
+---
+
+## 🔒 MEDIDAS DE SEGURIDAD Y AISLAMIENTO
+
+### 🛡️ Seguridad por Capas
+
+1. **Aislamiento de Clientes**:
+   ```python
+   # Cada cliente tiene su propio espacio completamente aislado
+   CLIENTE_PATH = f"/secure_vault/{hash(cliente_rut)}/{cliente_rut}/"
+   
+   # Verificación de acceso
+   def verificar_acceso(usuario, cliente_rut):
+       return usuario.tiene_permiso(cliente_rut) and usuario.autenticado
+   ```
+
+2. **Cifrado de Datos**:
+   ```python
+   # Todos los documentos se cifran al almacenar
+   def guardar_documento(documento, cliente_rut):
+       key = generar_clave_cliente(cliente_rut)
+       documento_cifrado = cifrar_aes_256(documento, key)
+       return almacenar_seguro(documento_cifrado)
+   ```
+
+3. **Control de Acceso Granular**:
+   ```python
+   PERMISOS = {
+       'admin_cliente': ['leer', 'escribir', 'eliminar', 'configurar'],
+       'usuario_tecnico': ['leer', 'escribir'],
+       'auditor': ['leer'],
+       'consultor_legal': ['leer', 'comentar']
+   }
+   ```
+
+4. **Auditoría Completa**:
+   ```python
+   # Todo queda registrado
+   def log_accion(usuario, accion, archivo, cliente):
+       registro = {
+           'timestamp': datetime.now(),
+           'usuario': usuario.id,
+           'accion': accion,
+           'archivo': archivo,
+           'cliente': cliente,
+           'ip': request.remote_addr
+       }
+       guardar_log_auditoria(registro)
+   ```
+
+---
+
+## 🚀 BENEFICIOS DE LA SOLUCIÓN
+
+### Para el Cliente:
+- ✅ **Cumplimiento Garantizado**: Sistema que conoce todos los requisitos
+- ⏰ **Alertas Preventivas**: Nunca más documentos vencidos
+- 📊 **Visibilidad Total**: Dashboard en tiempo real de su estado
+- 🔧 **Automatización**: Generación automática de reportes ANCI
+- 🛡️ **Seguridad Máxima**: Sus datos completamente protegidos
+
+### Para tu Empresa:
+- 💼 **Servicio Premium**: Ofreces una solución integral y profesional
+- 📈 **Escalabilidad**: Un cliente o mil, el sistema se adapta
+- 🎯 **Especialización**: Te conviertes en el experto en Ley 21.663
+- 💰 **Monetización**: Puedes cobrar por diferentes niveles de servicio
+- 🤖 **Eficiencia**: La IA hace el trabajo pesado, tú te enfocas en asesorar
+
+---
+
+## 💡 PLAN DE IMPLEMENTACIÓN
+
+### Fase 1 (Mes 1): Base del Sistema
+- Estructura de carpetas y base de datos
+- Sistema de autenticación y autorización
+- Dashboard básico
+- Alertas simples
+
+### Fase 2 (Mes 2): Inteligencia
+- Motor de evaluación de cumplimiento
+- Generación automática de reportes
+- Sistema de alertas avanzado
+- Integración con calendarios
+
+### Fase 3 (Mes 3): Automatización Avanzada
+- IA para análisis de documentos
+- Generación automática de planes
+- Integración con sistemas externos
+- Reportes ejecutivos automatizados
+
+### Fase 4 (Mes 4): Optimización
+- Machine Learning para predicciones
+- API para integraciones
+- App móvil
+- Sistema de recomendaciones inteligentes
+
+---
+
+## 🎯 PROPUESTA DE VALOR FINAL
+
+Este sistema convierte la **complejidad legal en simplicidad operativa**. Es como tener un **abogado especialista en ANCI trabajando 24/7** para cada cliente, pero más eficiente, más barato y que nunca se olvida de nada.
+
+**Para los clientes**: Tranquilidad total sabiendo que están 100% protegidos ante la ANCI.
+
+**Para ti**: Una ventaja competitiva única en el mercado chileno, posicionándote como **EL especialista** en cumplimiento de ciberseguridad.
+
+¿Te gusta esta propuesta? ¿Quieres que profundice en alguna parte específica o comenzamos con la implementación de la primera fase?

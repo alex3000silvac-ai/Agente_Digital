@@ -1,0 +1,4 @@
+﻿AgenteDigitalDB;dbo;Recomendaciones;RecomendacionID;4;int identity;10;4;0;10;0;NULL;NULL;4;NULL;NULL;1;NO;56
+AgenteDigitalDB;dbo;Recomendaciones;VerboID;4;int;10;4;0;10;0;NULL;NULL;4;NULL;NULL;2;NO;56
+AgenteDigitalDB;dbo;Recomendaciones;DescripcionRecomendacion;-1;text;2147483647;2147483647;NULL;NULL;0;NULL;NULL;-1;NULL;2147483647;3;NO;35
+AgenteDigitalDB;dbo;Recomendaciones;Fuente;-9;nvarchar;255;510;NULL;NULL;1;NULL;NULL;-9;NULL;510;4;YES;39
